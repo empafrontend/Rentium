@@ -5,6 +5,9 @@
 ## School project for advertisement page
 Built with `React` and `Typescript`.
 
+`npm i`
+`npm start`
+
 <br>
 
 ### Collaborators 
@@ -13,6 +16,7 @@ Built with `React` and `Typescript`.
 * Emil Hagelin [Github](https://github.com/empafrontend)
 * Rosanna Pistone [Github](https://github.com/rosannapistone)
 * Sara Lindqvist [Github](https://github.com/saralindqvist)
+* Millie Cheung [Github](https://github.com/millie-wy)
 
 <br>
 
