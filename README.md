@@ -5,6 +5,9 @@
 ## School project for advertisement page
 Built with `React` and `Typescript`.
 
+`npm i`
+`npm start`
+
 <br>
 
 ### Collaborators 
