@@ -28,7 +28,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "next lint --max-warnings 0",
     "format": "prettier --check .",
     "format:fix": "prettier --write ."
   },
