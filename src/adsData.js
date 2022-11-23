@@ -71,6 +71,30 @@ const ads = [
     img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Red_Vespa_Scooter.jpg/1200px-Red_Vespa_Scooter.jpg',
     category: 'vehicles',
   },
+  {
+    title: 'Sandaler',
+    text: 'Lorem ipsum dolor sit amet...',
+    price: '1300 kr',
+    location: 'Mora',
+    img: 'https://assets.hermes.com/is/image/hermesproduct/oran-sandal--202272Z%20JF-worn-1-0-0-800-800_b.jpg',
+    category: 'shoes',
+  },
+  {
+    title: 'Ducati Monster',
+    text: 'Lorem ipsum dolor sit amet...',
+    price: '10000 kr',
+    location: 'Malmö',
+    img: 'https://www.fastbikes.se/images/stories/2019/2020/12-dec/MY21_DUCATI_MONSTER_PLUS_AMBIENCE__4__UC214574_High.jpg',
+    category: 'vehicles',
+  },
+  {
+    title: 'Hatt',
+    text: 'Lorem ipsum dolor sit amet...',
+    price: '100 kr',
+    location: 'Karlstad',
+    img: 'https://images.fyndiq.se/images/f_auto/t_600x600/prod/e0b2e1d0a0024b15/4ee0324e6d79/svart-elegant-dam-hatt-mossa-svart',
+    category: 'hats',
+  },
 ];
 
 export default ads;
