@@ -1,5 +1,6 @@
 import { LocationOnOutlined } from '@mui/icons-material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Box, CardMedia, Container, Typography } from '@mui/material';
 import img from '../src/Assets/gk.png';
 import StyledButton from './shared/StyledButton';
@@ -19,7 +20,7 @@ function AddPage() {
         maxWidth={350}
         minWidth={300}
         margin="auto"
-        sx={{ display: 'flex', flexDirection: 'column', rowGap: 1 }}
+        sx={{ display: 'flex', flexDirection: 'column' }}
       >
         <CardMedia
           component="img"
@@ -35,10 +36,11 @@ function AddPage() {
           sx={{
             display: 'flex',
             flexDirection: 'column',
+            rowGap: 0.5,
           }}
         >
-          <AccessTimeIcon sx={{ fontSize: '1rem' }} /> {}
-          <LocationOnOutlined sx={{ fontSize: '1rem' }} /> {}
+          <AccessTimeIcon sx={{ fontSize: '15px' }} /> {}
+          <LocationOnOutlined sx={{ fontSize: '15px' }} /> {}
         </Box>
         <Box
           sx={{
@@ -48,7 +50,10 @@ function AddPage() {
             mt: '1rem',
           }}
         >
-          <Typography variant="h5" sx={{ color: '#343232' }}>
+          <Typography
+            variant="h5"
+            sx={{ color: '#343232', fontWeight: '500', fontSize: '20px' }}
+          >
             Galet snabb gräsklippare
           </Typography>
           <Typography
@@ -56,13 +61,48 @@ function AddPage() {
             sx={{
               color: '#2D3142',
               display: 'flex',
+              fontSize: '16px',
+              fontWeight: '400',
+              alignItems: 'center',
+              mt: '2px',
+            }}
+          >
+            600 kr
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+          }}
+        >
+          <PersonOutlineIcon
+            sx={{ fontSize: '1rem', m: '2px', color: '#6860CC' }}
+          />{' '}
+          {}
+          <Typography
+            variant="body1"
+            sx={{
+              color: '#6860CC',
+              fontSize: '10px',
+              display: 'flex',
+              fontWeight: '400',
               alignItems: 'center',
             }}
           >
-            {}kr
+            lindqvistsara
           </Typography>
         </Box>
-        <Typography variant="body2" sx={{ fontSize: '13px', margin: '1rem' }}>
+        <Typography
+          variant="body2"
+          sx={{
+            fontSize: '13px',
+            mt: '1rem',
+            mb: '1rem',
+            lineHeight: '20px',
+            fontWeight: '300',
+          }}
+        >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vitae
           lectus vulputate, rhoncus velit vitae, rhoncus sapien. Fusce finibus
           pharetra purus, venenatis sodales augue commodo et. Aliquam erat
