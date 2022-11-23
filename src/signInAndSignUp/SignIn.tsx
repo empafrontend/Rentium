@@ -18,7 +18,7 @@ const validationSchema = yup.object({
 });
 
 const SignIn = () => {
-  const handleSignIn = (values: any) => console.log('signing in'); // no function yet!
+  const handleSignIn = (values: any) => console.log(values); // no function yet!
   const formik = useFormik({
     initialValues: { username: '', password: '' },
     validationSchema: validationSchema,
