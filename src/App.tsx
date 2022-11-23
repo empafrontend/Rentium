@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import MainFeed from './Feed/Feed';
 import './index.css';
 import LandingPage from './LandingPage';
 
@@ -9,6 +10,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/feed" element={<MainFeed />} />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>
