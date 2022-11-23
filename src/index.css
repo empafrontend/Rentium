@@ -9,3 +9,17 @@ body {
   /* font-family: 'Hind', sans-serif; this is for header */
   font-family: 'Roboto', sans-serif; /* for body */
 }
+
+h2 {
+  font-size: 20px;
+  font-family: 'Hind', sans-serif;
+  font-weight: 600;
+}
+h3 {
+  font-family: 'Hind', sans-serif;
+}
+
+p {
+  font-size: 10px;
+  font-family: 'Hind', sans-serif;
+}
