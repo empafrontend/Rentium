@@ -1,5 +1,11 @@
+import { Container } from '@mui/material';
+
 function LandingPage() {
-  return <div>Hello</div>;
+  return (
+    <Container>
+      <div>Hello</div>
+    </Container>
+  );
 }
 
 export default LandingPage;
