@@ -16,7 +16,7 @@ const StyledButton = (props: Props) => {
         '&:hover': {
           background: '#ECECEC',
           color: '#535353',
-          border: 'none',
+          boxShadow: 'none',
         },
         borderRadius: 4,
         background: '#5D6DD8',
