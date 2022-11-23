@@ -13,6 +13,11 @@ const StyledButton = (props: Props) => {
       variant="contained"
       type={props.htmlType ? props.htmlType : 'button'}
       sx={{
+        '&:hover': {
+          background: '#ECECEC',
+          color: '#535353',
+          border: 'none',
+        },
         borderRadius: 4,
         background: '#5D6DD8',
         boxShadow: 'none',
