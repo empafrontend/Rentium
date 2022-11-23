@@ -1,0 +1,19 @@
+# This action for now is to clean/install all node dependencies and run format
+
+name: prCheck CI
+on:
+  pull_request:
+    branches: ['main']
+
+jobs:
+  prCheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install
+        run: npm ci
+
+      - name: Format
+        run: npm run format
