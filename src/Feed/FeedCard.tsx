@@ -1,4 +1,4 @@
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import { LocationOnOutlined } from '@mui/icons-material';
 import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import ads from '../adsData';
@@ -24,9 +24,10 @@ function FeedCard() {
           width: '100%',
         }}
       >
-        {ads.map((ads) => (
+        {ads.map((ads, index) => (
           <Card
             className="card"
+            key={index}
             sx={{
               width: '11rem',
               height: '14rem',
@@ -56,7 +57,7 @@ function FeedCard() {
                 }}
               >
                 <Typography variant="caption" sx={{ color: 'grey' }}>
-                  <LocationOnOutlinedIcon sx={{ fontSize: '.8rem' }} />{' '}
+                  <LocationOnOutlined sx={{ fontSize: '.8rem' }} />{' '}
                   {ads.location}
                 </Typography>
                 <Typography variant="caption">Pris: {ads.price}</Typography>

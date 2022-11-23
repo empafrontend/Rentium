@@ -1,4 +1,4 @@
-import PlaceIcon from '@mui/icons-material/Place';
+import { Place } from '@mui/icons-material';
 import { Container } from '@mui/material';
 import ads from './adsData';
 import './index.css';
@@ -19,7 +19,7 @@ const SlimCard = () => {
           <p className="text-lg">{ads.price}</p>
 
           <p className="text-sm text-blue-500">
-            <PlaceIcon /> {ads.location}
+            <Place /> {ads.location}
           </p>
         </div>
       </div>
