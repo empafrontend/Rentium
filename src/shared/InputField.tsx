@@ -36,7 +36,12 @@ const InputField = (props: Props) => {
           },
         }}
         FormHelperTextProps={{
-          style: { paddingLeft: 5, fontWeight: 300 },
+          style: {
+            paddingLeft: 5,
+            fontWeight: 300,
+            position: 'absolute',
+            bottom: -22,
+          },
         }}
       />
     </FormControl>
