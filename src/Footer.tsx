@@ -4,16 +4,13 @@ import {
   PersonOutlineOutlined,
   SearchOutlined,
 } from '@mui/icons-material';
-import { Box, Typography } from '@mui/material';
-import headerImg from './Assets/header-img.png';
-import './header.css';
+import { Box } from '@mui/material';
+import './footer.css';
 
-function Header() {
+function Footer() {
   return (
-    <Box className="header">
-      <Box component="img" src={headerImg} sx={{ width: '8rem' }}></Box>
-      <Typography variant="h3">Rentium</Typography>
-      <Box className="navigation">
+    <Box className="footer">
+      <Box className="footer-navigation">
         <HomeOutlined className="icon" sx={{ fontSize: '2.5rem' }} />
         <SearchOutlined className="icon" sx={{ fontSize: '2.5rem' }} />
         <AddCircleOutlineRounded className="icon" sx={{ fontSize: '2.5rem' }} />
@@ -23,4 +20,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default Footer;
