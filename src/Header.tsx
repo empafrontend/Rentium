@@ -4,15 +4,14 @@ import {
   PersonOutlineOutlined,
   SearchOutlined,
 } from '@mui/icons-material';
-import { Box, Typography } from '@mui/material';
-import headerImg from './Assets/header-img.png';
+import { Box } from '@mui/material';
+import Logo from './Assets/rentium-logo.png';
 import './header.css';
 
 function Header() {
   return (
     <Box className="header">
-      <Box component="img" src={headerImg} sx={{ width: '8rem' }}></Box>
-      <Typography variant="h3">Rentium</Typography>
+      <Box component="img" src={Logo} sx={{ width: '8rem' }}></Box>
       <Box className="navigation">
         <HomeOutlined className="icon" sx={{ fontSize: '2.5rem' }} />
         <SearchOutlined className="icon" sx={{ fontSize: '2.5rem' }} />

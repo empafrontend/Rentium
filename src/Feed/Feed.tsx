@@ -19,6 +19,7 @@ function Feed() {
           background: 'white',
           borderTopRightRadius: '70px',
           borderBottomLeftRadius: '70px',
+          overflow: 'scroll',
         }}
       >
         <FeedCard />
