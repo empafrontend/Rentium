@@ -1,18 +1,22 @@
 import { useState } from 'react';
+import './filterButtons.css';
 import filterButtons from './filterButtonsData';
+
 const FilterButtons = () => {
   const [count, setCount] = useState(0);
   const filterButtonsList = filterButtons.map((filterButtons) => (
     <div
       key={filterButtons.id}
-      className="w-full flex flex-col justify-center items-center"
+      className="w-20 flex flex-col items-center justify-center"
       onClick={() => setCount(filterButtons.id)}
     >
       <div>
-        <div className="rounded-full h-auto w-auto shadow-lg p-8">
-          <img src={filterButtons.img} alt="" className="h-16 aspect-auto" />
+        <div className="flex items-center justify-center rounded-full h-14 w-14 shadow-lg bg-white">
+          <div className="h-8 w-8">
+            <img src={filterButtons.img} alt="" className="aspect-auto " />
+          </div>
         </div>
-        <h2 className="text-center my-4">{filterButtons.text}</h2>
+        <h5 className="text-center my-4">{filterButtons.text}</h5>
       </div>
     </div>
   ));
@@ -59,6 +63,10 @@ const FilterButtons = () => {
     }
   };
   Filter();
-  return <div className="flex flex-row z-1">{filterButtonsList}</div>;
+  return (
+    <div className="flex flex-row w-full justify-center filter-buttons">
+      {filterButtonsList}
+    </div>
+  );
 };
 export default FilterButtons;

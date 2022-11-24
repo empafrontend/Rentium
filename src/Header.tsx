@@ -11,7 +11,7 @@ import './header.css';
 function Header() {
   return (
     <Box className="header">
-      <Box component="img" src={Logo} sx={{ width: '8rem' }}></Box>
+      <Box component="img" src={Logo} className="logo"></Box>
       <Box className="navigation">
         <HomeOutlined className="icon" sx={{ fontSize: '2.5rem' }} />
         <SearchOutlined className="icon" sx={{ fontSize: '2.5rem' }} />

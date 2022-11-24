@@ -13,21 +13,23 @@ import { theme } from './theme';
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <React.StrictMode>
-        <Header />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/sign-in" element={<SignIn />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/filter" element={<AdFilterFeed />} />
-            <Route path="/feed" element={<MainFeed />} />
-          </Routes>
-        </BrowserRouter>
-        <Footer />
-      </React.StrictMode>
-    </ThemeProvider>
+    <div className="app">
+      <ThemeProvider theme={theme}>
+        <React.StrictMode>
+          <Header />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/sign-in" element={<SignIn />} />
+              <Route path="/sign-up" element={<SignUp />} />
+              <Route path="/filter" element={<AdFilterFeed />} />
+              <Route path="/feed" element={<MainFeed />} />
+            </Routes>
+          </BrowserRouter>
+          <Footer />
+        </React.StrictMode>
+      </ThemeProvider>
+    </div>
   );
 }
 
