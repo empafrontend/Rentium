@@ -59,6 +59,6 @@ const FilterButtons = () => {
     }
   };
   Filter();
-  return <div className="flex flex-row">{filterButtonsList}</div>;
+  return <div className="flex flex-row z-1">{filterButtonsList}</div>;
 };
 export default FilterButtons;

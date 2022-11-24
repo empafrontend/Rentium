@@ -6,11 +6,11 @@ import './feed.css';
 
 function FeedCard() {
   return (
-    <Container sx={{ height: '100%' }}>
+    <Container sx={{ height: '100%', marginTop: '8rem', overflow: 'scroll' }}>
       <Typography
         variant="h5"
         sx={{
-          marginLeft: '4rem',
+          marginLeft: '1rem',
           paddingTop: '2rem',
           paddingBottom: '2rem',
         }}
@@ -32,7 +32,7 @@ function FeedCard() {
             className="card"
             key={index}
             sx={{
-              width: '11rem',
+              width: '10.2rem',
               height: '14rem',
               borderRadius: '1rem',
             }}
