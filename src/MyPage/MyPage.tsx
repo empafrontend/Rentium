@@ -24,9 +24,15 @@ const MyPage = () => {
           Hej lindqvistsara!
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'row', gap: 3 }}>
-          <Button variant="contained">Redigera profil</Button>
           <Button
             variant="contained"
+            onClick={() => console.log('edit profile')} // TODO: insert correct function / link
+          >
+            Redigera profil
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => console.log('show profile')} // TODO: insert correct function / link
             sx={{
               background: '#fff',
               border: 'solid #5D6DD8 2px',
