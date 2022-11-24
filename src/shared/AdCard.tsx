@@ -94,8 +94,8 @@ const AdCard = (props: Props) => {
               {props.title}
             </Typography>
             <Typography pb={3} variant="body2" color="text.secondary">
-              {props.isRequest ? props.author : 'Inlagd 24-11-2022'}
-              {/* date to be inserted from data */}
+              {props.isRequest ? props.author : 'Inlagd 24-11-2022'}{' '}
+              {/* TODO: insert date from data */}
             </Typography>
             <Typography variant="body1" fontWeight={400}>
               {props.price} kr
