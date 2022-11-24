@@ -6,10 +6,12 @@ const FilterButtons = () => {
     <div
       key={filterButtons.id}
       className="w-full flex flex-col justify-center items-center"
-      onClick={() => setCount(filterButtons.id)}
     >
       <div>
-        <div className="rounded-full h-auto w-auto shadow-lg p-8">
+        <div 
+        className="rounded-full h-auto w-auto shadow-lg p-8 cursor-pointer"
+        onClick={() => setCount(filterButtons.id)}
+        >
           <img src={filterButtons.img} alt="" className="h-16 aspect-auto" />
         </div>
         <h2 className="text-center my-4">{filterButtons.text}</h2>
@@ -17,6 +19,9 @@ const FilterButtons = () => {
     </div>
   ));
   const Filter = () => {
+    const feed = document.querySelector('#FeedCard');
+    feed?.classList.remove('css-1oqqzyl-MuiContainer-root');
+    feed?.classList.add('hidden');
     const shoes = document.querySelectorAll('div.shoes');
     const hats = document.querySelectorAll('div.hats');
     const tools = document.querySelectorAll('div.tools');
@@ -30,7 +35,6 @@ const FilterButtons = () => {
       housing[i]?.classList.add('hidden');
       vehicles[i]?.classList.add('hidden');
     }
-
     if (count === 1) {
       for (let i = 0; i < shoes.length; i++) {
         shoes[i]?.classList.add('flex');

@@ -1,7 +1,7 @@
 const filterButtons = [
   {
     text: 'Skor',
-    img: 'https://cdn-icons-png.flaticon.com/512/2589/2589999.png',
+    img: "",
     id: 1,
   },
   {
