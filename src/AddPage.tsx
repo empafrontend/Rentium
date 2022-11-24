@@ -33,6 +33,8 @@ function AddPage() {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
+            mr: '.5rem',
+            ml: '.5rem',
           }}
         >
           <Box
@@ -94,16 +96,35 @@ function AddPage() {
           >
             Galet snabb gräsklippare
           </Typography>
-          <Typography
-            variant="body1"
+          <Box
             sx={{
-              fontSize: '12px',
               display: 'flex',
-              fontWeight: '300',
+              flexDirection: 'row',
             }}
           >
-            Uthyres: 22/5 - 2/6
-          </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: '12px',
+                display: 'flex',
+                fontWeight: '300',
+                mr: '5px',
+              }}
+            >
+              Datum:
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                color: '#6860CC',
+                fontSize: '12px',
+                display: 'flex',
+                fontWeight: '400',
+              }}
+            >
+              22 maj 2022 - 6 juli 2022
+            </Typography>
+          </Box>
           <Typography
             variant="body1"
             sx={{

@@ -8,6 +8,7 @@ import Footer from './Footer';
 import Header from './Header';
 import './index.css';
 import LandingPage from './LandingPage';
+import MyAdd from './MyAdd';
 import SignIn from './signInAndSignUp/SignIn';
 import SignUp from './signInAndSignUp/SignUp';
 import { theme } from './theme';
@@ -23,6 +24,7 @@ function App() {
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/add" element={<AddPage />} />
+            <Route path="/my-add" element={<MyAdd />} />
             <Route path="/filter" element={<AdFilterFeed />} />
             <Route path="/feed" element={<MainFeed />} />
           </Routes>
