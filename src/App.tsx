@@ -3,6 +3,8 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AdFilterFeed from './AdFilterFeed';
 import MainFeed from './Feed/Feed';
+import Footer from './Footer';
+import Header from './Header';
 import './index.css';
 import LandingPage from './LandingPage';
 import SignIn from './signInAndSignUp/SignIn';
@@ -13,6 +15,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <React.StrictMode>
+        <Header />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<LandingPage />} />
@@ -22,6 +25,7 @@ function App() {
             <Route path="/feed" element={<MainFeed />} />
           </Routes>
         </BrowserRouter>
+        <Footer />
       </React.StrictMode>
     </ThemeProvider>
   );
