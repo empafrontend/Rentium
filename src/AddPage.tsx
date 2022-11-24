@@ -20,7 +20,7 @@ function AddPage() {
         maxWidth={350}
         minWidth={300}
         margin="auto"
-        sx={{ display: 'flex', flexDirection: 'column' }}
+        sx={{ display: 'flex', flexDirection: 'column', rowGap: 0.5 }}
       >
         <CardMedia
           component="img"
@@ -28,25 +28,45 @@ function AddPage() {
           alt=""
           sx={{
             borderRadius: '1rem',
-            objectFit: 'cover',
-            objectPosition: 'center',
           }}
         />
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'column',
-            rowGap: 0.5,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
           }}
         >
-          <AccessTimeIcon sx={{ fontSize: '15px' }} /> {}
-          <LocationOnOutlined sx={{ fontSize: '15px' }} /> {}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              rowGap: 0.5,
+            }}
+          >
+            <AccessTimeIcon sx={{ fontSize: '15px' }} /> {}
+            <LocationOnOutlined sx={{ fontSize: '15px' }} /> {}
+          </Box>
+          <Typography
+            variant="body1"
+            sx={{
+              color: '#6860CC',
+              fontSize: '12px',
+              display: 'flex',
+              fontWeight: '400',
+              alignItems: 'center',
+            }}
+          >
+            <PersonOutlineIcon
+              sx={{ fontSize: '1rem', m: '2px', color: '#6860CC' }}
+            />
+            lindqvistsara
+          </Typography>
         </Box>
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
+            flexDirection: 'column',
             mt: '1rem',
           }}
         >
@@ -55,6 +75,18 @@ function AddPage() {
             sx={{ color: '#343232', fontWeight: '500', fontSize: '20px' }}
           >
             Galet snabb gräsklippare
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              color: '#2D3142',
+              fontSize: '12px',
+              display: 'flex',
+              fontWeight: '400',
+              alignItems: 'center',
+            }}
+          >
+            Uthyres: 22/5 - 2/6
           </Typography>
           <Typography
             variant="body1"
@@ -70,36 +102,13 @@ function AddPage() {
             600 kr
           </Typography>
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-          }}
-        >
-          <PersonOutlineIcon
-            sx={{ fontSize: '1rem', m: '2px', color: '#6860CC' }}
-          />{' '}
-          {}
-          <Typography
-            variant="body1"
-            sx={{
-              color: '#6860CC',
-              fontSize: '10px',
-              display: 'flex',
-              fontWeight: '400',
-              alignItems: 'center',
-            }}
-          >
-            lindqvistsara
-          </Typography>
-        </Box>
         <Typography
           variant="body2"
           sx={{
             fontSize: '13px',
             mt: '1rem',
             mb: '1rem',
-            lineHeight: '20px',
+            lineHeight: '22px',
             fontWeight: '300',
           }}
         >

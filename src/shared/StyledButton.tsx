@@ -14,8 +14,9 @@ const StyledButton = (props: Props) => {
       type={props.htmlType ? props.htmlType : 'button'}
       sx={{
         '&:hover': {
-          background: '#ECECEC',
-          color: '#535353',
+          background: '#FFF',
+          color: '#5D6DD8',
+          border: '1px solid #5D6DD8',
           boxShadow: 'none',
         },
         borderRadius: 4,
