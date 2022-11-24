@@ -1,0 +1,28 @@
+.header {
+  background: linear-gradient(95.91deg, #6d82c8 6.74%, #3132ab 88.88%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem 2rem;
+  border-radius: 0px 0px 0px 70px;
+  height: 10rem;
+  width: 100%;
+  color: white;
+}
+
+.navigation {
+  color: white;
+  display: flex;
+  gap: 3rem;
+}
+
+.icon:hover {
+  text-decoration: underline;
+  color: lightblue;
+}
+
+@media screen and (max-width: 900px) {
+  .navigation {
+    display: none;
+  }
+}

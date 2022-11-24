@@ -7,6 +7,7 @@ interface Props {
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
+// this component will be deleted as this was added to theme - use <Button> instead
 const StyledButton = (props: Props) => {
   return (
     <Button

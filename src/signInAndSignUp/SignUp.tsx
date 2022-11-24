@@ -1,9 +1,8 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import InputField from '../shared/InputField';
-import StyledButton from '../shared/StyledButton';
 
 const validationSchema = yup.object({
   username: yup
@@ -36,15 +35,20 @@ const SignUp = () => {
         rowGap: 5,
       }}
     >
-      Välkommen! {/* to be wrapped with typography once there is theme */}
+      <Typography component="h2" variant="h1" mb={-1}>
+        Välkommen!
+      </Typography>{' '}
       <Box
         component="form"
         maxWidth={350}
         minWidth={300}
         margin="auto"
-        sx={{ display: 'flex', flexDirection: 'column', rowGap: 5 }}
+        sx={{ display: 'flex', flexDirection: 'column', rowGap: 4 }}
         onSubmit={formik.handleSubmit}
       >
+        <Typography component="h1" variant="h3" mb={-1}>
+          Skapa konto
+        </Typography>
         <InputField
           label="Användarnamn"
           type="username"
@@ -69,12 +73,17 @@ const SignUp = () => {
           helperText={formik.touched.password && formik.errors.password}
           onChange={formik.handleChange}
         />
-
-        <StyledButton content="Registrera" htmlType="submit" />
+        <Button variant="contained" type="submit">
+          Registrera
+        </Button>
       </Box>
       <Typography>
         Har du redan ett konto?{' '}
-        <Box component="span" fontWeight={500} sx={{ display: 'inline' }}>
+        <Box
+          component="span"
+          fontWeight={400}
+          sx={{ display: 'inline', color: '#302892' }}
+        >
           <Link to="/sign-in">Logga in!</Link>
           {/* to be wrapped with typography once there is theme */}
         </Box>

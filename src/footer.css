@@ -1,0 +1,26 @@
+.footer {
+  background: linear-gradient(95.91deg, #6d82c8 6.74%, #3132ab 88.88%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0px 70px 0px 0px;
+  height: 10rem;
+  width: 100%;
+  color: white;
+}
+
+.footer-navigation {
+  color: white;
+  display: flex;
+  gap: 3rem;
+}
+
+.icon:hover {
+  color: lightblue;
+}
+
+@media screen and (min-width: 900px) {
+  .footer-navigation {
+    display: none;
+  }
+}
