@@ -1,5 +1,3 @@
-import { LocationOnOutlined } from '@mui/icons-material';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Box, CardMedia, Container, Typography } from '@mui/material';
 import img from '../src/Assets/gk.png';
@@ -40,17 +38,36 @@ function AddPage() {
           <Box
             sx={{
               display: 'flex',
-              flexDirection: 'column',
-              rowGap: 0.5,
+              flexDirection: 'row',
             }}
           >
-            <AccessTimeIcon sx={{ fontSize: '15px' }} /> {}
-            <LocationOnOutlined sx={{ fontSize: '15px' }} /> {}
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: '12px',
+                display: 'flex',
+                fontWeight: '300',
+                mr: '5px',
+              }}
+            >
+              Inlagd: 16 Maj. 22:46
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                color: '#6860CC',
+                fontSize: '12px',
+                display: 'flex',
+                fontWeight: '300',
+              }}
+            >
+              Göteborg
+            </Typography>
           </Box>
           <Typography
             variant="body1"
             sx={{
-              color: '#6860CC',
+              color: '#343232',
               fontSize: '12px',
               display: 'flex',
               fontWeight: '400',
@@ -58,7 +75,7 @@ function AddPage() {
             }}
           >
             <PersonOutlineIcon
-              sx={{ fontSize: '1rem', m: '2px', color: '#6860CC' }}
+              sx={{ fontSize: '1rem', m: '2px', color: '#343232' }}
             />
             lindqvistsara
           </Typography>
@@ -68,6 +85,7 @@ function AddPage() {
             display: 'flex',
             flexDirection: 'column',
             mt: '1rem',
+            rowGap: 0.5,
           }}
         >
           <Typography
@@ -79,11 +97,9 @@ function AddPage() {
           <Typography
             variant="body1"
             sx={{
-              color: '#2D3142',
               fontSize: '12px',
               display: 'flex',
-              fontWeight: '400',
-              alignItems: 'center',
+              fontWeight: '300',
             }}
           >
             Uthyres: 22/5 - 2/6
@@ -93,8 +109,8 @@ function AddPage() {
             sx={{
               color: '#2D3142',
               display: 'flex',
-              fontSize: '16px',
-              fontWeight: '400',
+              fontSize: '14px',
+              fontWeight: '700',
               alignItems: 'center',
               mt: '2px',
             }}
