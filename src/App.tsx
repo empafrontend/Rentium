@@ -22,7 +22,7 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/sign-up" element={<SignUp />} />
-              <Route path="/add" element={<AddPage />} />
+            <Route path="/add" element={<AddPage />} />
             <Route path="/filter" element={<AdFilterFeed />} />
             <Route path="/feed" element={<MainFeed />} />
           </Routes>
@@ -30,7 +30,6 @@ function App() {
         <Footer />
       </React.StrictMode>
     </ThemeProvider>
-    main
   );
 }
 
