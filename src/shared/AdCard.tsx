@@ -18,7 +18,16 @@ interface Props {
 }
 
 const AdCard = (props: Props) => (
-  <Card sx={{ maxWidth: 300, borderRadius: '20px 20px 20px 0' }}>
+  <Card
+    sx={{
+      maxWidth: 250,
+      minWidth: 250,
+      height: 'fit-content',
+      borderRadius: '20px 20px 20px 0',
+      boxShadow: '0 2px 10px #DDDBD5',
+      mt: 1,
+    }}
+  >
     <Box sx={{ display: 'flex', flexDirection: 'row' }}>
       <Box width="50%" sx={{ py: 2, display: 'flex', placeContent: 'center' }}>
         <CardMedia
@@ -33,6 +42,7 @@ const AdCard = (props: Props) => (
           display: 'flex',
           flexDirection: 'column',
           placeContent: 'center',
+          pl: 1,
         }}
       >
         <Typography variant="body1" fontWeight={600}>
@@ -61,9 +71,7 @@ const AdCard = (props: Props) => (
             borderRadius: 0,
             background: '#ECECEC',
             color: '#535353',
-            '&:hover': {
-              background: '#C6C4C4',
-            },
+            '&:hover': { background: '#C6C4C4' },
           }}
         >
           Neka
