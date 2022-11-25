@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AddPage from './AddPage';
 import AdFilterFeed from './AdFilterFeed';
+import AdProvider from './Context/AdContextProvider';
 import UserProvider from './Context/UserContextProvider';
 import MainFeed from './Feed/Feed';
 import './index.css';
@@ -17,19 +18,21 @@ function App() {
     <ThemeProvider theme={theme}>
       <React.StrictMode>
         <BrowserRouter>
-          <UserProvider>
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                <Route index element={<MainFeed />} />
-                <Route path="/sign-in" element={<SignIn />} />
-                <Route path="/sign-up" element={<SignUp />} />
-                <Route path="/my-page" element={<MyPage />} />
-                <Route path="/add" element={<AddPage />} />
-                <Route path="/filter" element={<AdFilterFeed />} />
-                <Route path="/feed" element={<MainFeed />} />
-              </Route>
-            </Routes>
-          </UserProvider>
+          <AdProvider>
+            <UserProvider>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<MainFeed />} />
+                  <Route path="/sign-in" element={<SignIn />} />
+                  <Route path="/sign-up" element={<SignUp />} />
+                  <Route path="/my-page" element={<MyPage />} />
+                  <Route path="/add" element={<AddPage />} />
+                  <Route path="/filter" element={<AdFilterFeed />} />
+                  <Route path="/feed" element={<MainFeed />} />
+                </Route>
+              </Routes>
+            </UserProvider>
+          </AdProvider>
         </BrowserRouter>
       </React.StrictMode>
     </ThemeProvider>

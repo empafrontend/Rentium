@@ -9,12 +9,13 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import { useAd } from '../Context/AdContextProvider';
 
 interface Props {
   title: string;
   author: string;
   img: string;
-  href?: string; // TODO: This should not be optional (but it is currently missing from data)
+  href?: string; // TODO: This should not be optional
   price: number;
   isRequest?: boolean | false;
 }
@@ -22,12 +23,10 @@ interface Props {
 const AdCard = (props: Props) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [isToRemove, setIsToRemove] = useState<boolean>(false);
+  const { acceptOffer, rejectOffer, removeAd } = useAd();
 
   // Closes modal
-  const handleClose = () => {
-    setOpenModal(false);
-    setIsToRemove(false);
-  };
+  const handleClose = () => setOpenModal(false);
 
   // Displays warning for ad removal or offer rejection when clicking "neka" or "ta bort"
   const displayWarning = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -43,19 +42,10 @@ const AdCard = (props: Props) => {
     isToRemove ? removeAd(title) : rejectOffer(title);
   };
 
-  const acceptOffer = (title: string) => {
-    console.log('accepting offer', title);
-    // TODO: Update item status in db
-  };
-  const removeAd = (title: string) => {
-    console.log('deleting ad', title);
-    // TODO: Delete item from db
-  };
-
-  const rejectOffer = (title: string) => {
+  // Handles clicking "nej" in the warning
+  const cancelAction = () => {
+    handleClose();
     setIsToRemove(false);
-    console.log('rejecting offer', title);
-    // TODO: Remove ad from bokningsförfrågningarna
   };
 
   return (
@@ -180,7 +170,7 @@ const AdCard = (props: Props) => {
             </Button>
             <Button
               variant="contained"
-              onClick={() => handleClose()}
+              onClick={() => cancelAction()}
               sx={{
                 width: '50%',
                 borderRadius: '0 0  20px 0',
