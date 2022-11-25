@@ -9,25 +9,19 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import { Ad, useAd } from '../Context/AdContextProvider';
 
-interface Props {
-  title: string;
-  author: string;
-  img: string;
-  href?: string; // TODO: This should not be optional (but it is currently missing from data)
-  price: number;
+type ExAdCard = Partial<Ad> & {
   isRequest?: boolean | false;
-}
+};
 
-const AdCard = (props: Props) => {
+const AdCard = (props: ExAdCard) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [isToRemove, setIsToRemove] = useState<boolean>(false);
+  const { acceptOffer, rejectOffer, removeAd } = useAd();
 
   // Closes modal
-  const handleClose = () => {
-    setOpenModal(false);
-    setIsToRemove(false);
-  };
+  const handleClose = () => setOpenModal(false);
 
   // Displays warning for ad removal or offer rejection when clicking "neka" or "ta bort"
   const displayWarning = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -38,24 +32,15 @@ const AdCard = (props: Props) => {
   };
 
   // Handles clicking "ja" in the warning
-  const confirmAction = (title: string) => {
+  const confirmAction = (id: string) => {
     setOpenModal(false);
-    isToRemove ? removeAd(title) : rejectOffer(title);
+    isToRemove ? removeAd(id) : rejectOffer(id);
   };
 
-  const acceptOffer = (title: string) => {
-    console.log('accepting offer', title);
-    // TODO: Update item status in db
-  };
-  const removeAd = (title: string) => {
-    console.log('deleting ad', title);
-    // TODO: Delete item from db
-  };
-
-  const rejectOffer = (title: string) => {
+  // Handles clicking "nej" in the warning
+  const cancelAction = () => {
+    handleClose();
     setIsToRemove(false);
-    console.log('rejecting offer', title);
-    // TODO: Remove ad from bokningsförfrågningarna
   };
 
   return (
@@ -95,7 +80,7 @@ const AdCard = (props: Props) => {
             </Typography>
             <Typography pb={3} variant="body2" color="text.secondary">
               {props.isRequest ? props.author : 'Inlagd 24-11-2022'}{' '}
-              {/* TODO: insert date from data */}
+              {/******************************** TODO: insert date from data */}
             </Typography>
             <Typography variant="body1" fontWeight={400}>
               {props.price} kr
@@ -106,7 +91,8 @@ const AdCard = (props: Props) => {
           <CardActions disableSpacing sx={{ p: 0, width: '100%' }}>
             <Button
               variant="contained"
-              onClick={() => acceptOffer(props.title)}
+              onClick={() => acceptOffer(props.title!)}
+              // ************* TODO: here should be id that being passed ot the function
               sx={{ width: '50%', borderRadius: '20px 0 0 0' }}
             >
               Acceptera
@@ -173,14 +159,15 @@ const AdCard = (props: Props) => {
           <CardActions disableSpacing sx={{ p: 0, width: '100%' }}>
             <Button
               variant="contained"
-              onClick={() => confirmAction(props.title)}
+              onClick={() => confirmAction(props.title!)}
+              // ************* TODO: here should be id that being passed ot the function
               sx={{ width: '50%', borderRadius: '0 0 0 20px' }}
             >
               Ja
             </Button>
             <Button
               variant="contained"
-              onClick={() => handleClose()}
+              onClick={() => cancelAction()}
               sx={{
                 width: '50%',
                 borderRadius: '0 0  20px 0',
