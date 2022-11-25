@@ -6,7 +6,7 @@ import FeedCard from './FeedCard';
 function Feed() {
   return (
     <Box>
-      <div className="filter-buttons">
+      <div>
         <FilterButtons />
       </div>
       <Box
@@ -14,7 +14,8 @@ function Feed() {
         sx={{
           background:
             'linear-gradient(95.91deg, #6d82c8 6.74%, #3132ab 88.88%)',
-          height: '100vh',
+          height: '100%',
+          overflow: 'hidden',
         }}
       >
         <Box
