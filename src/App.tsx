@@ -8,6 +8,7 @@ import Footer from './Footer';
 import Header from './Header';
 import './index.css';
 import LandingPage from './LandingPage';
+import MyPage from './MyPage/MyPage';
 import SignIn from './signInAndSignUp/SignIn';
 import SignUp from './signInAndSignUp/SignUp';
 import { theme } from './theme';
@@ -22,7 +23,8 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/sign-up" element={<SignUp />} />
-              <Route path="/add" element={<AddPage />} />
+            <Route path="/my-page" element={<MyPage />} />
+            <Route path="/add" element={<AddPage />} />
             <Route path="/filter" element={<AdFilterFeed />} />
             <Route path="/feed" element={<MainFeed />} />
           </Routes>
@@ -30,7 +32,6 @@ function App() {
         <Footer />
       </React.StrictMode>
     </ThemeProvider>
-    main
   );
 }
 
