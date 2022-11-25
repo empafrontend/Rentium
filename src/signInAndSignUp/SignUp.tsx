@@ -86,7 +86,6 @@ const SignUp = () => {
           sx={{ display: 'inline', color: '#302892' }}
         >
           <Link to="/sign-in">Logga in!</Link>
-          {/* to be wrapped with typography once there is theme */}
         </Box>
       </Typography>
     </Container>
