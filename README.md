@@ -22,6 +22,12 @@ Built with `React` and `Typescript`.
 
 <br>
 
+### Login requirement
+
+We use google login in our app.
+
+<br>
+
 ### Github Projects
 
 - [Projects](https://github.com/users/empafrontend/projects/1)
