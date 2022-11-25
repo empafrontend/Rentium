@@ -1,27 +1,33 @@
+import hattIkon from './Assets/hattIkon.png';
+import husIkon from './Assets/husIkon.png';
+import moppeIkon from './Assets/moppeIkon.png';
+import skoIkon from './Assets/skoIkon.png';
+import verktygIkon from './Assets/verktygIkon.png';
+
 const filterButtons = [
   {
     text: 'Skor',
-    img: "",
+    img: skoIkon,
     id: 1,
   },
   {
     text: 'Hattar',
-    img: 'https://cdn-icons-png.flaticon.com/512/864/864744.png',
+    img: hattIkon,
     id: 2,
   },
   {
     text: 'Verktyg',
-    img: 'https://cdn-icons-png.flaticon.com/512/4359/4359812.png',
+    img: verktygIkon,
     id: 3,
   },
   {
     text: 'Boende',
-    img: 'https://cdn-icons-png.flaticon.com/512/6676/6676508.png',
+    img: husIkon,
     id: 4,
   },
   {
     text: 'Fordon',
-    img: 'https://www.iconpacks.net/icons/1/free-car-icon-1057-thumb.png',
+    img: moppeIkon,
     id: 5,
   },
 ];
