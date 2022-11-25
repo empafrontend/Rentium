@@ -1,6 +1,5 @@
 import { Box } from '@mui/material';
 import AdFilterFeed from '../AdFilterFeed';
-import CategoryLength from '../categoryLength';
 import FeedCard from './FeedCard';
 
 function Feed() {
@@ -13,8 +12,7 @@ function Feed() {
         width: '100%',
       }}
     >
-      <AdFilterFeed/>
-      <CategoryLength/>
+      <AdFilterFeed />
       <FeedCard />
     </Box>
   );
