@@ -11,7 +11,12 @@
 }
 
 .logo {
-  width: 6rem;
+  width: 5rem;
+  height: 5rem;
+  background-image: url(./Assets/rentium-logo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .navigation {
@@ -33,10 +38,11 @@
 
 @media screen and (max-width: 600px) {
   .header {
-    height: 6rem;
+    height: 5rem;
     border-radius: 0px 0px 0px 40px;
   }
   .logo {
-    width: 5rem;
+    width: 8rem;
+    background-image: url(./Assets/rentium-logo-horisontal.png);
   }
 }

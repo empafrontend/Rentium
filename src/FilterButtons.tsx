@@ -7,7 +7,7 @@ const FilterButtons = () => {
   const filterButtonsList = filterButtons.map((filterButtons) => (
     <div
       key={filterButtons.id}
-      className="w-20 flex flex-col items-center justify-center"
+      className=" w-20 flex flex-col items-center justify-center"
       onClick={() => setCount(filterButtons.id)}
     >
       <div>
@@ -64,7 +64,7 @@ const FilterButtons = () => {
   };
   Filter();
   return (
-    <div className="flex flex-row w-full justify-center filter-buttons">
+    <div className=" flex flex-row w-full justify-center filter-buttons">
       {filterButtonsList}
     </div>
   );
