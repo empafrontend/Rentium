@@ -1,7 +1,7 @@
 import { createContext, FC, PropsWithChildren, useContext } from 'react';
 
-interface Ad {
-  // according to firebase data
+export interface Ad {
+  // according to firebase data but can be changed
   title: string;
   text: string;
   price: number;
@@ -13,9 +13,9 @@ interface Ad {
 }
 
 interface AdContextValue {
-  acceptOffer: (title: string) => void;
-  rejectOffer: (title: string) => void;
-  removeAd: (title: string) => void;
+  acceptOffer: (id: string) => void;
+  rejectOffer: (id: string) => void;
+  removeAd: (id: string) => void;
 }
 
 export const AdContext = createContext<AdContextValue>({
@@ -25,18 +25,18 @@ export const AdContext = createContext<AdContextValue>({
 });
 
 const AdProvider: FC<PropsWithChildren> = (props) => {
-  const acceptOffer = (title: string) => {
-    console.log('accepting offer', title);
+  const acceptOffer = (id: string) => {
+    console.log('accepting offer', id);
     // TODO: Update item status in db
   };
 
-  const rejectOffer = (title: string) => {
-    console.log('rejecting offer', title);
+  const rejectOffer = (id: string) => {
+    console.log('rejecting offer', id);
     // TODO: Remove ad from bokningsförfrågningarna
   };
 
-  const removeAd = (title: string) => {
-    console.log('deleting ad', title);
+  const removeAd = (id: string) => {
+    console.log('deleting ad', id);
     // TODO: Delete item from db
   };
 

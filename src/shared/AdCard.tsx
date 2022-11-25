@@ -9,18 +9,13 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { useAd } from '../Context/AdContextProvider';
+import { Ad, useAd } from '../Context/AdContextProvider';
 
-interface Props {
-  title: string;
-  author: string;
-  img: string;
-  href?: string; // TODO: This should not be optional
-  price: number;
+type ExAdCard = Partial<Ad> & {
   isRequest?: boolean | false;
-}
+};
 
-const AdCard = (props: Props) => {
+const AdCard = (props: ExAdCard) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [isToRemove, setIsToRemove] = useState<boolean>(false);
   const { acceptOffer, rejectOffer, removeAd } = useAd();
@@ -37,9 +32,9 @@ const AdCard = (props: Props) => {
   };
 
   // Handles clicking "ja" in the warning
-  const confirmAction = (title: string) => {
+  const confirmAction = (id: string) => {
     setOpenModal(false);
-    isToRemove ? removeAd(title) : rejectOffer(title);
+    isToRemove ? removeAd(id) : rejectOffer(id);
   };
 
   // Handles clicking "nej" in the warning
@@ -85,7 +80,7 @@ const AdCard = (props: Props) => {
             </Typography>
             <Typography pb={3} variant="body2" color="text.secondary">
               {props.isRequest ? props.author : 'Inlagd 24-11-2022'}{' '}
-              {/* TODO: insert date from data */}
+              {/******************************** TODO: insert date from data */}
             </Typography>
             <Typography variant="body1" fontWeight={400}>
               {props.price} kr
@@ -96,7 +91,8 @@ const AdCard = (props: Props) => {
           <CardActions disableSpacing sx={{ p: 0, width: '100%' }}>
             <Button
               variant="contained"
-              onClick={() => acceptOffer(props.title)}
+              onClick={() => acceptOffer(props.title!)}
+              // ************* TODO: here should be id that being passed ot the function
               sx={{ width: '50%', borderRadius: '20px 0 0 0' }}
             >
               Acceptera
@@ -163,7 +159,8 @@ const AdCard = (props: Props) => {
           <CardActions disableSpacing sx={{ p: 0, width: '100%' }}>
             <Button
               variant="contained"
-              onClick={() => confirmAction(props.title)}
+              onClick={() => confirmAction(props.title!)}
+              // ************* TODO: here should be id that being passed ot the function
               sx={{ width: '50%', borderRadius: '0 0 0 20px' }}
             >
               Ja

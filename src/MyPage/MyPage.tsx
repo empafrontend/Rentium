@@ -48,6 +48,7 @@ const MyPage = () => {
           <Typography component="h2" variant="h4" mb={-1}>
             Bokningsförfrågningar ({ads.length})
             {/* TODO: number to be adjusted based on src */}
+            {/* TODO: add filter */}
           </Typography>
           <Box
             height={190}
@@ -59,14 +60,14 @@ const MyPage = () => {
               '::-webkit-scrollbar': { display: 'none' },
             }}
           >
-            {/* TODO: change to correct data src */}
+            {/* TODO: change to correct data src with filter */}
             {ads.map((ad, index) => (
               <AdCard
                 key={index}
                 title={ad.title}
                 img={ad.img}
-                author="lorem89" // TODO: insert from data
-                price={199} // TODO: insert from data (should always be number)
+                author={ad.author}
+                price={ad.price}
                 isRequest
               />
             ))}
@@ -75,8 +76,9 @@ const MyPage = () => {
 
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <Typography component="h2" variant="h4" mb={-1}>
-            Mina annonser ({ads.length}){' '}
-            {/* TODO: change to correct data src */}
+            Mina annonser (
+            {ads.filter((ad) => ad.author !== 'lindqvistsara').length}){' '}
+            {/* TODO: filter is in but should change author string to correct user */}
           </Typography>
           <Box
             height={190}
@@ -89,15 +91,18 @@ const MyPage = () => {
             }}
           >
             {/* TODO: change to correct data src */}
-            {ads.map((ad, index) => (
-              <AdCard
-                key={index}
-                title={ad.title}
-                img={ad.img}
-                author="lorem89" // TODO: insert from data
-                price={199} // TODO: insert from data (should always be number)
-              />
-            ))}
+            {/* TODO: filter is in but should change author string to correct user */}
+            {ads
+              .filter((ad) => ad.author !== 'lindqvistsara')
+              .map((ad, index) => (
+                <AdCard
+                  key={index}
+                  title={ad.title}
+                  img={ad.img}
+                  author={ad.author}
+                  price={ad.price}
+                />
+              ))}
           </Box>
         </Box>
       </Container>
