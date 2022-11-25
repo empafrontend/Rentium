@@ -23,6 +23,7 @@ Built with `React` and `Typescript`.
 <br>
 
 ### Login requirement
+
 We use google login in our app.
 
 <br>
