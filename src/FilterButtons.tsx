@@ -13,7 +13,7 @@ const FilterButtons = () => {
           className="rounded-full h-auto w-auto shadow-lg p-8 cursor-pointer"
           onClick={() => setCount(filterButtons.id)}
         >
-          <img src={filterButtons.img} alt="" className="h-16 aspect-auto" />
+          <img src={filterButtons.img} alt="" className="w-16 aspect-auto" />
         </div>
         <h2 className="text-center my-4">{filterButtons.text}</h2>
       </div>
