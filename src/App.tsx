@@ -8,6 +8,7 @@ import UserProvider from './Context/UserContextProvider';
 import MainFeed from './Feed/Feed';
 import './index.css';
 import Layout from './Layout';
+import MyAdd from './MyAdd';
 import MyPage from './MyPage/MyPage';
 import SignIn from './signInAndSignUp/SignIn';
 import SignUp from './signInAndSignUp/SignUp';
@@ -27,6 +28,7 @@ function App() {
                   <Route path="/sign-up" element={<SignUp />} />
                   <Route path="/my-page" element={<MyPage />} />
                   <Route path="/add" element={<AddPage />} />
+                  <Route path="/my-add" element={<MyAdd />} />
                   <Route path="/filter" element={<AdFilterFeed />} />
                   <Route path="/feed" element={<MainFeed />} />
                 </Route>
