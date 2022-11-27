@@ -1,7 +1,6 @@
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import { Box, CardMedia, Container, Typography } from '@mui/material';
+import { Box, Button, CardMedia, Container, Typography } from '@mui/material';
 import img from '../src/Assets/gk.png';
-import StyledButton from './shared/StyledButton';
 
 function AddPage() {
   return (
@@ -21,6 +20,7 @@ function AddPage() {
         margin="auto"
         sx={{ display: 'flex', flexDirection: 'column', rowGap: 0.5 }}
       >
+        {/* the border radius is not working? */}
         <CardMedia
           component="img"
           image={img}
@@ -156,7 +156,7 @@ function AddPage() {
           natoque penatibus et magnis dis parturient montes, nascetur ridiculus
           mus.
         </Typography>
-        <StyledButton content="Skicka bokningsförfrågan" htmlType="submit" />
+        <Button variant="contained">Skicka bokningsförfrågan</Button>
       </Box>
     </Container>
   );

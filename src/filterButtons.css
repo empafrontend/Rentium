@@ -1,0 +1,11 @@
+.filter-buttons {
+  position: absolute;
+  top: 6rem;
+  z-index: 1;
+}
+
+@media screen and (max-width: 600px) {
+  .filter-buttons {
+    top: 4rem;
+  }
+}

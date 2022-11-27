@@ -6,7 +6,7 @@ import './feed.css';
 
 function FeedCard() {
   return (
-    <Container sx={{ height: '100%', marginTop: '8rem', overflow: 'scroll' }}>
+    <Container sx={{ height: '100%', marginTop: '5rem', overflow: 'scroll' }}>
       <Typography
         variant="h5"
         sx={{

@@ -2,6 +2,7 @@ import { Box, Button, Container, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
+import { useUser } from '../Context/UserContextProvider';
 import InputField from '../shared/InputField';
 
 const validationSchema = yup.object({
@@ -18,7 +19,7 @@ const validationSchema = yup.object({
 });
 
 const SignUp = () => {
-  const handleSignUp = (values: any) => console.log(values); // no function yet!
+  const { handleSignUp } = useUser();
   const formik = useFormik({
     initialValues: { username: '', email: '', password: '' },
     validationSchema: validationSchema,
@@ -85,7 +86,6 @@ const SignUp = () => {
           sx={{ display: 'inline', color: '#302892' }}
         >
           <Link to="/sign-in">Logga in!</Link>
-          {/* to be wrapped with typography once there is theme */}
         </Box>
       </Typography>
     </Container>

@@ -15,6 +15,10 @@ export const theme = createTheme({
       fontSize: 20,
       fontWeight: 400,
     },
+    h4: {
+      fontSize: 16,
+      fontWeight: 200,
+    },
     body1: {
       fontFamily: 'Roboto',
       fontSize: 14,
@@ -32,7 +36,8 @@ export const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 15,
+          height: 35,
+          borderRadius: 20,
           background: '#5D6DD8',
           boxShadow: 'none',
           textTransform: 'unset',

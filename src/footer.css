@@ -24,3 +24,10 @@
     display: none;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .footer {
+    height: 6rem;
+    border-radius: 0px 70px 0px 0px;
+  }
+}
