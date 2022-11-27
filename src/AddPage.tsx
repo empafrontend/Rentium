@@ -11,7 +11,8 @@ function AddPage() {
         flexDirection: 'column',
         alignItems: 'center',
         rowGap: 5,
-        mt: '2rem',
+        mt: '4rem',
+        mb: '4rem',
       }}
     >
       <Box
@@ -86,8 +87,7 @@ function AddPage() {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            mt: '1rem',
-            rowGap: 0.5,
+            mt: '2rem',
           }}
         >
           <Typography
@@ -119,7 +119,7 @@ function AddPage() {
                 color: '#6860CC',
                 fontSize: '12px',
                 display: 'flex',
-                fontWeight: '400',
+                fontWeight: '300',
               }}
             >
               22 maj 2022 - 6 juli 2022
@@ -133,7 +133,6 @@ function AddPage() {
               fontSize: '14px',
               fontWeight: '700',
               alignItems: 'center',
-              mt: '2px',
             }}
           >
             600 kr
