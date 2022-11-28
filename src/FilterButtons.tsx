@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import CategoryLength from './categoryLength';
+import './filterButtons.css';
 import filterButtons from './filterButtonsData';
+
 const FilterButtons = () => {
   const [count, setCount] = useState(0);
   const filterButtonsList = filterButtons.map((filterButtons) => (
@@ -15,7 +17,7 @@ const FilterButtons = () => {
         >
           <img src={filterButtons.img} alt="" className="w-16 aspect-auto" />
         </div>
-        <h2 className="text-center my-4">{filterButtons.text}</h2>
+        <h5 className="text-center my-4">{filterButtons.text}</h5>
       </div>
     </div>
   ));
@@ -73,8 +75,8 @@ const FilterButtons = () => {
   };
   Filter();
   return (
-    <div>
-      <div className="flex flex-row">{filterButtonsList}</div>
+    <div className=" flex flex-row w-full justify-center filter-buttons">
+      {filterButtonsList}
       <div>
         <CategoryLength />
       </div>

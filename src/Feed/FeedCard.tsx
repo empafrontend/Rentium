@@ -6,11 +6,16 @@ import './feed.css';
 
 function FeedCard() {
   return (
-    <Container id="FeedCard">
+    <Container
+      id="FeedCard"
+      sx={{ height: '100%', marginTop: '5rem', overflow: 'scroll' }}
+    >
       <Typography
         variant="h5"
         sx={{
-          padding: '1rem',
+          marginLeft: '1rem',
+          paddingTop: '2rem',
+          paddingBottom: '2rem',
         }}
       >
         Nya annonser
@@ -22,6 +27,7 @@ function FeedCard() {
           gap: '1rem',
           justifyContent: 'center',
           width: '100%',
+          paddingBottom: '2rem',
         }}
       >
         {ads.map((ads, index) => (
@@ -29,7 +35,7 @@ function FeedCard() {
             className="card"
             key={index}
             sx={{
-              width: '11rem',
+              width: '10.2rem',
               height: '14rem',
               borderRadius: '1rem',
             }}

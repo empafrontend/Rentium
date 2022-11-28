@@ -1,0 +1,48 @@
+.header {
+  background: linear-gradient(95.91deg, #6d82c8 6.74%, #3132ab 88.88%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem 2rem;
+  border-radius: 0px 0px 0px 70px;
+  height: 8rem;
+  width: 100%;
+  color: transparent;
+}
+
+.logo {
+  width: 5rem;
+  height: 5rem;
+  background-image: url(./Assets/rentium-logo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.navigation {
+  color: white;
+  display: flex;
+  gap: 3rem;
+}
+
+.icon:hover {
+  text-decoration: underline;
+  color: lightblue;
+}
+
+@media screen and (max-width: 900px) {
+  .navigation {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .header {
+    height: 5rem;
+    border-radius: 0px 0px 0px 40px;
+  }
+  .logo {
+    width: 8rem;
+    background-image: url(./Assets/rentium-logo-horisontal.png);
+  }
+}
