@@ -1,4 +1,4 @@
-import { Button, MenuItem, Select } from '@mui/material';
+import { Button, MenuItem, Select, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -74,17 +74,21 @@ function NewAdPage() {
           rowGap: 3,
         }}
       >
-        <h1 className="text-3xl">Vad vill du annonsera?</h1>
-        <button className="h-32 w-32 bg-sky-600 my-4 rounded-md text-white">
-          IKON
-        </button>
+        <Typography component="h1" variant="h2">
+          Vad vill du annonsera?{' '}
+        </Typography>
 
         <Box
           component="form"
-          maxWidth={350}
+          maxWidth={500}
           minWidth={300}
           margin="auto"
-          sx={{ display: 'flex', flexDirection: 'column', rowGap: 4 }}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            rowGap: 4,
+            width: '90%',
+          }}
           onSubmit={formik.handleSubmit}
         >
           {/* <div className="flex flex-col my-4">
@@ -162,7 +166,6 @@ function NewAdPage() {
             error={formik.touched.location && Boolean(formik.errors.location)}
             onChange={formik.handleChange}
           >
-            <MenuItem value="" />
             <MenuItem value="Norra Göteborg">Norra Göteborg</MenuItem>
             <MenuItem value="Centrala Göteborg">Centrala Göteborg</MenuItem>
             <MenuItem value="Västra Göteborg">Västra Göteborg</MenuItem>
@@ -171,7 +174,7 @@ function NewAdPage() {
           <Button
             variant="contained"
             type="submit"
-            sx={{ width: 'fit-content' }}
+            sx={{ width: 150, alignSelf: 'center' }}
           >
             Lägg upp
           </Button>
