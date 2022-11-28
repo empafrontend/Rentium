@@ -1,14 +1,27 @@
-import { Button, Container } from '@mui/material';
+import { Button, Container, MenuItem, Select } from '@mui/material';
 import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
-import * as React from 'react';
 import * as yup from 'yup';
 import InputField from './shared/InputField';
 
 const validationSchema = yup.object({
+  category: yup
+    .string()
+    .required('Required')
+    .min(3, 'Username must be between 3 to 20 characters')
+    .max(20, 'Username must be between 3 to 20 characters'),
   title: yup
+    .string()
+    .required('Required')
+    .min(3, 'Username must be between 3 to 20 characters')
+    .max(20, 'Username must be between 3 to 20 characters'),
+  description: yup
+    .string()
+    .required('Required')
+    .min(3, 'Username must be between 3 to 20 characters')
+    .max(20, 'Username must be between 3 to 20 characters'),
+  price: yup.number().required('Required'),
+  location: yup
     .string()
     .required('Required')
     .min(3, 'Username must be between 3 to 20 characters')
@@ -35,15 +48,15 @@ const currencies = [
 ];
 
 function NewAdPage() {
-  const [category, setCategory] = React.useState('EUR');
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCategory(event.target.value);
-  };
-
   const handleInput = (values: any) => console.log(values);
   const formik = useFormik({
-    initialValues: { title: '' },
+    initialValues: {
+      category: 'SHOES' || 'TOOLS' || 'CLOTHES' || 'VEHICLE',
+      title: '',
+      description: '',
+      price: 0,
+      location: '',
+    },
     validationSchema: validationSchema,
     validateOnMount: true,
     onSubmit: (values) => handleInput(values),
@@ -58,60 +71,72 @@ function NewAdPage() {
         </button>
       </div>
       <Box
-        className="flex justify-center"
         component="form"
-        sx={{
-          '& .MuiTextField-root': { width: '65ch' },
-        }}
-        noValidate
-        autoComplete="off"
+        maxWidth={350}
+        minWidth={300}
+        margin="auto"
+        sx={{ display: 'flex', flexDirection: 'column', rowGap: 4 }}
+        onSubmit={formik.handleSubmit}
       >
         <div className="flex flex-col my-4">
-          <div className="flex flex-col my-4">
-            <span>Kategorier</span>
-            <TextField
-              id="outlined-select-currency"
-              select
-              value={category}
-              onChange={handleChange}
-            >
-              {currencies.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-          </div>
-
-          <div className="flex flex-col my-4">
-            <span>Rubrik</span>
-            <InputField
-              label="Rubrik"
-              type="title"
-              value={formik.values.title}
-              error={formik.touched.title && Boolean(formik.errors.title)}
-              helperText={formik.touched.title && formik.errors.title}
-              onChange={formik.handleChange}
-            />
-          </div>
-          <div className="flex flex-col my-4">
-            <span>Beskrivning av varan</span>
-            <TextField id="outlined-basic" variant="outlined" />
-          </div>
-          <div className="flex flex-col my-4">
-            <span>Pris</span>
-            <TextField id="outlined-basic" variant="outlined" />
-          </div>
-          <div className="flex flex-col my-4">
-            <span>Plats</span>
-            <TextField id="outlined-basic" variant="outlined" />
-          </div>
-          <div className="flex justify-center">
-            <Button variant="contained" type="submit">
-              Logga in
-            </Button>
-          </div>
+          <span>Kategorier</span>
+          <Select
+            label="Kategori"
+            type="category"
+            name="category"
+            value={formik.values.category}
+            error={formik.touched.category && Boolean(formik.errors.category)}
+            onChange={formik.handleChange}
+          >
+            {currencies.map((option, index) => (
+              <MenuItem key={index} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
         </div>
+
+        <InputField
+          label="Rubrik"
+          type="title"
+          value={formik.values.title}
+          error={formik.touched.title && Boolean(formik.errors.title)}
+          helperText={formik.touched.title && formik.errors.title}
+          onChange={formik.handleChange}
+        />
+
+        <InputField
+          label="Beskrivning"
+          type="description"
+          value={formik.values.description}
+          error={
+            formik.touched.description && Boolean(formik.errors.description)
+          }
+          helperText={formik.touched.description && formik.errors.description}
+          onChange={formik.handleChange}
+        />
+
+        <InputField
+          label="Pris"
+          type="price"
+          value={formik.values.price}
+          error={formik.touched.price && Boolean(formik.errors.price)}
+          helperText={formik.touched.price && formik.errors.price}
+          onChange={formik.handleChange}
+        />
+
+        <InputField
+          label="Plats"
+          type="location"
+          value={formik.values.location}
+          error={formik.touched.location && Boolean(formik.errors.location)}
+          helperText={formik.touched.location && formik.errors.location}
+          onChange={formik.handleChange}
+        />
+
+        <Button variant="contained" type="submit" sx={{ width: 'fit-content' }}>
+          Lägg upp
+        </Button>
       </Box>
     </Container>
   );
