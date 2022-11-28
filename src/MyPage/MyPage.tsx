@@ -1,25 +1,12 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import ads from '../adsData.js';
 import AdCard from '../shared/AdCard';
+import ContentContainer from '../shared/ContentContainer';
 
 const MyPage = () => {
   return (
-    <Container
-      maxWidth={false}
-      sx={{
-        background: '#F5F5F5',
-        minHeight: 'calc(100vh - ?)', // TODO: ? = height of header + height of rooter
-        pb: 5, // TODO: adjust after added header and footer
-      }}
-    >
-      <Container
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          rowGap: 5,
-          background: '#F5F5F5',
-        }}
-      >
+    <ContentContainer background="#F5F5F5">
+      <Box sx={{ display: 'flex', flexDirection: 'column', rowGap: 5 }}>
         <Typography component="h1" variant="h3" mb={-1} fontWeight={600}>
           Hej lindqvistsara!
         </Typography>
@@ -105,8 +92,8 @@ const MyPage = () => {
               ))}
           </Box>
         </Box>
-      </Container>
-    </Container>
+      </Box>
+    </ContentContainer>
   );
 };
 
