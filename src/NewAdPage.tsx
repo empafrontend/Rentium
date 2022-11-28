@@ -1,8 +1,19 @@
-import { Container } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
+import { useFormik } from 'formik';
 import * as React from 'react';
+import * as yup from 'yup';
+import InputField from './shared/InputField';
+
+const validationSchema = yup.object({
+  title: yup
+    .string()
+    .required('Required')
+    .min(3, 'Username must be between 3 to 20 characters')
+    .max(20, 'Username must be between 3 to 20 characters'),
+});
 
 const currencies = [
   {
@@ -29,6 +40,14 @@ function NewAdPage() {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCategory(event.target.value);
   };
+
+  const handleInput = (values: any) => console.log(values);
+  const formik = useFormik({
+    initialValues: { title: '' },
+    validationSchema: validationSchema,
+    validateOnMount: true,
+    onSubmit: (values) => handleInput(values),
+  });
 
   return (
     <Container>
@@ -66,7 +85,14 @@ function NewAdPage() {
 
           <div className="flex flex-col my-4">
             <span>Rubrik</span>
-            <TextField id="outlined-basic" variant="outlined" />
+            <InputField
+              label="Rubrik"
+              type="title"
+              value={formik.values.title}
+              error={formik.touched.title && Boolean(formik.errors.title)}
+              helperText={formik.touched.title && formik.errors.title}
+              onChange={formik.handleChange}
+            />
           </div>
           <div className="flex flex-col my-4">
             <span>Beskrivning av varan</span>
@@ -81,9 +107,9 @@ function NewAdPage() {
             <TextField id="outlined-basic" variant="outlined" />
           </div>
           <div className="flex justify-center">
-            <button className="h-14 w-40 bg-sky-600 my-4 rounded-md text-white">
-              Lägg upp
-            </button>
+            <Button variant="contained" type="submit">
+              Logga in
+            </Button>
           </div>
         </div>
       </Box>
