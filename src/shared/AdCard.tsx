@@ -160,7 +160,7 @@ const AdCard = (props: ExAdCard) => {
             <Button
               variant="contained"
               onClick={() => confirmAction(props.title!)}
-              // ************* TODO: here should be id that being passed ot the function
+              // ************ TODO: here should be id that being passed ot the function
               sx={{ width: '50%', borderRadius: '0 0 0 20px' }}
             >
               Ja
