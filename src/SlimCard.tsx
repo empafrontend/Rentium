@@ -27,7 +27,11 @@ const SlimCard = () => {
     </div>
   ));
 
-  return <Container maxWidth="sm">{adsList}</Container>;
+  return (
+    <Container maxWidth="sm">
+      <div className="mt-14">{adsList}</div>
+    </Container>
+  );
 };
 
 export default SlimCard;
