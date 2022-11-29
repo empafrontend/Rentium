@@ -6,6 +6,10 @@
 
 Built with `React` and `Typescript`.
 
+<br>
+
+### Run the project
+
 `npm i`
 `npm start`
 
@@ -24,7 +28,7 @@ Built with `React` and `Typescript`.
 
 ### Login requirement
 
-We use google login in our app.
+We use google login in our app with `Firebase`.
 
 <br>
 
