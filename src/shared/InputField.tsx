@@ -3,7 +3,7 @@ import { TextField } from '@mui/material';
 interface Props {
   label: string;
   type: string;
-  value: string;
+  value: string | number;
   error?: boolean;
   helperText?: string | undefined | boolean;
   onChange?: any;
