@@ -2,7 +2,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Box, Button, CardMedia, Container, Typography } from '@mui/material';
 import img from '../src/Assets/gk.png';
 
-function AddPage() {
+function AdPage() {
   return (
     <Container
       sx={{
@@ -162,4 +162,4 @@ function AddPage() {
   );
 }
 
-export default AddPage;
+export default AdPage;
