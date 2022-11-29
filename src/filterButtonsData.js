@@ -1,27 +1,33 @@
+import car from '../src/Assets/car.png';
+import hat from '../src/Assets/hat.png';
+import house from '../src/Assets/house.png';
+import shoe from '../src/Assets/shoe.png';
+import tool from '../src/Assets/tools.png';
+
 const filterButtons = [
   {
     text: 'Skor',
-    img: 'https://cdn-icons-png.flaticon.com/512/2589/2589999.png',
+    img: shoe,
     id: 1,
   },
   {
     text: 'Hattar',
-    img: 'https://cdn-icons-png.flaticon.com/512/864/864744.png',
+    img: hat,
     id: 2,
   },
   {
     text: 'Verktyg',
-    img: 'https://cdn-icons-png.flaticon.com/512/4359/4359812.png',
+    img: tool,
     id: 3,
   },
   {
     text: 'Boende',
-    img: 'https://cdn-icons-png.flaticon.com/512/6676/6676508.png',
+    img: house,
     id: 4,
   },
   {
     text: 'Fordon',
-    img: 'https://www.iconpacks.net/icons/1/free-car-icon-1057-thumb.png',
+    img: car,
     id: 5,
   },
 ];

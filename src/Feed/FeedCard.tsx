@@ -35,6 +35,7 @@ function FeedCard() {
               width: '10.2rem',
               height: '14rem',
               borderRadius: '1rem',
+              boxShadow: 'none',
             }}
           >
             <CardMedia
