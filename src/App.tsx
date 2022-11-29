@@ -11,6 +11,7 @@ import Layout from './Layout';
 import MyAd from './MyAd';
 import MyPage from './MyPage/MyPage';
 import NewAdPage from './NewAdPage';
+import Profile from './Profile';
 import SignIn from './signInAndSignUp/SignIn';
 import SignUp from './signInAndSignUp/SignUp';
 import { theme } from './theme';
@@ -30,6 +31,8 @@ function App() {
                   <Route path="/my-page" element={<MyPage />} />
                   <Route path="/ad" element={<AdPage />} />
                   <Route path="/my-ad" element={<MyAd />} />
+                  <Route path="/profile" element={<Profile />} />
+
                   <Route path="/filter" element={<AdFilterFeed />} />
                   <Route path="/feed" element={<MainFeed />} />
                   <Route path="/new-ad" element={<NewAdPage />} />
