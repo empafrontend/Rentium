@@ -10,6 +10,7 @@ import './index.css';
 import Layout from './Layout';
 import MyAdd from './MyAdd';
 import MyPage from './MyPage/MyPage';
+import NewAdPage from './NewAdPage';
 import SignIn from './signInAndSignUp/SignIn';
 import SignUp from './signInAndSignUp/SignUp';
 import { theme } from './theme';
@@ -31,6 +32,7 @@ function App() {
                   <Route path="/my-add" element={<MyAdd />} />
                   <Route path="/filter" element={<AdFilterFeed />} />
                   <Route path="/feed" element={<MainFeed />} />
+                  <Route path="/new-ad" element={<NewAdPage />} />
                 </Route>
               </Routes>
             </UserProvider>

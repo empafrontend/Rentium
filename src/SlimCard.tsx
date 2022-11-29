@@ -12,7 +12,7 @@ const SlimCard = () => {
       <div className="flex flex-col">
         <div className="mb-4">
           <h2>{ads.title}</h2>
-          <p className="text-sm hind">{ads.text}</p>
+          <p className="text-sm hind">{ads.description}</p>
         </div>
 
         <div className="flex flex-row justify-between">
