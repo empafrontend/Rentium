@@ -1,8 +1,8 @@
-import car from '../src/Assets/car.png';
-import hat from '../src/Assets/hat.png';
-import house from '../src/Assets/house.png';
-import shoe from '../src/Assets/shoe.png';
-import tool from '../src/Assets/tools.png';
+import hat from '../src/Assets/hattIkon.png';
+import house from '../src/Assets/husIkon.png';
+import car from '../src/Assets/moppeIkon.png';
+import shoe from '../src/Assets/skoIkon.png';
+import tool from '../src/Assets/verktygIkon.png';
 
 const filterButtons = [
   {
