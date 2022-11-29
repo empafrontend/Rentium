@@ -1,7 +1,7 @@
 import { Box, Button, CardMedia, Container, Typography } from '@mui/material';
 import img from '../src/Assets/gk.png';
 
-function MyAdd() {
+function MyAd() {
   return (
     <Container
       sx={{
@@ -156,4 +156,4 @@ function MyAdd() {
   );
 }
 
-export default MyAdd;
+export default MyAd;
