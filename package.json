@@ -42,7 +42,7 @@
     "eject": "react-scripts eject",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "lint": "eslint . --ext .tsx, .ts"
+    "lint": "eslint . --ext .tsx"
   },
   "eslintConfig": {
     "extends": [
