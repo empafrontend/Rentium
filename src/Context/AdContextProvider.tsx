@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createContext, FC, PropsWithChildren, useContext } from 'react';
 
 export interface Ad {
