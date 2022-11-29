@@ -1,8 +1,8 @@
 import { ThemeProvider } from '@emotion/react';
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AddPage from './AddPage';
 import AdFilterFeed from './AdFilterFeed';
+import AdPage from './AdPage';
 import AdProvider from './Context/AdContextProvider';
 import UserProvider from './Context/UserContextProvider';
 import MainFeed from './Feed/Feed';
@@ -28,7 +28,7 @@ function App() {
                   <Route path="/sign-in" element={<SignIn />} />
                   <Route path="/sign-up" element={<SignUp />} />
                   <Route path="/my-page" element={<MyPage />} />
-                  <Route path="/add" element={<AddPage />} />
+                  <Route path="/add" element={<AdPage />} />
                   <Route path="/my-add" element={<MyAdd />} />
                   <Route path="/filter" element={<AdFilterFeed />} />
                   <Route path="/feed" element={<MainFeed />} />
