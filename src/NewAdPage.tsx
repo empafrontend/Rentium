@@ -22,8 +22,8 @@ const validationSchema = yup.object({
   description: yup
     .string()
     .required('Required')
-    .min(10, 'Username must be between 10 to 500 characters')
-    .max(500, 'Username must be between 10 to 500 characters'),
+    .min(10, 'Description must be between 10 to 500 characters')
+    .max(500, 'Description must be between 10 to 500 characters'),
   price: yup.number().required('Required'),
   location: yup.string().required('Required'),
 });
