@@ -9,6 +9,7 @@ Built with `React` and `Typescript`.
 <br>
 
 ### Run the project
+
 `npm i`
 `npm start`
 

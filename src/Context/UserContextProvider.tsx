@@ -1,3 +1,4 @@
+/* eslint-disable */ // delete this line when functionality is added in all functions
 import { createContext, FC, PropsWithChildren, useContext } from 'react';
 
 interface User {
