@@ -1,16 +1,28 @@
 /* eslint-disable */ // delete this line when functionality is added in all functions
-import { createContext, FC, PropsWithChildren, useContext } from 'react';
+import { collection, getDocs } from '@firebase/firestore';
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { db } from '../firebase.js';
 
 export interface Ad {
-  // according to firebase data but can be changed
-  title: string;
-  text: string;
-  price: number;
-  location: string;
-  img: string;
-  category: string;
-  status: boolean;
   author: string;
+  bookingRequests: string[];
+  category: string;
+  description: string;
+  endDate: string;
+  id: string;
+  img: string;
+  isAvailable: boolean;
+  location: string;
+  price: number;
+  startDate: string;
+  title: string;
 }
 
 interface AdContextValue {
@@ -26,6 +38,18 @@ export const AdContext = createContext<AdContextValue>({
 });
 
 const AdProvider: FC<PropsWithChildren> = (props) => {
+  const adsCollectionRef = collection(db, 'ads');
+  const [ads, setAds] = useState<Ad[]>([]);
+
+  useEffect(() => {
+    const getAds = async () => {
+      const adData = await getDocs(adsCollectionRef);
+      setAds(adData.docs.map((doc) => ({ ...(doc.data() as Ad), id: doc.id })));
+      console.log(ads);
+    };
+    getAds();
+  }, []);
+
   const acceptOffer = (id: string) => {
     console.log('accepting offer', id);
     // TODO: Update item status in db
