@@ -31,8 +31,10 @@ function Profile() {
         >
           Lindqvistsara's annonser (
           {ads.filter((ad) => ad.author !== 'lindqvistsara').length}){' '}
+          {/* change to correct user */}
         </Typography>
 
+        {/* should change author string to correct user */}
         {ads
           .filter((ad) => ad.author !== 'lindqvistsara')
           .map((ad, index) => (
@@ -105,8 +107,7 @@ function Profile() {
                     color="text.secondary"
                     sx={{ textAlign: 'right' }}
                   >
-                    {'Inlagd 24-11-2022'}{' '}
-                    {/******************************** TODO: insert date from data */}
+                    {'Inlagd 24-11-2022'} {/* insert date from data */}
                   </Typography>
                 </CardContent>
               </Box>
