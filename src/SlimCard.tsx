@@ -4,8 +4,9 @@ import ads from './adsData';
 import './index.css';
 
 const SlimCard = () => {
-  const adsList = ads.map((ads) => (
+  const adsList = ads.map((ads, index) => (
     <div
+      key={index}
       className={`${ads.category} hidden flex-row items-center mb-8 p-8 shadow-lg`}
     >
       <img src={ads.img} alt="" className="w-32 aspect-auto rounded-lg mx-8" />
