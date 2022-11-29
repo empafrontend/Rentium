@@ -26,37 +26,39 @@ function Profile() {
             alignItems: 'center',
           }}
         >
-          {ads.map((ad, index) => (
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                mb: 3,
-              }}
-            >
-              <CardMedia
-                component="img"
-                alt={ad.title}
-                image={ad.img}
-                sx={{ borderRadius: 3, width: 100, height: 100, rowGap: 5 }}
-              />
-              <CardContent
+          {ads
+            .filter((ad) => ad.author !== 'lindqvistsara')
+            .map((ad, index) => (
+              <Box
                 sx={{
                   display: 'flex',
-                  flexDirection: 'column',
-                  placeContent: 'center',
-                  pl: 1,
+                  flexDirection: 'row',
+                  mb: 3,
                 }}
               >
-                <Typography variant="body1" fontWeight={600}>
-                  {ad.title}
-                </Typography>
-                <Typography variant="body1" fontWeight={400}>
-                  {ad.price} kr
-                </Typography>
-              </CardContent>
-            </Box>
-          ))}
+                <CardMedia
+                  component="img"
+                  alt={ad.title}
+                  image={ad.img}
+                  sx={{ borderRadius: 3, width: 100, height: 100, rowGap: 5 }}
+                />
+                <CardContent
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    placeContent: 'center',
+                    pl: 1,
+                  }}
+                >
+                  <Typography variant="body1" fontWeight={600}>
+                    {ad.title}
+                  </Typography>
+                  <Typography variant="body1" fontWeight={400}>
+                    {ad.price} kr
+                  </Typography>
+                </CardContent>
+              </Box>
+            ))}
         </Card>
       </Box>
     </ContentContainer>
