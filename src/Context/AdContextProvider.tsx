@@ -34,36 +34,95 @@ export interface Ad {
 }
 
 interface AdContextValue {
-  // ads: Ad[];
+  ads: Ad[];
+  singleAd: Ad;
+  selectedAd: Ad;
+  getAds: () => Promise<unknown>;
+  getOneAd: (id: string) => Promise<unknown>;
+  createAd: (values: Ad) => Promise<unknown>;
+  updateAdStatus: (id: string) => Promise<unknown>;
+  removeAd: (id: string) => Promise<unknown>;
   acceptOffer: (id: string) => void;
   rejectOffer: (id: string) => void;
-  removeAd: (id: string) => void;
 }
 
 export const AdContext = createContext<AdContextValue>({
+  ads: [],
+  singleAd: {
+    author: '',
+    category: '',
+    description: '',
+    endDate: '',
+    img: '',
+    isAvailable: true,
+    location: '',
+    price: 0,
+    startDate: '',
+    title: '',
+  },
+  selectedAd: {
+    author: '',
+    category: '',
+    description: '',
+    endDate: '',
+    img: '',
+    isAvailable: true,
+    location: '',
+    price: 0,
+    startDate: '',
+    title: '',
+  },
+  getAds: () => Promise.resolve(),
+  getOneAd: (id) => Promise.resolve(),
+  createAd: (values) => Promise.resolve(),
+  updateAdStatus: (id) => Promise.resolve(),
+  removeAd: () => Promise.resolve(),
   acceptOffer: () => {},
   rejectOffer: () => {},
-  removeAd: () => {},
 });
 
 const AdProvider: FC<PropsWithChildren> = (props) => {
   const adsCollectionRef = collection(db, 'ads');
   const [ads, setAds] = useState<Ad[]>([]);
-  const [singleAd, setSingleAd] = useState<Ad>();
-  const [selectedAd, setSelectedAd] = useState<Ad>();
+  // this singleAd state is for rendering a single ad (but it may not be needed - depends on how the data is being rendered)
+  const [singleAd, setSingleAd] = useState<Ad>({
+    author: '',
+    category: '',
+    description: '',
+    endDate: '',
+    img: '',
+    isAvailable: true,
+    location: '',
+    price: 0,
+    startDate: '',
+    title: '',
+  });
+  // this selectedAd state is for accepting or rejecting booking requests as well as removing ad
+  const [selectedAd, setSelectedAd] = useState<Ad>({
+    author: '',
+    category: '',
+    description: '',
+    endDate: '',
+    img: '',
+    isAvailable: true,
+    location: '',
+    price: 0,
+    startDate: '',
+    title: '',
+  });
 
   useEffect(() => {
     getAds();
     // console.log('getAds() returns:', ads);
   }, []);
 
-  // Gets all data from db ad collection
+  /** Gets all data from db ad collection */
   const getAds = async () => {
     const adData = await getDocs(adsCollectionRef);
     setAds(adData.docs.map((doc) => ({ ...(doc.data() as Ad), id: doc.id })));
   };
 
-  // Gets a single documents from db ad collection
+  /** Gets a single documents from db ad collection */
   const getOneAd = async (id: string) => {
     const docRef = doc(db, 'ads', id);
     const docSnap = await getDoc(docRef);
@@ -78,7 +137,7 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   //   // console.log('getOneAd() returns:', singleAd);
   // }, []);
 
-  // Adds new ad entry to db ad collection
+  /** Adds new ad entry to db ad collection */
   const createAd = async (values: Ad) => {
     const newAd = {
       ...values,
@@ -88,7 +147,8 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
     await addDoc(adsCollectionRef, newAd);
   };
 
-  ///////// FOR TESTING ONLY. IF YOU CALL THIS, remember to remove from database after!
+  ///////// FOR TESTING ONLY
+  ///////// *** IF YOU CALL THIS, remember to remove from database after!
   // useEffect(() => {
   // createAd({
   //   author: 'milliecheung',
@@ -103,7 +163,7 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   // });
   //}, []);
 
-  // Updates the variable "isAvailable" in a single doc
+  /** Updates the variable "isAvailable" in a single doc */
   const updateAdStatus = async (id: string) => {
     const docRef = doc(db, 'ads', id);
     setSelectedAd((await getDoc(docRef).then((ref) => ref.data())) as Ad);
@@ -111,18 +171,14 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
       isAvailable: selectedAd?.isAvailable == true ? false : true,
     });
   };
-
-  ///////// FOR TESTING ONLY
-  // useEffect(() => {
+  ///////// FOR TESTING ONLY - this will be called continuously once uncommented
   //   updateAdStatus('7TENcfLgExXjxgh7by2S');
-  // }, []);
 
-  // Removes a document from the db ad collection
-  const deleteAd = async (id: string) => {
+  /** Removes a document from the db ad collection */
+  const removeAd = async (id: string) => {
     const docRef = doc(db, 'ads', id);
     await deleteDoc(docRef);
   };
-
   ///////// FOR TESTING ONLY
   // deleteAd('SKiiovFeRNLfqVoVBnpi');
 
@@ -136,13 +192,21 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
     // TODO: Remove ad from bokningsförfrågningarna
   };
 
-  const removeAd = (id: string) => {
-    console.log('deleting ad', id);
-    // TODO: Delete item from db
-  };
-
   return (
-    <AdContext.Provider value={{ acceptOffer, rejectOffer, removeAd }}>
+    <AdContext.Provider
+      value={{
+        ads,
+        singleAd,
+        selectedAd,
+        getAds,
+        getOneAd,
+        createAd,
+        updateAdStatus,
+        removeAd,
+        acceptOffer,
+        rejectOffer,
+      }}
+    >
       {props.children}
     </AdContext.Provider>
   );
