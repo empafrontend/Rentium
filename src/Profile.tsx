@@ -29,7 +29,7 @@ function Profile() {
             paddingBottom: '2rem',
           }}
         >
-          Lindqvistsara's annonser (
+          Lindqvistsaras annonser (
           {ads.filter((ad) => ad.author !== 'lindqvistsara').length}){' '}
           {/* change to correct user */}
         </Typography>
