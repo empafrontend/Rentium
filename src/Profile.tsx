@@ -1,5 +1,12 @@
 import { LocationOnOutlined } from '@mui/icons-material';
-import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+} from '@mui/material';
 import ads from './adsData';
 import './footer.css';
 import ContentContainer from './shared/ContentContainer';
@@ -34,54 +41,90 @@ function Profile() {
               key={index}
               sx={{
                 display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                pl: 1,
+                flexDirection: 'column',
+                alignItems: 'flex-start',
                 width: '60%',
-                height: 120,
+                height: 'fit-content',
+                borderRadius: '20px 20px 20px 0',
+                boxShadow: '0 2px 10px #DDDBD5',
+                mt: 1,
               }}
             >
-              <CardMedia
-                component="img"
-                image={ad.img}
-                alt="img"
-                sx={{
-                  borderRadius: 3,
-                  width: 100,
-                  height: 100,
-                }}
-              />
-              <CardContent
+              <Box
                 sx={{
                   display: 'flex',
-                  flexDirection: 'column',
+                  flexDirection: 'row',
+                  alignItems: 'center',
                   width: '100%',
-                  height: 120,
+                  padding: '1rem 1rem 1rem 1rem',
                 }}
               >
-                <Typography variant="body1" fontWeight={600}>
-                  {ad.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {ad.description}
-                </Typography>
-                <Box
+                <CardMedia
+                  component="img"
+                  image={ad.img}
+                  alt="img"
+                  sx={{
+                    borderRadius: 3,
+                    width: 100,
+                    height: 100,
+                  }}
+                />
+                <CardContent
                   sx={{
                     display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    pt: 4,
+                    flexDirection: 'column',
+                    width: '100%',
+                    height: 120,
                   }}
                 >
-                  <Typography variant="body1" fontWeight={400}>
-                    Pris: {ad.price}
+                  <Typography variant="body1" fontWeight={600}>
+                    {ad.title}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: 'grey' }}>
-                    <LocationOnOutlined sx={{ fontSize: '.8rem' }} />{' '}
-                    {ad.location}
+                  <Typography variant="body2" color="text.secondary">
+                    {ad.description}
                   </Typography>
-                </Box>
-              </CardContent>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      pt: 4,
+                    }}
+                  >
+                    <Typography variant="body1" fontWeight={400}>
+                      {ad.price} kr
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'grey' }}>
+                      <LocationOnOutlined sx={{ fontSize: '.8rem' }} />{' '}
+                      {ad.location}
+                    </Typography>
+                  </Box>
+                  <Typography
+                    pb={3}
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ textAlign: 'right' }}
+                  >
+                    {'Inlagd 24-11-2022'}{' '}
+                    {/******************************** TODO: insert date from data */}
+                  </Typography>
+                </CardContent>
+              </Box>
+              <Box
+                sx={{
+                  width: '100%',
+                  height: 35,
+                  mt: 1,
+                }}
+              >
+                <Button
+                  variant="contained"
+                  sx={{ width: '100%', borderRadius: '20px 0 0 0' }}
+                >
+                  Skicka bokningsförfrågan
+                  {/* To be added: some sort of confirmation when this button is clicked */}
+                </Button>
+              </Box>
             </Card>
           ))}
       </Box>
