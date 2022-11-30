@@ -1,4 +1,11 @@
-import { Button, MenuItem, Select, Typography } from '@mui/material';
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from '@mui/material';
 import Box from '@mui/material/Box';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -51,13 +58,12 @@ function NewAdPage() {
   const handleInput = (values: any) => console.log(values);
   const formik = useFormik({
     initialValues: {
-      category: '' || 'SHOES' || 'TOOLS' || 'CLOTHES' || 'VEHICLE',
+      category: 'SHOES' || 'TOOLS' || 'CLOTHES' || 'VEHICLE',
       title: '',
       description: '',
       img: '',
       price: 0,
-      location:
-        '' || 'Norra Göteborg' || 'Centrala Göteborg' || 'Västra Göteborg',
+      location: 'Norra Göteborg' || 'Centrala Göteborg' || 'Västra Göteborg',
     },
     validationSchema: validationSchema,
     validateOnMount: true,
@@ -75,7 +81,7 @@ function NewAdPage() {
         }}
       >
         <Typography component="h1" variant="h2">
-          Vad vill du annonsera?{' '}
+          Vad vill du annonsera?
         </Typography>
 
         <Box
@@ -91,35 +97,40 @@ function NewAdPage() {
           }}
           onSubmit={formik.handleSubmit}
         >
-          {/* <div className="flex flex-col my-4">
-            <span>Kategorier</span> */}
-          <Select
-            sx={{
-              background: '#F5F5F5',
-              borderRadius: 15,
-              height: 35,
-              fontSize: 13,
-              borderStyle: 'none',
-              paddingLeft: 2,
-              paddingRight: 2,
-            }}
-            disableUnderline
-            variant="standard"
-            label="Kategori"
-            type="category"
-            name="category"
-            defaultValue=""
-            value={formik.values.category}
-            error={formik.touched.category && Boolean(formik.errors.category)}
-            onChange={formik.handleChange}
-          >
-            {categories.map((option, index) => (
-              <MenuItem key={index} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </Select>
-          {/* </div> */}
+          <FormControl>
+            <InputLabel
+              variant="standard"
+              htmlFor="category"
+              sx={{ '&.Mui-focused': { color: '#535353' } }}
+            >
+              Kategori
+            </InputLabel>
+            <Select
+              sx={{
+                background: '#F5F5F5',
+                borderRadius: 15,
+                height: 35,
+                fontSize: 13,
+                borderStyle: 'none',
+                paddingLeft: 2,
+                paddingRight: 2,
+              }}
+              disableUnderline
+              variant="standard"
+              type="category"
+              name="category"
+              defaultValue=""
+              value={formik.values.category}
+              error={formik.touched.category && Boolean(formik.errors.category)}
+              onChange={formik.handleChange}
+            >
+              {categories.map((option, index) => (
+                <MenuItem key={index} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
           <InputField
             label="Rubrik"
@@ -133,6 +144,7 @@ function NewAdPage() {
           <InputField
             label="Beskrivning"
             type="description"
+            rows={4}
             value={formik.values.description}
             error={
               formik.touched.description && Boolean(formik.errors.description)
@@ -142,7 +154,7 @@ function NewAdPage() {
           />
 
           <InputField
-            label="Bild"
+            label="Bild URL"
             type="img"
             value={formik.values.img}
             error={formik.touched.img && Boolean(formik.errors.img)}
@@ -168,29 +180,37 @@ function NewAdPage() {
             onChange={formik.handleChange}
           /> */}
 
-          <Select
-            sx={{
-              background: '#F5F5F5',
-              borderRadius: 15,
-              height: 35,
-              fontSize: 13,
-              borderStyle: 'none',
-              paddingLeft: 2,
-              paddingRight: 2,
-            }}
-            disableUnderline
-            type="location"
-            name="location"
-            variant="standard"
-            defaultValue=""
-            value={formik.values.location}
-            error={formik.touched.location && Boolean(formik.errors.location)}
-            onChange={formik.handleChange}
-          >
-            <MenuItem value="Norra Göteborg">Norra Göteborg</MenuItem>
-            <MenuItem value="Centrala Göteborg">Centrala Göteborg</MenuItem>
-            <MenuItem value="Västra Göteborg">Västra Göteborg</MenuItem>
-          </Select>
+          <FormControl>
+            <InputLabel
+              variant="standard"
+              htmlFor="category"
+              sx={{ '&.Mui-focused': { color: '#535353' } }}
+            >
+              Plats
+            </InputLabel>
+            <Select
+              sx={{
+                background: '#F5F5F5',
+                borderRadius: 15,
+                height: 35,
+                fontSize: 13,
+                borderStyle: 'none',
+                paddingLeft: 2,
+                paddingRight: 2,
+              }}
+              disableUnderline
+              type="location"
+              name="location"
+              variant="standard"
+              value={formik.values.location}
+              error={formik.touched.location && Boolean(formik.errors.location)}
+              onChange={formik.handleChange}
+            >
+              <MenuItem value="Norra Göteborg">Norra Göteborg</MenuItem>
+              <MenuItem value="Centrala Göteborg">Centrala Göteborg</MenuItem>
+              <MenuItem value="Västra Göteborg">Västra Göteborg</MenuItem>
+            </Select>
+          </FormControl>
 
           <Button
             variant="contained"
