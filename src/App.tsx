@@ -11,6 +11,7 @@ import Layout from './Layout';
 import MyAd from './MyAd';
 import MyPage from './MyPage/MyPage';
 import NewAdPage from './NewAdPage';
+import NotFound from './notFound';
 import Profile from './Profile';
 import SignIn from './signInAndSignUp/SignIn';
 import SignUp from './signInAndSignUp/SignUp';
@@ -36,6 +37,7 @@ function App() {
                   <Route path="/filter" element={<AdFilterFeed />} />
                   <Route path="/feed" element={<MainFeed />} />
                   <Route path="/new-ad" element={<NewAdPage />} />
+                  <Route path="*" element={<NotFound />} />
                 </Route>
               </Routes>
             </UserProvider>
