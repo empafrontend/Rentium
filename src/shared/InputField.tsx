@@ -2,17 +2,20 @@ import { TextField } from '@mui/material';
 
 interface Props {
   label: string;
+  rows?: number;
   type: string;
   value: string | number;
   error?: boolean;
   helperText?: string | undefined | boolean;
-  onChange?: any;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 const InputField = (props: Props) => {
   return (
     <TextField
+      multiline
       variant="standard"
       label={props.label}
+      rows={props.rows}
       id={props.type}
       type={props.type}
       value={props.value}
@@ -28,7 +31,7 @@ const InputField = (props: Props) => {
         style: {
           background: '#F5F5F5',
           borderRadius: 15,
-          height: 35,
+          minHeight: 35,
           paddingLeft: 15,
           paddingRight: 15,
           fontSize: 13,

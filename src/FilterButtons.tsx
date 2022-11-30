@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Feed from './Feed/Feed';
+import CategoryLength from './categoryLength';
 import './filterButtons.css';
 import filterButtons from './filterButtonsData';
 import ContentContainer from './shared/ContentContainer';
@@ -46,6 +47,9 @@ const FilterButtons = () => {
     const tools = document.querySelectorAll('div.tools');
     const housing = document.querySelectorAll('div.housing');
     const vehicles = document.querySelectorAll('div.vehicles');
+    const category = document.getElementById('numberOfArticles');
+    category?.classList.add('flex');
+    category?.classList.remove('hidden');
     const categorysArray = [shoes, hats, tools, housing, vehicles];
     for (let i = 0; i < categorysArray.length; i++) {
       shoes[i]?.classList.add('hidden');
@@ -53,45 +57,60 @@ const FilterButtons = () => {
       tools[i]?.classList.add('hidden');
       housing[i]?.classList.add('hidden');
       vehicles[i]?.classList.add('hidden');
+      shoes[i]?.classList.remove('showing');
+      hats[i]?.classList.remove('showing');
+      tools[i]?.classList.remove('showing');
+      housing[i]?.classList.remove('showing');
+      vehicles[i]?.classList.remove('showing');
     }
 
     if (count === 1) {
       for (let i = 0; i < shoes.length; i++) {
         shoes[i]?.classList.add('flex');
+        shoes[i]?.classList.add('showing');
         shoes[i]?.classList.remove('hidden');
       }
     } else if (count === 2) {
       for (let i = 0; i < hats.length; i++) {
         hats[i]?.classList.add('flex');
+        hats[i]?.classList.add('showing');
         hats[i]?.classList.remove('hidden');
       }
     } else if (count === 3) {
       for (let i = 0; i < tools.length; i++) {
         tools[i]?.classList.add('flex');
+        tools[i]?.classList.add('showing');
         tools[i]?.classList.remove('hidden');
       }
     } else if (count === 4) {
       for (let i = 0; i < shoes.length; i++) {
         housing[i]?.classList.add('flex');
+        housing[i]?.classList.add('showing');
         housing[i]?.classList.remove('hidden');
       }
     } else if (count === 5) {
       for (let i = 0; i < vehicles.length; i++) {
         vehicles[i]?.classList.add('flex');
+        vehicles[i]?.classList.add('showing');
         vehicles[i]?.classList.remove('hidden');
       }
     }
   };
 
   return (
+
     <Box>
       <div className=" flex flex-row w-full justify-center filter-buttons">
         {filterButtonsList}
+      </div>
+      <div className="flex flex-col-reverse">
+        <CategoryLength />
       </div>
       <ContentContainer>
         {count <= 0 ? <Feed /> : <SlimCard />}
       </ContentContainer>
     </Box>
+
   );
 };
 export default FilterButtons;
