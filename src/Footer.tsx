@@ -6,9 +6,11 @@ import {
 } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useUser } from './Context/UserContextProvider';
 import './footer.css';
 
 function Footer() {
+  const { user } = useUser();
   return (
     <Box className="footer">
       <Box className="footer-navigation">
@@ -17,7 +19,7 @@ function Footer() {
         </Link>
         <SearchOutlined className="icon" sx={{ fontSize: '2.5rem' }} />
         <AddCircleOutlineRounded className="icon" sx={{ fontSize: '2.5rem' }} />
-        <Link to="/sign-in">
+        <Link to={user ? '/my-page' : '/sign-in'}>
           <PersonOutlineOutlined className="icon" sx={{ fontSize: '2.5rem' }} />
         </Link>
       </Box>

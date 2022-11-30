@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import { useUser } from '../Context/UserContextProvider';
-import { firebaseConfig, GoogleLogin } from '../firebase';
+import { firebaseConfig } from '../firebase';
 import ContentContainer from '../shared/ContentContainer';
 import InputField from '../shared/InputField';
 
@@ -23,7 +23,7 @@ const validationSchema = yup.object({
 });
 
 const SignIn = () => {
-  const { handleSignIn } = useUser();
+  const { handleSignIn, handleGoogleSignIn, user, handleSignOut } = useUser();
   const formik = useFormik({
     initialValues: { username: '', password: '' },
     validationSchema: validationSchema,
@@ -54,7 +54,7 @@ const SignIn = () => {
         >
           <Button
             variant="contained"
-            onClick={GoogleLogin}
+            onClick={handleGoogleSignIn}
             sx={{
               background: '#fff',
               border: 'solid #5D6DD8 2px',
