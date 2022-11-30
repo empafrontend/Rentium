@@ -1,13 +1,5 @@
-import FilterButtons from './FilterButtons';
-import SlimCard from './SlimCard';
-
 const AdFilterFeed = () => {
-  return (
-    <div>
-      <FilterButtons />
-      <SlimCard />
-    </div>
-  );
+  return <div>{/*  <SlimCard /> */}</div>;
 };
 
 export default AdFilterFeed;

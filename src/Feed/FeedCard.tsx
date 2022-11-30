@@ -1,25 +1,13 @@
 import { LocationOnOutlined } from '@mui/icons-material';
 import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
-import { Container } from '@mui/system';
 import ads from '../adsData';
+import ContentContainer from '../shared/ContentContainer';
 import './feed.css';
 
 function FeedCard() {
   return (
-    <Container
-      id="FeedCard"
-      sx={{ height: '100%', marginTop: '5rem', overflow: 'scroll' }}
-    >
-      <Typography
-        variant="h5"
-        sx={{
-          marginLeft: '1rem',
-          paddingTop: '2rem',
-          paddingBottom: '2rem',
-        }}
-      >
-        Nya annonser
-      </Typography>
+    <ContentContainer>
+      <Typography variant="h5">Nya annonser</Typography>
       <Box
         sx={{
           display: 'flex',
@@ -73,7 +61,7 @@ function FeedCard() {
           </Card>
         ))}
       </Box>
-    </Container>
+    </ContentContainer>
   );
 }
 

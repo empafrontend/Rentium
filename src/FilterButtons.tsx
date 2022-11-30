@@ -1,20 +1,29 @@
-import { Typography } from '@mui/material';
-import { useState } from 'react';
+import { Box, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import Feed from './Feed/Feed';
 import CategoryLength from './categoryLength';
 import './filterButtons.css';
 import filterButtons from './filterButtonsData';
+import ContentContainer from './shared/ContentContainer';
+import SlimCard from './SlimCard';
 
 const FilterButtons = () => {
   const [count, setCount] = useState(0);
+  console.log(count);
+
+  useEffect(() => {
+    Filter();
+  }, [count]);
+
   const filterButtonsList = filterButtons.map((filterButtons) => (
     <div
       key={filterButtons.id}
-      className=" w-20 flex flex-col items-center justify-center"
+      className=" w-16 flex flex-col items-center justify-center"
       onClick={() => setCount(filterButtons.id)}
     >
       <div>
-        <div className="flex items-center justify-center rounded-full h-14 w-14 shadow-lg bg-white">
-          <div className="h-8 w-8">
+        <div className="flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white">
+          <div className="h-7 w-7" onClick={() => setCount(filterButtons.id)}>
             <img src={filterButtons.img} alt="" className="aspect-auto " />
           </div>
         </div>
@@ -31,6 +40,7 @@ const FilterButtons = () => {
       </div>
     </div>
   ));
+
   const Filter = () => {
     const shoes = document.querySelectorAll('div.shoes');
     const hats = document.querySelectorAll('div.hats');
@@ -86,14 +96,19 @@ const FilterButtons = () => {
       }
     }
   };
-  Filter();
+
   return (
-    <div className=" flex flex-row w-full justify-center filter-buttons">
+    <Box>
+      <div className=" flex flex-row w-full justify-center filter-buttons">
+        {filterButtonsList}
+      </div>
       <div className="flex flex-col-reverse">
         <CategoryLength />
       </div>
-      <div className="flex flex-row">{filterButtonsList}</div>
-    </div>
+      <ContentContainer>
+        {count <= 0 ? <Feed /> : <SlimCard />}
+      </ContentContainer>
+    </Box>
   );
 };
 export default FilterButtons;
