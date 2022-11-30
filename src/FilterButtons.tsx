@@ -98,7 +98,6 @@ const FilterButtons = () => {
   };
 
   return (
-
     <Box>
       <div className=" flex flex-row w-full justify-center filter-buttons">
         {filterButtonsList}
@@ -110,7 +109,6 @@ const FilterButtons = () => {
         {count <= 0 ? <Feed /> : <SlimCard />}
       </ContentContainer>
     </Box>
-
   );
 };
 export default FilterButtons;
