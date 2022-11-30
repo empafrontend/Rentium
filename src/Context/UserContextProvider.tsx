@@ -10,21 +10,24 @@ import {
   FC,
   PropsWithChildren,
   useContext,
-  useEffect,
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
-//import { GoogleAuthProvider, signInWithPopup, signInWithRedirect, signOut, onAuthStateChanged} from "firebase/auth"
 
 interface User {
   username: string;
   password: string;
 }
 
+interface GoogleUser {
+  displayName: string;
+  email: string;
+  photoURL: string;
+}
+
 interface UserContextValue {
-  // TODO: add one for current cookie session too
-  user: any;
+  user: GoogleUser;
   handleSignIn: (user: User) => void;
   handleSignUp: (user: User) => void;
   handleSignOut: () => void;
@@ -32,7 +35,7 @@ interface UserContextValue {
 }
 
 export const UserContext = createContext<UserContextValue>({
-  user: {},
+  user: { displayName: '', email: '', photoURL: '' },
   handleSignIn: () => {},
   handleSignUp: () => {},
   handleSignOut: () => {},
@@ -41,34 +44,35 @@ export const UserContext = createContext<UserContextValue>({
 
 const UserProvider: FC<PropsWithChildren> = (props) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<any>({});
+  const [user, setUser] = useState<GoogleUser>({
+    displayName: '',
+    email: '',
+    photoURL: '',
+  });
+
   const handleSignIn = (user: User) => console.log('signing in', user); // TODO: add function
   const handleSignUp = (user: User) => console.log('signing up', user); // TODO: add function
-  const handleSignOut = async () => await signOut(auth); // TODO: add function
 
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
-    //await signInWithRedirect(auth, provider);
-
+    await signInWithPopup(auth, provider).then(() => {
+      onAuthStateChanged(auth, (currentUser) => {
+        setUser({
+          displayName: currentUser!.displayName!,
+          photoURL: currentUser!.photoURL!,
+          email: currentUser!.email!,
+        });
+        navigate('/my-page');
+      });
+    });
     // TODO: error handling
   };
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      console.log(currentUser);
+  const handleSignOut = async () =>
+    await signOut(auth).then(() => {
+      setUser({ displayName: '', email: '', photoURL: '' });
+      if (user !== null) navigate('/');
     });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (user !== null) {
-      navigate('/my-page');
-    }
-  }, [user]);
 
   return (
     <UserContext.Provider
