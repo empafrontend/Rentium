@@ -134,7 +134,8 @@ function NewAdPage() {
 
           <InputField
             label="Rubrik"
-            type="title"
+            type="text"
+            id="title"
             value={formik.values.title}
             error={formik.touched.title && Boolean(formik.errors.title)}
             helperText={formik.touched.title && formik.errors.title}
@@ -143,8 +144,10 @@ function NewAdPage() {
 
           <InputField
             label="Beskrivning"
-            type="description"
+            type="text"
+            id="description"
             rows={4}
+            multiline={true}
             value={formik.values.description}
             error={
               formik.touched.description && Boolean(formik.errors.description)
@@ -155,7 +158,8 @@ function NewAdPage() {
 
           <InputField
             label="Bild URL"
-            type="img"
+            type="text"
+            id="img"
             value={formik.values.img}
             error={formik.touched.img && Boolean(formik.errors.img)}
             helperText={formik.touched.img && formik.errors.img}
@@ -164,7 +168,8 @@ function NewAdPage() {
 
           <InputField
             label="Pris"
-            type="price"
+            type="number"
+            id="price"
             value={formik.values.price}
             error={formik.touched.price && Boolean(formik.errors.price)}
             helperText={formik.touched.price && formik.errors.price}

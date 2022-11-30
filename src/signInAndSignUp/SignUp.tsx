@@ -75,7 +75,8 @@ const SignUp = () => {
           </Typography>
           <InputField
             label="Användarnamn"
-            type="username"
+            type="text"
+            id="username"
             value={formik.values.username}
             error={formik.touched.username && Boolean(formik.errors.username)}
             helperText={formik.touched.username && formik.errors.username}
@@ -84,6 +85,7 @@ const SignUp = () => {
           <InputField
             label="E-postadress"
             type="email"
+            id="email"
             value={formik.values.email}
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
@@ -92,6 +94,7 @@ const SignUp = () => {
           <InputField
             label="Lösenord"
             type="password"
+            id="password"
             value={formik.values.password}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
