@@ -11,7 +11,10 @@ import './header.css';
 function Header() {
   return (
     <Box className="header">
-      <Box className="logo" />
+      <Link to="/">
+        <Box className="logo" />
+      </Link>
+
       <Box className="navigation">
         <Link to="/">
           <HomeOutlined className="icon" sx={{ fontSize: '2.5rem' }} />

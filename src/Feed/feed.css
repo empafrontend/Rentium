@@ -1,3 +1,19 @@
+#FeedCard {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+#FeedCard::-webkit-scrollbar {
+  display: none;
+}
+
+#ScrollBox {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+#ScrollBox::-webkit-scrollbar {
+  display: none;
+}
+
 @media screen and (min-width: 600px) {
   .card {
     width: 14rem;
