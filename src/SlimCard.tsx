@@ -11,7 +11,6 @@ const SlimCard = () => {
       key={index}
       className={`${ads.category} hidden flex flex-row justify-center items-center mb-1 p-1 mt-1`}
     >
-      {ads.category.includes('hats')}
       <img
         src={ads.img}
         alt=""
