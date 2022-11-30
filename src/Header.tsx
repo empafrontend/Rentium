@@ -20,7 +20,12 @@ function Header() {
           <HomeOutlined className="icon" sx={{ fontSize: '2.5rem' }} />
         </Link>
         <SearchOutlined className="icon" sx={{ fontSize: '2.5rem' }} />
-        <AddCircleOutlineRounded className="icon" sx={{ fontSize: '2.5rem' }} />
+        <Link to="/new-ad">
+          <AddCircleOutlineRounded
+            className="icon"
+            sx={{ fontSize: '2.5rem' }}
+          />
+        </Link>
         <Link to="/sign-in">
           <PersonOutlineOutlined className="icon" sx={{ fontSize: '2.5rem' }} />
         </Link>
