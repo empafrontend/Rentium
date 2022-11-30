@@ -1,14 +1,11 @@
-import { Box } from '@mui/material';
-import FilterButtons from '../FilterButtons';
+import ContentContainer from '../shared/ContentContainer';
 import './feed.css';
 import FeedCard from './FeedCard';
 
 function Feed() {
   return (
-    <Box>
-      <div>
-        <FilterButtons />
-      </div>
+    <ContentContainer>
+      {/*  <Box>
       <Box
         className="feed"
         sx={{
@@ -30,11 +27,12 @@ function Feed() {
             borderBottomLeftRadius: '70px',
             overflow: 'scroll',
           }}
-        >
-          <FeedCard />
-        </Box>
+        > */}
+      <FeedCard />
+      {/* </Box>
       </Box>
-    </Box>
+    </Box> */}
+    </ContentContainer>
   );
 }
 

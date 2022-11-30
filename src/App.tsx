@@ -5,7 +5,8 @@ import AddPage from './AddPage';
 import AdFilterFeed from './AdFilterFeed';
 import AdProvider from './Context/AdContextProvider';
 import UserProvider from './Context/UserContextProvider';
-import MainFeed from './Feed/Feed';
+import Feed from './Feed/Feed';
+import FilterButtons from './FilterButtons';
 import './index.css';
 import Layout from './Layout';
 import MyAdd from './MyAdd';
@@ -24,14 +25,14 @@ function App() {
             <UserProvider>
               <Routes>
                 <Route path="/" element={<Layout />}>
-                  <Route index element={<MainFeed />} />
+                  <Route index element={<FilterButtons />} />
                   <Route path="/sign-in" element={<SignIn />} />
                   <Route path="/sign-up" element={<SignUp />} />
                   <Route path="/my-page" element={<MyPage />} />
                   <Route path="/add" element={<AddPage />} />
                   <Route path="/my-add" element={<MyAdd />} />
                   <Route path="/filter" element={<AdFilterFeed />} />
-                  <Route path="/feed" element={<MainFeed />} />
+                  <Route path="/feed" element={<Feed />} />
                   <Route path="/new-ad" element={<NewAdPage />} />
                 </Route>
               </Routes>
