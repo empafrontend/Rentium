@@ -30,6 +30,16 @@
   color: lightblue;
 }
 
+.img-icon {
+  width: 32px;
+  border-radius: 50px;
+  border: solid white 3px;
+}
+
+.img-icon:hover {
+  border: solid lightblue 3px;
+}
+
 @media screen and (max-width: 900px) {
   .navigation {
     display: none;

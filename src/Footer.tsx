@@ -15,12 +15,23 @@ function Footer() {
     <Box className="footer">
       <Box className="footer-navigation">
         <Link to="/">
-          <HomeOutlined className="icon" sx={{ fontSize: '2.5rem' }} />
+          <HomeOutlined className="icon" fontSize="large" />
         </Link>
-        <SearchOutlined className="icon" sx={{ fontSize: '2.5rem' }} />
-        <AddCircleOutlineRounded className="icon" sx={{ fontSize: '2.5rem' }} />
-        <Link to={user ? '/my-page' : '/sign-in'}>
-          <PersonOutlineOutlined className="icon" sx={{ fontSize: '2.5rem' }} />
+        <SearchOutlined className="icon" fontSize="large" />
+        <Link to={!user.email ? '/sign-in' : '/new-ad'}>
+          <AddCircleOutlineRounded className="icon" fontSize="large" />
+        </Link>
+        <Link to={!user.email ? '/sign-in' : '/my-page'}>
+          {!user.email ? (
+            <PersonOutlineOutlined className="icon" fontSize="large" />
+          ) : (
+            <Box
+              component="img"
+              className="img-icon icon:hover"
+              src={user.photoURL}
+              alt={user.displayName}
+            />
+          )}
         </Link>
       </Box>
     </Box>
