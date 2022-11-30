@@ -1,16 +1,17 @@
 import { ThemeProvider } from '@emotion/react';
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AddPage from './AddPage';
 import AdFilterFeed from './AdFilterFeed';
+import AdPage from './AdPage';
 import AdProvider from './Context/AdContextProvider';
 import UserProvider from './Context/UserContextProvider';
 import MainFeed from './Feed/Feed';
 import './index.css';
 import Layout from './Layout';
-import MyAdd from './MyAdd';
+import MyAd from './MyAd';
 import MyPage from './MyPage/MyPage';
 import NewAdPage from './NewAdPage';
+import Profile from './Profile';
 import SignIn from './signInAndSignUp/SignIn';
 import SignUp from './signInAndSignUp/SignUp';
 import { theme } from './theme';
@@ -28,8 +29,10 @@ function App() {
                   <Route path="/sign-in" element={<SignIn />} />
                   <Route path="/sign-up" element={<SignUp />} />
                   <Route path="/my-page" element={<MyPage />} />
-                  <Route path="/add" element={<AddPage />} />
-                  <Route path="/my-add" element={<MyAdd />} />
+                  <Route path="/ad" element={<AdPage />} />
+                  <Route path="/my-ad" element={<MyAd />} />
+                  <Route path="/profile" element={<Profile />} />
+
                   <Route path="/filter" element={<AdFilterFeed />} />
                   <Route path="/feed" element={<MainFeed />} />
                   <Route path="/new-ad" element={<NewAdPage />} />

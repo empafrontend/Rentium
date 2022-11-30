@@ -5,7 +5,7 @@ import FeedCard from './FeedCard';
 
 function Feed() {
   return (
-    <Box>
+    <Box id="container">
       <div>
         <FilterButtons />
       </div>
@@ -19,6 +19,7 @@ function Feed() {
         }}
       >
         <Box
+          id="ScrollBox"
           sx={{
             display: 'flex',
             flexDirection: 'column',

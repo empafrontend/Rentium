@@ -1,33 +1,33 @@
-import hattIkon from './Assets/hattIkon.png';
-import husIkon from './Assets/husIkon.png';
-import moppeIkon from './Assets/moppeIkon.png';
-import skoIkon from './Assets/skoIkon.png';
-import verktygIkon from './Assets/verktygIkon.png';
+import hat from '../src/Assets/hattIkon.png';
+import house from '../src/Assets/husIkon.png';
+import car from '../src/Assets/moppeIkon.png';
+import shoe from '../src/Assets/skoIkon.png';
+import tool from '../src/Assets/verktygIkon.png';
 
 const filterButtons = [
   {
     text: 'Skor',
-    img: skoIkon,
+    img: shoe,
     id: 1,
   },
   {
     text: 'Hattar',
-    img: hattIkon,
+    img: hat,
     id: 2,
   },
   {
     text: 'Verktyg',
-    img: verktygIkon,
+    img: tool,
     id: 3,
   },
   {
     text: 'Boende',
-    img: husIkon,
+    img: house,
     id: 4,
   },
   {
     text: 'Fordon',
-    img: moppeIkon,
+    img: car,
     id: 5,
   },
 ];

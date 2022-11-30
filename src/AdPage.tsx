@@ -1,7 +1,8 @@
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Box, Button, CardMedia, Container, Typography } from '@mui/material';
 import img from '../src/Assets/gk.png';
 
-function MyAdd() {
+function AdPage() {
   return (
     <Container
       sx={{
@@ -19,6 +20,7 @@ function MyAdd() {
         margin="auto"
         sx={{ display: 'flex', flexDirection: 'column', rowGap: 0.5 }}
       >
+        {/* the border radius is not working? */}
         <CardMedia
           component="img"
           image={img}
@@ -65,12 +67,27 @@ function MyAdd() {
               Göteborg
             </Typography>
           </Box>
+          <Typography
+            variant="body1"
+            sx={{
+              color: '#343232',
+              fontSize: '12px',
+              display: 'flex',
+              fontWeight: '400',
+              alignItems: 'center',
+            }}
+          >
+            <PersonOutlineIcon
+              sx={{ fontSize: '1rem', m: '2px', color: '#343232' }}
+            />
+            lindqvistsara
+          </Typography>
         </Box>
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            mt: '1.5rem',
+            mt: '2rem',
           }}
         >
           <Typography
@@ -139,21 +156,10 @@ function MyAdd() {
           natoque penatibus et magnis dis parturient montes, nascetur ridiculus
           mus.
         </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}
-        >
-          <Button variant="contained" sx={{ mr: '.5rem;' }}>
-            Ta bort
-          </Button>
-          <Button variant="contained">Redigera profil</Button>
-        </Box>
+        <Button variant="contained">Skicka bokningsförfrågan</Button>
       </Box>
     </Container>
   );
 }
 
-export default MyAdd;
+export default AdPage;

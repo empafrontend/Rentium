@@ -42,7 +42,6 @@
     border-radius: 0px 0px 0px 40px;
   }
   .logo {
-    width: 8rem;
-    background-image: url(./Assets/rentium-logo-horisontal.png);
+    width: 4rem;
   }
 }
