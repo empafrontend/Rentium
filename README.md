@@ -3,6 +3,7 @@
 <br>
 
 ## School project for advertisement site
+
 In this school project we are suppose to build a advertisment site using `Prettier`, `ESlint`, `CI/CD` and also bug testing with `Cypress`.
 
 This project is built with `React`, `Typescript` and `MUI` to style our components.
@@ -10,6 +11,7 @@ This project is built with `React`, `Typescript` and `MUI` to style our componen
 <br>
 
 ### Run the project
+
 Open up terminal and add following command
 <br>
 `npm i`
@@ -30,14 +32,17 @@ Open up terminal and add following command
 <br>
 
 ### Login requirement
+
 We use google login in our app with `Firebase`.
 
 <br>
 
 ### Github Projects
+
 - [Projects](https://github.com/users/empafrontend/projects/1)
 
 <br>
 
 ### Figma (Graphic Profile / Sketches)
+
 https://www.figma.com/file/IDmhFfO3T9Vki7NCI0wWLn/Untitled?node-id=0%3A1&t=7E7Crt70M7tJhNly-1

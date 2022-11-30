@@ -18,11 +18,11 @@ function Footer() {
           <HomeOutlined className="icon" fontSize="large" />
         </Link>
         <SearchOutlined className="icon" fontSize="large" />
-        <Link to={!user.email ? '/sign-in' : '/new-ad'}>
+        <Link to={!user.uid ? '/sign-in' : '/new-ad'}>
           <AddCircleOutlineRounded className="icon" fontSize="large" />
         </Link>
-        <Link to={!user.email ? '/sign-in' : '/my-page'}>
-          {!user.email ? (
+        <Link to={!user.uid ? '/sign-in' : '/my-page'}>
+          {!user.uid ? (
             <PersonOutlineOutlined className="icon" fontSize="large" />
           ) : (
             <Box
