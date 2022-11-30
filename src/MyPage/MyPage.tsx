@@ -33,16 +33,26 @@ const MyPage = () => {
             >
               Visa profil
             </Button>
-            <Button variant="contained" onClick={handleSignOut}>
-              Logout
+            <Button
+              variant="contained"
+              onClick={handleSignOut}
+              sx={{
+                background: 'none',
+                color: '#5D6DD8',
+                '&:hover': { background: '#ECEFFF' },
+              }}
+            >
+              Logga ut
             </Button>
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography component="h2" variant="h4" mb={-1}>
-              Bokningsförfrågningar ({ads.length})
-              {/* TODO: number to be adjusted based on src */}
-              {/* TODO: add filter */}
+              Bokningsförfrågningar (
+              {ads
+                .filter((ad) => ad.authorId === user.uid)
+                .reduce((prevBk, bk) => prevBk + bk.bookingRequests.length, 0)}
+              )
             </Typography>
             <Box
               height={190}
@@ -55,24 +65,26 @@ const MyPage = () => {
               }}
             >
               {/* TODO: change to correct data src with filter */}
-              {ads.map((ad, index) => (
-                <AdCard
-                  key={index}
-                  title={ad.title}
-                  img={ad.img}
-                  author={ad.author}
-                  price={ad.price}
-                  isRequest
-                />
-              ))}
+              {ads
+                .filter((ad) => ad.authorId === user.uid)
+                .map((ad, index) => (
+                  <AdCard
+                    key={index}
+                    title={ad.title}
+                    img={ad.img}
+                    author={ad.author}
+                    price={ad.price}
+                    bookingRequests={ad.bookingRequests}
+                    isRequest
+                  />
+                ))}
             </Box>
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography component="h2" variant="h4" mb={-1}>
               Mina annonser (
-              {ads.filter((ad) => ad.author !== 'lindqvistsara').length}){' '}
-              {/* TODO: filter is in but should change author string to correct user */}
+              {ads.filter((ad) => ad.authorId === user.uid).length}){' '}
             </Typography>
             <Box
               height={190}
@@ -84,10 +96,8 @@ const MyPage = () => {
                 '::-webkit-scrollbar': { display: 'none' },
               }}
             >
-              {/* TODO: change to correct data src */}
-              {/* TODO: filter is in but should change author string to correct user */}
               {ads
-                .filter((ad) => ad.author !== 'lindqvistsara')
+                .filter((ad) => ad.authorId === user.uid)
                 .map((ad, index) => (
                   <AdCard
                     key={index}

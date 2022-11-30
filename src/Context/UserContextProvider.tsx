@@ -24,6 +24,7 @@ interface GoogleUser {
   displayName: string;
   email: string;
   photoURL: string;
+  uid: string;
 }
 
 interface UserContextValue {
@@ -35,7 +36,7 @@ interface UserContextValue {
 }
 
 export const UserContext = createContext<UserContextValue>({
-  user: { displayName: '', email: '', photoURL: '' },
+  user: { displayName: '', email: '', photoURL: '', uid: '' },
   handleSignIn: () => {},
   handleSignUp: () => {},
   handleSignOut: () => {},
@@ -48,6 +49,7 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
     displayName: '',
     email: '',
     photoURL: '',
+    uid: '',
   });
 
   const handleSignIn = (user: User) => console.log('signing in', user); // TODO: add function
@@ -61,6 +63,7 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
           displayName: currentUser!.displayName!,
           photoURL: currentUser!.photoURL!,
           email: currentUser!.email!,
+          uid: currentUser!.uid,
         });
         navigate('/my-page');
       });
@@ -70,7 +73,7 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
 
   const handleSignOut = async () =>
     await signOut(auth).then(() => {
-      setUser({ displayName: '', email: '', photoURL: '' });
+      setUser({ displayName: '', email: '', photoURL: '', uid: '' });
       if (user !== null) navigate('/');
     });
 

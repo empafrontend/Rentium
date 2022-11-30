@@ -21,6 +21,7 @@ import { useUser } from './UserContextProvider';
 
 export interface Ad {
   author?: string;
+  authorId?: string;
   bookingRequests?: string[];
   category: string;
   description: string;
@@ -140,6 +141,7 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
     const newAd = {
       ...values,
       author: user.displayName,
+      authorId: user.uid,
       isAvailable: true as Boolean,
       bookingRequests: [],
     };
