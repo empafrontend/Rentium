@@ -39,6 +39,7 @@ const SlimCard = () => {
   ));
 
   return <ContentContainer>{adsList}</ContentContainer>;
+
 };
 
 export default SlimCard;

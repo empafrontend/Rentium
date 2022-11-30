@@ -11,13 +11,13 @@ const validationSchema = yup.object({
   username: yup
     .string()
     .required('Required')
-    .min(3, 'Username must be between 3 to 20 characters')
-    .max(20, 'Username must be between 3 to 20 characters'),
+    .min(3, 'Användarnamn måste vara mellan 3 till 20 karaktärer')
+    .max(20, 'Användarnamn måste vara mellan 3 till 20 karaktärer'),
   email: yup.string().email().required('Required'),
   password: yup
     .string()
-    .required('Required')
-    .min(6, 'Password must be at least 6 characters'),
+    .required('Vänligen fyll i ditt lösenord')
+    .min(6, 'Lösenord måste vara minst 6 karaktärer'),
 });
 
 const SignUp = () => {
