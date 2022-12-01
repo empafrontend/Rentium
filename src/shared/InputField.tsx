@@ -4,19 +4,21 @@ interface Props {
   label: string;
   rows?: number;
   type: string;
+  id: string;
   value: string | number;
   error?: boolean;
   helperText?: string | undefined | boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  multiline?: boolean;
 }
 const InputField = (props: Props) => {
   return (
     <TextField
-      multiline
+      multiline={false || props.multiline}
       variant="standard"
       label={props.label}
       rows={props.rows}
-      id={props.type}
+      id={props.id}
       type={props.type}
       value={props.value}
       error={props.error}
