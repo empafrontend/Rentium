@@ -79,8 +79,8 @@ const AdCard = (props: ExAdCard) => {
               {props.title}
             </Typography>
             <Typography pb={3} variant="body2" color="text.secondary">
-              {props.isRequest ? props.bookingRequests : 'Inlagd 24-11-2022'}{' '}
-              {/******************************** TODO: bookingRequest is wrong for now, insert date from data */}
+              {props.isRequest ? props.requestor : props.createdAt}
+              {/******************************** TODO: insert date from data */}
             </Typography>
             <Typography variant="body1" fontWeight={400}>
               {props.price} kr

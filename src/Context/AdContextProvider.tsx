@@ -6,6 +6,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  serverTimestamp,
   updateDoc,
 } from '@firebase/firestore';
 import {
@@ -34,7 +35,7 @@ export interface Ad {
   price: number;
   startDate: string;
   title: string;
-  createdAt?: string;
+  createdAt?: any | string;
 }
 
 interface AdContextValue {
@@ -146,6 +147,7 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
       authorId: user.uid,
       isAvailable: true as Boolean,
       bookingRequests: [],
+      createdAt: serverTimestamp(),
     };
     await addDoc(adsCollectionRef, newAd);
   };
@@ -153,18 +155,18 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   ///////// FOR TESTING ONLY
   ///////// *** IF YOU CALL THIS, remember to remove from database after!
   // useEffect(() => {
-  // createAd({
-  //   author: 'milliecheung',
-  //   category: 'shoes',
-  //   description: 'jingle bells jingle bells jingle bells rock!',
-  //   endDate: '2022-01-01',
-  //   img: 'https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png',
-  //   location: 'Centrala Göteborg',
-  //   price: 999,
-  //   startDate: '2022-12-25',
-  //   title: "Santa's boots",
-  // });
-  //}, []);
+  //   console.log('called');
+  //   createAd({
+  //     category: 'shoes',
+  //     description: 'jingle bells jingle bells jingle bells rock!',
+  //     endDate: '2022-01-01',
+  //     img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcfw1vik_3tGuayJWzN8q-ls3OADSufDCV8UYX03GQIhz00zCPuWL5dEHQNexk63hLrO4&usqp=CAU',
+  //     location: 'Centrala Göteborg',
+  //     price: 999,
+  //     startDate: '2022-12-25',
+  //     title: "Santa's boots",
+  //   });
+  // }, []);
 
   /** Updates the variable "isAvailable" in a single doc */
   const updateAdStatus = async (id: string) => {
