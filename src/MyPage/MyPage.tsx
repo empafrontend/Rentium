@@ -68,7 +68,7 @@ const MyPage = () => {
                 '::-webkit-scrollbar': { display: 'none' },
               }}
             >
-              {/* TODO: change to correct data src with filter */}
+              {/* TODO: change to correct data src with filter!! */}
               {ads
                 .filter((ad) => ad.authorId === user.uid)
                 .map((ad, index) => (
