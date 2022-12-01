@@ -1,9 +1,12 @@
 import { Box, Button, Typography } from '@mui/material';
-import ads from '../adsData.js';
+import { useContext } from 'react';
+import { AdContext } from '../Context/AdContextProvider';
+/* import ads from '../adsData.js'; */
 import AdCard from '../shared/AdCard';
 import ContentContainer from '../shared/ContentContainer';
 
 const MyPage = () => {
+  const { ads } = useContext(AdContext);
   return (
     <ContentContainer background="#F5F5F5">
       <Box sx={{ display: 'flex', flexDirection: 'column', rowGap: 5 }}>

@@ -1,7 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Feed from './Feed/Feed';
-import CategoryLength from './categoryLength';
 import './filterButtons.css';
 import filterButtons from './filterButtonsData';
 import ContentContainer from './shared/ContentContainer';
@@ -83,7 +82,7 @@ const FilterButtons = () => {
         tools[i]?.classList.remove('hidden');
       }
     } else if (count === 4) {
-      for (let i = 0; i < shoes.length; i++) {
+      for (let i = 0; i < housing.length; i++) {
         housing[i]?.classList.add('flex');
         housing[i]?.classList.add('showing');
         housing[i]?.classList.remove('hidden');
@@ -95,6 +94,13 @@ const FilterButtons = () => {
         vehicles[i]?.classList.remove('hidden');
       }
     }
+    console.log(
+      /* vehicles.length,
+      hats.length, */
+      shoes.length
+      /* tools.length,
+      housing.length */
+    );
   };
 
   return (
@@ -102,9 +108,10 @@ const FilterButtons = () => {
       <div className=" flex flex-row w-full justify-center filter-buttons">
         {filterButtonsList}
       </div>
-      <div className="flex flex-col-reverse">
+      {/*   <div className="flex flex-col-reverse">
         <CategoryLength />
-      </div>
+      </div> */}
+
       <ContentContainer>
         {count <= 0 ? <Feed /> : <SlimCard />}
       </ContentContainer>

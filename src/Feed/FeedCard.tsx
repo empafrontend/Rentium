@@ -1,10 +1,13 @@
 import { LocationOnOutlined } from '@mui/icons-material';
 import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
-import ads from '../adsData';
+import { useContext } from 'react';
+import { AdContext } from '../Context/AdContextProvider';
 import ContentContainer from '../shared/ContentContainer';
 import './feed.css';
 
 function FeedCard() {
+  const { ads } = useContext(AdContext);
+
   return (
     <ContentContainer>
       <Typography variant="h5">Nya annonser</Typography>

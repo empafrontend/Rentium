@@ -7,11 +7,15 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material';
-import ads from './adsData';
+import { useContext } from 'react';
+/* import ads from './adsData'; */
+import { AdContext } from './Context/AdContextProvider';
 import './footer.css';
 import ContentContainer from './shared/ContentContainer';
 
 function Profile() {
+  const { ads } = useContext(AdContext);
+
   return (
     <ContentContainer background="#F5F5F5">
       <Box
