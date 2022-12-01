@@ -1,19 +1,17 @@
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import { Box, Button, CardMedia, Container, Typography } from '@mui/material';
+import { Box, Button, CardMedia, Typography } from '@mui/material';
+import { useContext } from 'react';
 import img from '../src/Assets/gk.png';
+import { AdContext } from './Context/AdContextProvider';
+import { useUser } from './Context/UserContextProvider';
+import ContentContainer from './shared/ContentContainer';
 
-function AdPage() {
+const AdPage = () => {
+  const { ads } = useContext(AdContext);
+  const { user, handleSignOut } = useUser();
+
   return (
-    <Container
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        rowGap: 5,
-        mt: '4rem',
-        mb: '4rem',
-      }}
-    >
+    <ContentContainer>
       <Box
         maxWidth={350}
         minWidth={300}
@@ -158,8 +156,8 @@ function AdPage() {
         </Typography>
         <Button variant="contained">Skicka bokningsförfrågan</Button>
       </Box>
-    </Container>
+    </ContentContainer>
   );
-}
+};
 
 export default AdPage;
