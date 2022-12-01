@@ -1,11 +1,14 @@
 import { PlaceOutlined } from '@mui/icons-material';
-import { Typography } from '@mui/material';
-import ads from './adsData';
+import { Box, Typography } from '@mui/material';
+import { useContext } from 'react';
+import CategoryLength from './categoryLength';
+import { AdContext } from './Context/AdContextProvider';
 import './Feed/feed.css';
 import './index.css';
 import ContentContainer from './shared/ContentContainer';
 
 const SlimCard = () => {
+  const { ads } = useContext(AdContext);
   const adsList = ads.map((ads, index) => (
     <div
       key={index}
@@ -37,7 +40,14 @@ const SlimCard = () => {
     </div>
   ));
 
-  return <ContentContainer>{adsList}</ContentContainer>;
+  return (
+    <ContentContainer>
+      <Box>
+        <CategoryLength />
+        {adsList}
+      </Box>
+    </ContentContainer>
+  );
 };
 
 export default SlimCard;

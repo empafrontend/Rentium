@@ -1,12 +1,16 @@
 import { Box, Button, Typography } from '@mui/material';
-import ads from '../adsData.js';
+import { useContext } from 'react';
+import { AdContext } from '../Context/AdContextProvider';
+/* import ads from '../adsData.js'; */
 import { useUser } from '../Context/UserContextProvider';
 import Protected from '../Protected';
 import AdCard from '../shared/AdCard';
 import ContentContainer from '../shared/ContentContainer';
 
 const MyPage = () => {
+  const { ads } = useContext(AdContext);
   const { user, handleSignOut } = useUser();
+
   return (
     <Protected>
       <ContentContainer background="#F5F5F5">
