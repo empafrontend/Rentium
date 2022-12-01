@@ -1,8 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
-
 import { useContext, useEffect } from 'react';
 import { AdContext } from '../Context/AdContextProvider';
-/* import ads from '../adsData.js'; */
 import { useUser } from '../Context/UserContextProvider';
 import Protected from '../Protected';
 import AdCard from '../shared/AdCard';
@@ -30,10 +28,37 @@ const MyPage = () => {
     <Protected>
       <ContentContainer background="#F5F5F5">
         <Box sx={{ display: 'flex', flexDirection: 'column', rowGap: 5 }}>
-          <Typography component="h1" variant="h3" mb={-1} fontWeight={600}>
-            Hej {user?.displayName}!
-          </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', gap: 3 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              gap: 1,
+              placeItems: 'center',
+            }}
+          >
+            <Typography component="h1" variant="h3" mb={-1} fontWeight={600}>
+              Hej {user?.displayName}!
+            </Typography>
+            <Button
+              variant="contained"
+              onClick={handleSignOut}
+              sx={{
+                mt: 1,
+                background: 'none',
+                color: '#5D6DD8',
+                '&:hover': { color: '#3335A7', background: 'none' },
+              }}
+            >
+              Logga ut
+            </Button>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              gap: 3,
+            }}
+          >
             <Button
               variant="contained"
               onClick={() => console.log('edit profile')} // TODO: insert correct function / link
@@ -51,17 +76,6 @@ const MyPage = () => {
               }}
             >
               Visa profil
-            </Button>
-            <Button
-              variant="contained"
-              onClick={handleSignOut}
-              sx={{
-                background: 'none',
-                color: '#5D6DD8',
-                '&:hover': { background: '#ECEFFF' },
-              }}
-            >
-              Logga ut
             </Button>
           </Box>
 
@@ -117,6 +131,10 @@ const MyPage = () => {
                     img={ad.img}
                     author={ad.author}
                     price={ad.price}
+                    createdAt={ad.createdAt
+                      ?.toDate()
+                      .toDateString('')
+                      .replace(/^\S+\s/, '')}
                   />
                 ))}
             </Box>
