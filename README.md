@@ -47,5 +47,6 @@ We use google login in our app with `Firebase`.
 
 https://www.figma.com/file/IDmhFfO3T9Vki7NCI0wWLn/Untitled?node-id=0%3A1&t=7E7Crt70M7tJhNly-1
 
-### Deployed Site (work in progress) 
+### Deployed Site (work in progress)
+
 [Rentium site](https://rentium.vercel.app/)
