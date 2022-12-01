@@ -55,7 +55,7 @@ const MyPage = () => {
               Bokningsförfrågningar (
               {ads
                 .filter((ad) => ad.authorId === user.uid)
-                .reduce((prevBk, bk) => prevBk + bk.bookingRequests.length, 0)}
+                .reduce((prevBk, bk) => prevBk + bk.bookingRequests!.length, 0)}
               )
             </Typography>
             <Box
