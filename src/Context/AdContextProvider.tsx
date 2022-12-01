@@ -23,6 +23,7 @@ export interface Ad {
   author?: string;
   authorId?: string;
   bookingRequests?: string[];
+  requestor?: string;
   category: string;
   description: string;
   endDate: string;
@@ -33,6 +34,7 @@ export interface Ad {
   price: number;
   startDate: string;
   title: string;
+  createdAt?: string;
 }
 
 interface AdContextValue {

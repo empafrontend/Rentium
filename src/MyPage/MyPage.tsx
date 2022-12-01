@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
-import { useContext } from 'react';
+
+import { useContext, useEffect } from 'react';
 import { AdContext } from '../Context/AdContextProvider';
 /* import ads from '../adsData.js'; */
 import { useUser } from '../Context/UserContextProvider';
@@ -10,6 +11,20 @@ import ContentContainer from '../shared/ContentContainer';
 const MyPage = () => {
   const { ads } = useContext(AdContext);
   const { user, handleSignOut } = useUser();
+
+  const generateBookingReq = () => {
+    return ads
+      .filter((ad) => ad.authorId === user.uid)
+      .flatMap((ad) =>
+        ad.bookingRequests?.map((requestor) => {
+          return { ...ad, requestor: requestor };
+        })
+      );
+  };
+
+  useEffect(() => {
+    generateBookingReq();
+  }, []);
 
   return (
     <Protected>
@@ -52,12 +67,7 @@ const MyPage = () => {
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography component="h2" variant="h4" mb={-1}>
-              Bokningsförfrågningar (
-              {ads
-                .filter((ad) => ad.authorId === user.uid)
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                .reduce((prevBk, bk) => prevBk + bk.bookingRequests!.length, 0)}
-              )
+              Bokningsförfrågningar ({generateBookingReq().length})
             </Typography>
             <Box
               height={190}
@@ -69,27 +79,24 @@ const MyPage = () => {
                 '::-webkit-scrollbar': { display: 'none' },
               }}
             >
-              {/* TODO: change to correct data src with filter */}
-              {ads
-                .filter((ad) => ad.authorId === user.uid)
-                .map((ad, index) => (
-                  <AdCard
-                    key={index}
-                    title={ad.title}
-                    img={ad.img}
-                    author={ad.author}
-                    price={ad.price}
-                    bookingRequests={ad.bookingRequests}
-                    isRequest
-                  />
-                ))}
+              {generateBookingReq().map((req, index) => (
+                <AdCard
+                  key={index}
+                  title={req?.title}
+                  img={req?.img}
+                  author={req?.author}
+                  price={req?.price}
+                  requestor={req?.requestor}
+                  isRequest
+                />
+              ))}
             </Box>
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography component="h2" variant="h4" mb={-1}>
               Mina annonser (
-              {ads.filter((ad) => ad.authorId === user.uid).length}){' '}
+              {ads.filter((ad) => ad.authorId === user.uid).length})
             </Typography>
             <Box
               height={190}
