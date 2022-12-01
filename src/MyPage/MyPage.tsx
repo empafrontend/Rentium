@@ -55,6 +55,9 @@ const MyPage = () => {
               Bokningsförfrågningar (
               {ads
                 .filter((ad) => ad.authorId === user.uid)
+
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
                 .reduce((prevBk, bk) => prevBk + bk.bookingRequests!.length, 0)}
               )
             </Typography>
