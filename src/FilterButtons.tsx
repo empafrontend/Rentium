@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { NavigationContext } from './Context/NavigationContext';
 import Feed from './Feed/Feed';
 import './filterButtons.css';
 import filterButtons from './filterButtonsData';
@@ -8,11 +9,19 @@ import SlimCard from './SlimCard';
 
 const FilterButtons = () => {
   const [count, setCount] = useState(0);
+  const { filterNavigation, setFilterNavigation } =
+    useContext(NavigationContext);
   console.log(count);
+  console.log(filterNavigation);
 
   useEffect(() => {
     Filter();
   }, [count]);
+
+  const handleView = (filterButtons: number) => {
+    setCount(filterButtons);
+    setFilterNavigation(true);
+  };
 
   const filterButtonsList = filterButtons.map((filterButtons) => (
     <div
@@ -22,7 +31,7 @@ const FilterButtons = () => {
     >
       <div>
         <div className="flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white">
-          <div className="h-7 w-7" onClick={() => setCount(filterButtons.id)}>
+          <div className="h-7 w-7" onClick={() => handleView(filterButtons.id)}>
             <img src={filterButtons.img} alt="" className="aspect-auto " />
           </div>
         </div>
@@ -94,13 +103,6 @@ const FilterButtons = () => {
         vehicles[i]?.classList.remove('hidden');
       }
     }
-    console.log(
-      /* vehicles.length,
-      hats.length, */
-      shoes.length
-      /* tools.length,
-      housing.length */
-    );
   };
 
   return (
@@ -113,7 +115,7 @@ const FilterButtons = () => {
       </div> */}
 
       <ContentContainer>
-        {count <= 0 ? <Feed /> : <SlimCard />}
+        {filterNavigation === false ? <Feed /> : <SlimCard />}
       </ContentContainer>
     </Box>
   );

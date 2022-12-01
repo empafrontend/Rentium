@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AdFilterFeed from './AdFilterFeed';
 import AdPage from './AdPage';
 import AdProvider from './Context/AdContextProvider';
+import NavigationContextProvider from './Context/NavigationContext';
 import UserProvider from './Context/UserContextProvider';
 import Feed from './Feed/Feed';
 import FilterButtons from './FilterButtons';
@@ -23,26 +24,28 @@ function App() {
     <ThemeProvider theme={theme}>
       <React.StrictMode>
         <BrowserRouter>
-          <AdProvider>
-            <UserProvider>
-              <Routes>
-                <Route path="/" element={<Layout />}>
-                  <Route index element={<FilterButtons />} />
-                  <Route path="/sign-in" element={<SignIn />} />
-                  <Route path="/sign-up" element={<SignUp />} />
-                  <Route path="/my-page" element={<MyPage />} />
-                  <Route path="/ad" element={<AdPage />} />
-                  <Route path="/my-ad" element={<MyAd />} />
-                  <Route path="/profile" element={<Profile />} />
+          <NavigationContextProvider>
+            <AdProvider>
+              <UserProvider>
+                <Routes>
+                  <Route path="/" element={<Layout />}>
+                    <Route index element={<FilterButtons />} />
+                    <Route path="/sign-in" element={<SignIn />} />
+                    <Route path="/sign-up" element={<SignUp />} />
+                    <Route path="/my-page" element={<MyPage />} />
+                    <Route path="/ad" element={<AdPage />} />
+                    <Route path="/my-ad" element={<MyAd />} />
+                    <Route path="/profile" element={<Profile />} />
 
-                  <Route path="/filter" element={<AdFilterFeed />} />
-                  <Route path="/feed" element={<Feed />} />
-                  <Route path="/new-ad" element={<NewAdPage />} />
-                  <Route path="*" element={<NotFound />} />
-                </Route>
-              </Routes>
-            </UserProvider>
-          </AdProvider>
+                    <Route path="/filter" element={<AdFilterFeed />} />
+                    <Route path="/feed" element={<Feed />} />
+                    <Route path="/new-ad" element={<NewAdPage />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Route>
+                </Routes>
+              </UserProvider>
+            </AdProvider>
+          </NavigationContextProvider>
         </BrowserRouter>
       </React.StrictMode>
     </ThemeProvider>

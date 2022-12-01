@@ -5,16 +5,20 @@ import {
   SearchOutlined,
 } from '@mui/icons-material';
 import { Box } from '@mui/material';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { NavigationContext } from './Context/NavigationContext';
 import { useUser } from './Context/UserContextProvider';
 import './header.css';
 
 function Header() {
   const { user } = useUser();
+  const { filterNavigation, setFilterNavigation } =
+    useContext(NavigationContext);
   return (
     <Box className="header">
       <Link to="/">
-        <Box className="logo" />
+        <Box className="logo" onClick={() => setFilterNavigation(false)} />
       </Link>
 
       <Box className="navigation">

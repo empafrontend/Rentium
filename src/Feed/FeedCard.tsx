@@ -10,7 +10,9 @@ function FeedCard() {
 
   return (
     <ContentContainer>
-      <Typography variant="h5">Nya annonser</Typography>
+      <Typography variant="h5" sx={{ margin: '1rem' }}>
+        Nya annonser
+      </Typography>
       <Box
         sx={{
           display: 'flex',
