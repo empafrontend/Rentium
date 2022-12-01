@@ -1,31 +1,92 @@
 /* eslint-disable */ // delete this line when functionality is added in all functions
-import { createContext, FC, PropsWithChildren, useContext } from 'react';
+import {
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth';
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useContext,
+  useState,
+} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../firebase';
 
 interface User {
   username: string;
   password: string;
 }
 
+interface GoogleUser {
+  displayName: string;
+  email: string;
+  photoURL: string;
+  uid: string;
+}
+
 interface UserContextValue {
-  // TODO: add one for current cookie session too
+  user: GoogleUser;
   handleSignIn: (user: User) => void;
   handleSignUp: (user: User) => void;
-  handleSignOut: (user: User) => void;
+  handleSignOut: () => void;
+  handleGoogleSignIn: () => void;
 }
 
 export const UserContext = createContext<UserContextValue>({
+  user: { displayName: '', email: '', photoURL: '', uid: '' },
   handleSignIn: () => {},
   handleSignUp: () => {},
   handleSignOut: () => {},
+  handleGoogleSignIn: () => {},
 });
 
 const UserProvider: FC<PropsWithChildren> = (props) => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState<GoogleUser>({
+    displayName: '',
+    email: '',
+    photoURL: '',
+    uid: '',
+  });
+
   const handleSignIn = (user: User) => console.log('signing in', user); // TODO: add function
   const handleSignUp = (user: User) => console.log('signing up', user); // TODO: add function
-  const handleSignOut = (user: User) => console.log('signing out', user); // TODO: add function
+
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider).then(() => {
+      onAuthStateChanged(auth, (currentUser) => {
+        setUser({
+          displayName: currentUser!.displayName!,
+          photoURL: currentUser!.photoURL!,
+          email: currentUser!.email!,
+          uid: currentUser!.uid,
+        });
+        navigate('/my-page');
+      });
+    });
+    // TODO: error handling
+  };
+
+  const handleSignOut = async () =>
+    await signOut(auth).then(() => {
+      setUser({ displayName: '', email: '', photoURL: '', uid: '' });
+      if (user !== null) navigate('/');
+    });
 
   return (
-    <UserContext.Provider value={{ handleSignIn, handleSignUp, handleSignOut }}>
+    <UserContext.Provider
+      value={{
+        user,
+        handleSignIn,
+        handleSignUp,
+        handleSignOut,
+        handleGoogleSignIn,
+      }}
+    >
       {props.children}
     </UserContext.Provider>
   );

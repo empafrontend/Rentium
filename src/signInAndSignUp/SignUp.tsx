@@ -3,7 +3,6 @@ import { useFormik } from 'formik';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 import { useUser } from '../Context/UserContextProvider';
-import { GoogleLogin } from '../firebase';
 import ContentContainer from '../shared/ContentContainer';
 import InputField from '../shared/InputField';
 
@@ -21,7 +20,7 @@ const validationSchema = yup.object({
 });
 
 const SignUp = () => {
-  const { handleSignUp } = useUser();
+  const { handleSignUp, handleGoogleSignIn } = useUser();
   const formik = useFormik({
     initialValues: { username: '', email: '', password: '' },
     validationSchema: validationSchema,
@@ -52,7 +51,7 @@ const SignUp = () => {
         >
           <Button
             variant="contained"
-            onClick={GoogleLogin}
+            onClick={handleGoogleSignIn}
             sx={{
               background: '#fff',
               border: 'solid #5D6DD8 2px',
@@ -76,7 +75,8 @@ const SignUp = () => {
           </Typography>
           <InputField
             label="Användarnamn"
-            type="username"
+            type="text"
+            id="username"
             value={formik.values.username}
             error={formik.touched.username && Boolean(formik.errors.username)}
             helperText={formik.touched.username && formik.errors.username}
@@ -85,6 +85,7 @@ const SignUp = () => {
           <InputField
             label="E-postadress"
             type="email"
+            id="email"
             value={formik.values.email}
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
@@ -93,6 +94,7 @@ const SignUp = () => {
           <InputField
             label="Lösenord"
             type="password"
+            id="password"
             value={formik.values.password}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}

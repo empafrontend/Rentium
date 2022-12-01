@@ -12,10 +12,21 @@
   color: white;
   display: flex;
   gap: 3rem;
+  place-items: center;
 }
 
 .icon:hover {
   color: lightblue;
+}
+
+.img-icon {
+  width: 32px;
+  border-radius: 50px;
+  border: solid white 3px;
+}
+
+.img-icon:hover {
+  border: solid lightblue 3px;
 }
 
 @media screen and (min-width: 900px) {

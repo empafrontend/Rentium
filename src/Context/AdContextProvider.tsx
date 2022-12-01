@@ -17,9 +17,11 @@ import {
   useState,
 } from 'react';
 import { db } from '../firebase.js';
+import { useUser } from './UserContextProvider';
 
 export interface Ad {
-  author: string;
+  author?: string;
+  authorId?: string;
   bookingRequests?: string[];
   category: string;
   description: string;
@@ -49,7 +51,6 @@ interface AdContextValue {
 export const AdContext = createContext<AdContextValue>({
   ads: [],
   singleAd: {
-    author: '',
     category: '',
     description: '',
     endDate: '',
@@ -61,7 +62,6 @@ export const AdContext = createContext<AdContextValue>({
     title: '',
   },
   selectedAd: {
-    author: '',
     category: '',
     description: '',
     endDate: '',
@@ -82,11 +82,11 @@ export const AdContext = createContext<AdContextValue>({
 });
 
 const AdProvider: FC<PropsWithChildren> = (props) => {
+  const { user } = useUser();
   const adsCollectionRef = collection(db, 'ads');
   const [ads, setAds] = useState<Ad[]>([]);
   // this singleAd state is for rendering a single ad (but it may not be needed - depends on how the data is being rendered)
   const [singleAd, setSingleAd] = useState<Ad>({
-    author: '',
     category: '',
     description: '',
     endDate: '',
@@ -99,7 +99,6 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   });
   // this selectedAd state is for accepting or rejecting booking requests as well as removing ad
   const [selectedAd, setSelectedAd] = useState<Ad>({
-    author: '',
     category: '',
     description: '',
     endDate: '',
@@ -141,6 +140,8 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   const createAd = async (values: Ad) => {
     const newAd = {
       ...values,
+      author: user.displayName,
+      authorId: user.uid,
       isAvailable: true as Boolean,
       bookingRequests: [],
     };

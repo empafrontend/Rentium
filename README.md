@@ -2,15 +2,20 @@
 
 <br>
 
-## School project for advertisement page
+## School project for advertisement site
 
-Built with `React` and `Typescript`.
+In this school project we are suppose to build a advertisment site using `Prettier`, `ESlint`, `CI/CD` and also bug testing with `Cypress`.
+
+This project is built with `React`, `Typescript` and `MUI` to style our components.
 
 <br>
 
 ### Run the project
 
+Open up terminal and add following command
+<br>
 `npm i`
+<br>
 `npm start`
 
 <br>
@@ -35,6 +40,8 @@ We use google login in our app with `Firebase`.
 ### Github Projects
 
 - [Projects](https://github.com/users/empafrontend/projects/1)
+
+<br>
 
 ### Figma (Graphic Profile / Sketches)
 
