@@ -102,7 +102,7 @@ const AdCard = (props: ExAdCard) => {
             <Button
               variant="contained"
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              onClick={() => acceptOffer(props.ad.id!)}
+              onClick={() => acceptOffer(props.ad.id!, props.ad.requestor!)}
               sx={{ width: '50%', borderRadius: '20px 0 0 0' }}
             >
               Acceptera

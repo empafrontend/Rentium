@@ -47,7 +47,7 @@ interface AdContextValue {
   createAd: (values: Ad) => Promise<unknown>;
   updateAdStatus: (id: string) => Promise<unknown>;
   removeAd: (id: string) => Promise<unknown>;
-  acceptOffer: (id: string) => void;
+  acceptOffer: (id: string, requestor: string) => Promise<unknown>;
   rejectOffer: (id: string) => void;
 }
 
@@ -80,7 +80,7 @@ export const AdContext = createContext<AdContextValue>({
   createAd: (values) => Promise.resolve(),
   updateAdStatus: (id) => Promise.resolve(),
   removeAd: () => Promise.resolve(),
-  acceptOffer: () => {},
+  acceptOffer: (id, requestor) => Promise.resolve(),
   rejectOffer: () => {},
 });
 
@@ -164,7 +164,7 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   //     location: 'Centrala Göteborg',
   //     price: 999,
   //     startDate: '2022-12-25',
-  //     title: "Santa's boots",
+  //     title: "Santa's boots lalala",
   //   });
   // }, []);
 
@@ -187,9 +187,25 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   ///////// FOR TESTING ONLY
   // deleteAd('SKiiovFeRNLfqVoVBnpi');
 
-  const acceptOffer = (id: string) => {
+  const acceptOffer = async (id: string, requestor: string) => {
+    /////// DO NOT DELETE, WORKING ON IT
+    // const docRef = doc(db, 'ads', id);
+    // console.log((await getDoc(docRef).then((ref) => ref.data())) as Ad);
+    // //setSelectedAd((await getDoc(docRef).then((ref) => ref.data())) as Ad);
+
+    // console.log(selectedAd);
+    // const index = selectedAd.bookingRequests!.indexOf(requestor);
+    // selectedAd.bookingRequests!.splice(index);
+
+    // console.log(selectedAd);
+
+    // await updateDoc(docRef, {
+    //   isAvailable: false,
+
+    //   bookingRequests:
+
+    // });
     console.log('accepting offer', id);
-    // TODO: Update item status in db
   };
 
   const rejectOffer = (id: string) => {
