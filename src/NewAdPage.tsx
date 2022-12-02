@@ -34,6 +34,8 @@ const validationSchema = yup.object({
     .max(500, 'Beskrivning måste vara mellan 10 till 500 karaktärer'),
   price: yup.number().required('Vänligen fyll i detta fält'),
   location: yup.string().required('Vänligen fyll i detta fält'),
+  startDate: yup.date().required('Vänligen fyll i ett startdatum'),
+  endDate: yup.date().required('Vänligen fyll i ett slutdatum'),
 });
 
 const categories = [
@@ -64,6 +66,8 @@ function NewAdPage() {
       description: '',
       img: '',
       price: 0,
+      startDate: '',
+      endDate: '',
       location: 'Norra Göteborg' || 'Centrala Göteborg' || 'Västra Göteborg',
     },
     validationSchema: validationSchema,
@@ -179,6 +183,28 @@ function NewAdPage() {
               value={formik.values.price}
               error={formik.touched.price && Boolean(formik.errors.price)}
               helperText={formik.touched.price && formik.errors.price}
+              onChange={formik.handleChange}
+            />
+
+            <InputField
+              label="Startdatum"
+              type="date"
+              id="startDate"
+              value={formik.values.startDate}
+              error={
+                formik.touched.startDate && Boolean(formik.errors.startDate)
+              }
+              helperText={formik.touched.startDate && formik.errors.startDate}
+              onChange={formik.handleChange}
+            />
+
+            <InputField
+              label="Slutdatum"
+              type="date"
+              id="endDate"
+              value={formik.values.endDate}
+              error={formik.touched.endDate && Boolean(formik.errors.endDate)}
+              helperText={formik.touched.endDate && formik.errors.endDate}
               onChange={formik.handleChange}
             />
 
