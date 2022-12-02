@@ -16,7 +16,7 @@ const MyPage = () => {
       <ContentContainer background="#F5F5F5">
         <Box sx={{ display: 'flex', flexDirection: 'column', rowGap: 5 }}>
           <Typography component="h1" variant="h3" mb={-1} fontWeight={600}>
-            Hej {user?.displayName}!
+            Hej {user?.displayName}
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', gap: 3 }}>
             <Button

@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useContext } from 'react';
+import { useParams } from 'react-router-dom';
 /* import ads from './adsData'; */
 import { AdContext } from './Context/AdContextProvider';
 import './footer.css';
@@ -15,6 +16,7 @@ import ContentContainer from './shared/ContentContainer';
 
 function Profile() {
   const { ads } = useContext(AdContext);
+  const params = useParams<{ id: string }>();
 
   return (
     <ContentContainer background="#F5F5F5">
@@ -33,14 +35,12 @@ function Profile() {
             paddingBottom: '2rem',
           }}
         >
-          Lindqvistsaras annonser (
-          {ads.filter((ad) => ad.author !== 'lindqvistsara').length}){' '}
-          {/* change to correct user */}
+          Lindqvistsaras annonser ({/* {user.displayName}s annonser ( */}
+          {ads.filter((ad) => ad.author !== params.id).length}){' '}
         </Typography>
 
-        {/* should change author string to correct user */}
         {ads
-          .filter((ad) => ad.author !== 'lindqvistsara')
+          .filter((ad) => ad.author !== params.id)
           .map((ad, index) => (
             <Card
               className="card"

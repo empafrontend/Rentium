@@ -1,6 +1,7 @@
 import { PlaceOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import { useContext } from 'react';
+import AdPage from './AdPage';
 import CategoryLength from './categoryLength';
 import { AdContext } from './Context/AdContextProvider';
 import './Feed/feed.css';
@@ -41,12 +42,13 @@ const SlimCard = () => {
   ));
 
   return (
-    <ContentContainer>
-      <Box>
+    <Box>
+      <ContentContainer>
         <CategoryLength />
         {adsList}
-      </Box>
-    </ContentContainer>
+      </ContentContainer>
+      <AdPage />
+    </Box>
   );
 };
 

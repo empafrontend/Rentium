@@ -1,14 +1,29 @@
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Box, Button, CardMedia, Typography } from '@mui/material';
-import { useContext } from 'react';
-import img from '../src/Assets/gk.png';
-import { AdContext } from './Context/AdContextProvider';
+import { Link, useParams } from 'react-router-dom';
+import ads from './adsData';
 import { useUser } from './Context/UserContextProvider';
 import ContentContainer from './shared/ContentContainer';
 
-const AdPage = () => {
-  const { ads } = useContext(AdContext);
-  const { user, handleSignOut } = useUser();
+{
+  /* Detailpage */
+}
+function AdPage() {
+  // const newads = useContext(AdContext).ads;
+  const params = useParams<{ id: string }>();
+  const { user } = useUser();
+
+  // const ads = newads.find((ad) => ad.id === params?.id);
+  // if (!ads) return null;
+
+  const singleAd = () => {
+    const arr = ads
+      .filter((ad) => ad.id === params.id)
+      .flatMap((ad) => {
+        return ad;
+      });
+    return Object.assign({}, ...arr);
+  };
 
   return (
     <ContentContainer>
@@ -21,11 +36,10 @@ const AdPage = () => {
         {/* the border radius is not working? */}
         <CardMedia
           component="img"
-          image={img}
-          alt=""
           sx={{
             borderRadius: '1rem',
           }}
+          src={singleAd().img}
         />
         <Box
           sx={{
@@ -51,7 +65,7 @@ const AdPage = () => {
                 mr: '5px',
               }}
             >
-              Inlagd: 16 Maj. 22:46
+              Inlagd: {singleAd().createdAt}
             </Typography>
             <Typography
               variant="body1"
@@ -62,7 +76,7 @@ const AdPage = () => {
                 fontWeight: '300',
               }}
             >
-              Göteborg
+              {singleAd().location}
             </Typography>
           </Box>
           <Typography
@@ -75,10 +89,12 @@ const AdPage = () => {
               alignItems: 'center',
             }}
           >
-            <PersonOutlineIcon
-              sx={{ fontSize: '1rem', m: '2px', color: '#343232' }}
-            />
-            lindqvistsara
+            <Link to={`/profile/${singleAd().authorId}`}>
+              <PersonOutlineIcon
+                sx={{ fontSize: '1rem', m: '2px', color: '#343232' }}
+              />
+              {singleAd().author}
+            </Link>
           </Typography>
         </Box>
         <Box
@@ -92,7 +108,7 @@ const AdPage = () => {
             variant="h5"
             sx={{ color: '#343232', fontWeight: '500', fontSize: '20px' }}
           >
-            Galet snabb gräsklippare
+            {singleAd().title}
           </Typography>
           <Box
             sx={{
@@ -120,7 +136,7 @@ const AdPage = () => {
                 fontWeight: '300',
               }}
             >
-              22 maj 2022 - 6 juli 2022
+              {singleAd().startDate} - {singleAd().endDate}
             </Typography>
           </Box>
           <Typography
@@ -133,7 +149,7 @@ const AdPage = () => {
               alignItems: 'center',
             }}
           >
-            600 kr
+            {singleAd().price} kr
           </Typography>
         </Box>
         <Typography
@@ -146,18 +162,23 @@ const AdPage = () => {
             fontWeight: '300',
           }}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vitae
-          lectus vulputate, rhoncus velit vitae, rhoncus sapien. Fusce finibus
-          pharetra purus, venenatis sodales augue commodo et. Aliquam erat
-          volutpat. Nam consectetur magna ut dui pulvinar accumsan. Phasellus
-          condimentum dictum leo, id luctus risus hendrerit non. Orci varius
-          natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-          mus.
+          {singleAd().description}
         </Typography>
-        <Button variant="contained">Skicka bokningsförfrågan</Button>
+        {!user.uid ? (
+          <Typography>
+            You have to log in before sending a booking request.
+          </Typography>
+        ) : (
+          <Button
+            variant="contained"
+            onClick={() => console.log('sending request')}
+          >
+            Skicka bokningsförfrågan
+          </Button>
+        )}
       </Box>
     </ContentContainer>
   );
-};
+}
 
 export default AdPage;
