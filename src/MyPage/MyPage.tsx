@@ -92,11 +92,8 @@ const MyPage = () => {
               {generateBookingReq().map((req, index) => (
                 <AdCard
                   key={index}
-                  title={req?.title}
-                  img={req?.img}
-                  author={req?.author}
-                  price={req?.price}
-                  requestor={req?.requestor}
+                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                  ad={req!}
                   isRequest
                 />
               ))}
@@ -121,17 +118,7 @@ const MyPage = () => {
               {ads
                 .filter((ad) => ad.authorId === user.uid)
                 .map((ad, index) => (
-                  <AdCard
-                    key={index}
-                    title={ad.title}
-                    img={ad.img}
-                    author={ad.author}
-                    price={ad.price}
-                    createdAt={ad.createdAt
-                      ?.toDate()
-                      .toDateString('')
-                      .replace(/^\S+\s/, '')}
-                  />
+                  <AdCard key={index} ad={ad} />
                 ))}
             </Box>
           </Box>
