@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from '@mui/material';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AdContext } from '../Context/AdContextProvider';
 import { useUser } from '../Context/UserContextProvider';
 import Protected from '../Protected';
@@ -7,7 +7,8 @@ import AdCard from '../shared/AdCard';
 import ContentContainer from '../shared/ContentContainer';
 
 const MyPage = () => {
-  const { ads } = useContext(AdContext);
+  const { ads, getAds, acceptOffer, rejectOffer, removeAd } =
+    useContext(AdContext);
   const { user, handleSignOut } = useUser();
 
   const generateBookingReq = () => {
@@ -19,6 +20,10 @@ const MyPage = () => {
         })
       );
   };
+
+  useEffect(() => {
+    getAds();
+  }, [acceptOffer, rejectOffer, removeAd]);
 
   return (
     <Protected>

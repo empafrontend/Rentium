@@ -50,10 +50,13 @@ const AdCard = (props: ExAdCard) => {
         sx={{
           maxWidth: 250,
           minWidth: 250,
-          height: 'fit-content',
+          maxHeight: 200,
           borderRadius: '20px 20px 20px 0',
           boxShadow: '0 2px 10px #DDDBD5',
           mt: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
         }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
@@ -74,6 +77,7 @@ const AdCard = (props: ExAdCard) => {
               flexDirection: 'column',
               placeContent: 'center',
               pl: 1,
+              maxWidth: 120,
             }}
           >
             <Typography variant="body1" fontWeight={600}>
