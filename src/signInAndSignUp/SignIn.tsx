@@ -3,6 +3,8 @@ import firebase from 'firebase/compat/app';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import * as yup from 'yup';
 import { useUser } from '../Context/UserContextProvider';
 import { firebaseConfig } from '../firebase';
@@ -26,6 +28,11 @@ const validationSchema = yup.object({
 const SignIn = () => {
   const { handleSignIn, handleGoogleSignIn, user, handleSignOut } = useUser();
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const showToastMessage = () => {
+    toast.success('Success Notification !', {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
 
   // Closes modal
   const handleClose = () => setOpenModal(false);

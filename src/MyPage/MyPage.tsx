@@ -1,5 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useContext } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { AdContext } from '../Context/AdContextProvider';
 import { useUser } from '../Context/UserContextProvider';
 import Protected from '../Protected';
@@ -9,6 +11,11 @@ import ContentContainer from '../shared/ContentContainer';
 const MyPage = () => {
   const { ads } = useContext(AdContext);
   const { user, handleSignOut } = useUser();
+  const showToastMessage = () => {
+    toast.success('Success Notification !', {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
 
   const generateBookingReq = () => {
     return ads
