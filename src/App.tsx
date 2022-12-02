@@ -36,7 +36,6 @@ function App() {
                     <Route path="/ad" element={<AdPage />} />
                     <Route path="/my-ad" element={<MyAd />} />
                     <Route path="/profile" element={<Profile />} />
-
                     <Route path="/filter" element={<AdFilterFeed />} />
                     <Route path="/feed" element={<Feed />} />
                     <Route path="/new-ad" element={<NewAdPage />} />
