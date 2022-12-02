@@ -11,14 +11,16 @@ const MyPage = () => {
     useContext(AdContext);
   const { user, handleSignOut } = useUser();
 
+  const adsFromCurrentUser = () => {
+    return ads.filter((ad) => ad.authorId === user.uid);
+  };
+
   const generateBookingReq = () => {
-    return ads
-      .filter((ad) => ad.authorId === user.uid)
-      .flatMap((ad) =>
-        ad.bookingRequests?.map((requestor) => {
-          return { ...ad, requestor: requestor };
-        })
-      );
+    return adsFromCurrentUser().flatMap((ad) =>
+      ad.bookingRequests?.map((requestor) => {
+        return { ...ad, requestor: requestor };
+      })
+    );
   };
 
   useEffect(() => {
@@ -94,21 +96,24 @@ const MyPage = () => {
                 '::-webkit-scrollbar': { display: 'none' },
               }}
             >
-              {generateBookingReq().map((req, index) => (
-                <AdCard
-                  key={index}
-                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                  ad={req!}
-                  isRequest
-                />
-              ))}
+              {!generateBookingReq().length ? (
+                <Typography>You have no booking requests to show.</Typography>
+              ) : (
+                generateBookingReq().map((req, index) => (
+                  <AdCard
+                    key={index}
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    ad={req!}
+                    isRequest
+                  />
+                ))
+              )}
             </Box>
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography component="h2" variant="h4" mb={-1}>
-              Mina annonser (
-              {ads.filter((ad) => ad.authorId === user.uid).length})
+              Mina annonser ({adsFromCurrentUser().length})
             </Typography>
             <Box
               height={190}
@@ -120,11 +125,13 @@ const MyPage = () => {
                 '::-webkit-scrollbar': { display: 'none' },
               }}
             >
-              {ads
-                .filter((ad) => ad.authorId === user.uid)
-                .map((ad, index) => (
+              {!adsFromCurrentUser().length ? (
+                <Typography>You have no ads to show.</Typography>
+              ) : (
+                adsFromCurrentUser().map((ad, index) => (
                   <AdCard key={index} ad={ad} />
-                ))}
+                ))
+              )}
             </Box>
           </Box>
         </Box>
