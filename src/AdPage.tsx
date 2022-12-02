@@ -1,8 +1,16 @@
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Box, Button, CardMedia, Container, Typography } from '@mui/material';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import img from '../src/Assets/gk.png';
 
 function AdPage() {
+  const showToastMessage = () => {
+    toast.success('Din bokningsförfrågan har blivit skickad.', {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  };
+
   return (
     <Container
       sx={{
@@ -156,7 +164,10 @@ function AdPage() {
           natoque penatibus et magnis dis parturient montes, nascetur ridiculus
           mus.
         </Typography>
-        <Button variant="contained">Skicka bokningsförfrågan</Button>
+        <Button onClick={showToastMessage} variant="contained">
+          Skicka bokningsförfrågan
+        </Button>
+        <ToastContainer />
       </Box>
     </Container>
   );
