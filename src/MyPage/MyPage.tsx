@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from '@mui/material';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { AdContext } from '../Context/AdContextProvider';
 import { useUser } from '../Context/UserContextProvider';
 import Protected from '../Protected';
@@ -19,10 +19,6 @@ const MyPage = () => {
         })
       );
   };
-
-  useEffect(() => {
-    generateBookingReq();
-  }, []);
 
   return (
     <Protected>
