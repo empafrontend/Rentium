@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AdContext } from '../Context/AdContextProvider';
 import { useUser } from '../Context/UserContextProvider';
 import Protected from '../Protected';
@@ -7,6 +8,7 @@ import AdCard from '../shared/AdCard';
 import ContentContainer from '../shared/ContentContainer';
 
 const MyPage = () => {
+  const navigate = useNavigate();
   const { ads, getAds, acceptOffer, rejectOffer, removeAd } =
     useContext(AdContext);
   const { user, handleSignOut } = useUser();
@@ -70,7 +72,7 @@ const MyPage = () => {
             </Button>
             <Button
               variant="contained"
-              onClick={() => console.log('show profile')} // TODO: insert correct function / link
+              onClick={() => navigate(`/profile/${user.uid}`)}
               sx={{
                 background: '#fff',
                 border: 'solid #5D6DD8 2px',
@@ -97,7 +99,9 @@ const MyPage = () => {
               }}
             >
               {!generateBookingReq().length ? (
-                <Typography>You have no booking requests to show.</Typography>
+                <Typography alignSelf="center" mx="auto">
+                  Du har inga bokningsförfrågningar att visa.
+                </Typography>
               ) : (
                 generateBookingReq().map((req, index) => (
                   <AdCard
@@ -126,7 +130,9 @@ const MyPage = () => {
               }}
             >
               {!adsFromCurrentUser().length ? (
-                <Typography>You have no ads to show.</Typography>
+                <Typography alignSelf="center" mx="auto">
+                  Du har inga annonser att visa.
+                </Typography>
               ) : (
                 adsFromCurrentUser().map((ad, index) => (
                   <AdCard key={index} ad={ad} />
