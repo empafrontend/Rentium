@@ -1,6 +1,8 @@
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Box, Button, CardMedia, Typography } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ads from './adsData';
 import { useUser } from './Context/UserContextProvider';
 import ContentContainer from './shared/ContentContainer';
@@ -25,6 +27,12 @@ function AdPage() {
     return Object.assign({}, ...arr);
   };
 
+  const showToastMessage = () => {
+    toast.success('Din bokningsförfrågan har blivit skickad.', {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  };
+
   return (
     <ContentContainer>
       <Box
@@ -40,7 +48,7 @@ function AdPage() {
             borderRadius: '1rem',
           }}
           src={singleAd().img}
-        />
+        ></CardMedia>
         <Box
           sx={{
             display: 'flex',
@@ -93,6 +101,7 @@ function AdPage() {
               <PersonOutlineIcon
                 sx={{ fontSize: '1rem', m: '2px', color: '#343232' }}
               />
+
               {singleAd().author}
             </Link>
           </Typography>
@@ -169,12 +178,12 @@ function AdPage() {
             You have to log in before sending a booking request.
           </Typography>
         ) : (
-          <Button
-            variant="contained"
-            onClick={() => console.log('sending request')}
-          >
-            Skicka bokningsförfrågan
-          </Button>
+          <>
+            <Button variant="contained" onClick={showToastMessage}>
+              Skicka bokningsförfrågan
+            </Button>
+            <ToastContainer />
+          </>
         )}
       </Box>
     </ContentContainer>
