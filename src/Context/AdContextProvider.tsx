@@ -14,7 +14,6 @@ import {
   FC,
   PropsWithChildren,
   useContext,
-  useEffect,
   useState,
 } from 'react';
 import { db } from '../firebase.js';
@@ -113,10 +112,10 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
     title: '',
   });
 
-  useEffect(() => {
-    getAds();
-    // console.log('getAds() returns:', ads);
-  }, []);
+  // useEffect(() => {
+  //   getAds();
+  //   // console.log('getAds() returns:', ads);
+  // }, []);
 
   /** Gets all data from db ad collection */
   const getAds = async () => {

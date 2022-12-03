@@ -11,8 +11,8 @@ const FilterButtons = () => {
   const [count, setCount] = useState(0);
   const { filterNavigation, setFilterNavigation } =
     useContext(NavigationContext);
-  console.log(count);
-  console.log(filterNavigation);
+  // console.log(count);
+  // console.log(filterNavigation);
 
   useEffect(() => {
     Filter();

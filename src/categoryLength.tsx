@@ -3,8 +3,8 @@ import { Typography } from '@mui/material';
 const CategoryLength = () => {
   const totalItems = document.querySelectorAll('.showing');
   const totalItemsLength = totalItems.length.toString();
-  console.log(totalItems);
-  console.log(totalItemsLength);
+  // console.log(totalItems);
+  // console.log(totalItemsLength);
   return (
     <div
       id="numberOfArticles"

@@ -1,12 +1,17 @@
 import { LocationOnOutlined } from '@mui/icons-material';
 import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import ads from '../adsData.js';
+import { AdContext } from '../Context/AdContextProvider';
 import ContentContainer from '../shared/ContentContainer';
 import './feed.css';
 
 function Feed() {
-  //const { ads } = useContext(AdContext);
+  const { ads, getAds } = useContext(AdContext);
+
+  useEffect(() => {
+    getAds();
+  }, []);
 
   return (
     <ContentContainer>

@@ -1,9 +1,10 @@
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Box, Button, CardMedia, Typography } from '@mui/material';
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ads from './adsData';
+import { useAd } from './Context/AdContextProvider';
 import { useUser } from './Context/UserContextProvider';
 import ContentContainer from './shared/ContentContainer';
 
@@ -11,21 +12,15 @@ import ContentContainer from './shared/ContentContainer';
   /* Detailpage */
 }
 function AdPage() {
-  // const newads = useContext(AdContext).ads;
   const params = useParams<{ id: string }>();
   const { user } = useUser();
+  const { getOneAd, singleAd } = useAd();
 
-  // const ads = newads.find((ad) => ad.id === params?.id);
-  // if (!ads) return null;
-
-  const singleAd = () => {
-    const arr = ads
-      .filter((ad) => ad.id === params.id)
-      .flatMap((ad) => {
-        return ad;
-      });
-    return Object.assign({}, ...arr);
-  };
+  useEffect(() => {
+    if (params.id) {
+      getOneAd(params.id);
+    }
+  }, []);
 
   const showToastMessage = () => {
     toast.success('Din bokningsförfrågan har blivit skickad.', {
@@ -47,7 +42,7 @@ function AdPage() {
           sx={{
             borderRadius: '1rem',
           }}
-          src={singleAd().img}
+          src={singleAd.img}
         ></CardMedia>
         <Box
           sx={{
@@ -73,7 +68,7 @@ function AdPage() {
                 mr: '5px',
               }}
             >
-              Inlagd: {singleAd().createdAt}
+              {/* Inlagd: {singleAd.createdAt} */}
             </Typography>
             <Typography
               variant="body1"
@@ -84,7 +79,7 @@ function AdPage() {
                 fontWeight: '300',
               }}
             >
-              {singleAd().location}
+              {singleAd.location}
             </Typography>
           </Box>
           <Typography
@@ -97,12 +92,12 @@ function AdPage() {
               alignItems: 'center',
             }}
           >
-            <Link to={`/profile/${singleAd().authorId}`}>
+            <Link to={`/profile/${singleAd.authorId}`}>
               <PersonOutlineIcon
                 sx={{ fontSize: '1rem', m: '2px', color: '#343232' }}
               />
 
-              {singleAd().author}
+              {singleAd.author}
             </Link>
           </Typography>
         </Box>
@@ -117,7 +112,7 @@ function AdPage() {
             variant="h5"
             sx={{ color: '#343232', fontWeight: '500', fontSize: '20px' }}
           >
-            {singleAd().title}
+            {singleAd.title}
           </Typography>
           <Box
             sx={{
@@ -145,7 +140,7 @@ function AdPage() {
                 fontWeight: '300',
               }}
             >
-              {singleAd().startDate} - {singleAd().endDate}
+              {singleAd.startDate} - {singleAd.endDate}
             </Typography>
           </Box>
           <Typography
@@ -158,7 +153,7 @@ function AdPage() {
               alignItems: 'center',
             }}
           >
-            {singleAd().price} kr
+            {singleAd.price} kr
           </Typography>
         </Box>
         <Typography
@@ -171,7 +166,7 @@ function AdPage() {
             fontWeight: '300',
           }}
         >
-          {singleAd().description}
+          {singleAd.description}
         </Typography>
         {!user.uid ? (
           <Typography>

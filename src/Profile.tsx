@@ -7,13 +7,15 @@ import {
   CardMedia,
   Typography,
 } from '@mui/material';
+import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import ads from './adsData.js';
+import { AdContext } from './Context/AdContextProvider';
+
 import './footer.css';
 import ContentContainer from './shared/ContentContainer';
 
 function Profile() {
-  // const { ads } = useContext(AdContext);
+  const { ads } = useContext(AdContext);
   const params = useParams<{ id: string }>();
 
   const user = () => {
@@ -37,9 +39,7 @@ function Profile() {
             paddingBottom: '2rem',
           }}
         >
-          {user().map((ad) => ad.author) + 's annonser'} (
-          {/* {user.displayName}s annonser ( */}
-          {user().length}){' '}
+          {user().map((ad) => ad.author)[0] + 's annonser'} ({user().length}){' '}
         </Typography>
 
         {user().map((ad, index) => (
