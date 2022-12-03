@@ -9,6 +9,7 @@ import {
   serverTimestamp,
   updateDoc,
 } from '@firebase/firestore';
+import { arrayRemove } from 'firebase/firestore';
 import {
   createContext,
   FC,
@@ -16,7 +17,6 @@ import {
   useContext,
   useState,
 } from 'react';
-
 import { db } from '../firebase.js';
 import { useUser } from './UserContextProvider';
 
@@ -187,27 +187,26 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   ///////// FOR TESTING ONLY
   // deleteAd('SKiiovFeRNLfqVoVBnpi');
 
+  /** Accepts a booking request */
   const acceptOffer = async (id: string, requestor: string) => {
     const docRef = doc(db, 'ads', id);
+    // const newBookingReqList = selectedAd.bookingRequests!.filter(
+    //   (req) => req !== requestor
+    // );
     setSelectedAd((await getDoc(docRef).then((ref) => ref.data())) as Ad);
     await updateDoc(docRef, {
       isAvailable: false,
-      bookingRequests: selectedAd.bookingRequests!.filter(
-        (req) => req !== requestor
-      ),
+      bookingRequests: arrayRemove(requestor),
     });
   };
 
+  /** Rejects a booking request */
   const rejectOffer = async (id: string, requestor: string) => {
     const docRef = doc(db, 'ads', id);
     setSelectedAd((await getDoc(docRef).then((ref) => ref.data())) as Ad);
     await updateDoc(docRef, {
-      bookingRequests: selectedAd.bookingRequests!.filter(
-        (req) => req !== requestor
-      ),
+      bookingRequests: arrayRemove(requestor),
     });
-    console.log('rejecting offer', id);
-    // TODO: Remove ad from bokningsförfrågningarna
   };
 
   return (
