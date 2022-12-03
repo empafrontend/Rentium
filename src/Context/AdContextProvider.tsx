@@ -16,6 +16,7 @@ import {
   useContext,
   useState,
 } from 'react';
+
 import { db } from '../firebase.js';
 import { useUser } from './UserContextProvider';
 
@@ -47,7 +48,7 @@ interface AdContextValue {
   updateAdStatus: (id: string) => Promise<unknown>;
   removeAd: (id: string) => Promise<unknown>;
   acceptOffer: (id: string, requestor: string) => Promise<unknown>;
-  rejectOffer: (id: string) => void;
+  rejectOffer: (id: string, requestor: string) => void;
 }
 
 export const AdContext = createContext<AdContextValue>({
@@ -80,7 +81,7 @@ export const AdContext = createContext<AdContextValue>({
   updateAdStatus: (id) => Promise.resolve(),
   removeAd: () => Promise.resolve(),
   acceptOffer: (id, requestor) => Promise.resolve(),
-  rejectOffer: () => {},
+  rejectOffer: (id, requestor) => {},
 });
 
 const AdProvider: FC<PropsWithChildren> = (props) => {
@@ -187,27 +188,24 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   // deleteAd('SKiiovFeRNLfqVoVBnpi');
 
   const acceptOffer = async (id: string, requestor: string) => {
-    /////// DO NOT DELETE, WORKING ON IT
-    // const docRef = doc(db, 'ads', id);
-    // console.log((await getDoc(docRef).then((ref) => ref.data())) as Ad);
-    // //setSelectedAd((await getDoc(docRef).then((ref) => ref.data())) as Ad);
-
-    // console.log(selectedAd);
-    // const index = selectedAd.bookingRequests!.indexOf(requestor);
-    // selectedAd.bookingRequests!.splice(index);
-
-    // console.log(selectedAd);
-
-    // await updateDoc(docRef, {
-    //   isAvailable: false,
-
-    //   bookingRequests:
-
-    // });
-    console.log('accepting offer', id);
+    const docRef = doc(db, 'ads', id);
+    setSelectedAd((await getDoc(docRef).then((ref) => ref.data())) as Ad);
+    await updateDoc(docRef, {
+      isAvailable: false,
+      bookingRequests: selectedAd.bookingRequests!.filter(
+        (req) => req !== requestor
+      ),
+    });
   };
 
-  const rejectOffer = (id: string) => {
+  const rejectOffer = async (id: string, requestor: string) => {
+    const docRef = doc(db, 'ads', id);
+    setSelectedAd((await getDoc(docRef).then((ref) => ref.data())) as Ad);
+    await updateDoc(docRef, {
+      bookingRequests: selectedAd.bookingRequests!.filter(
+        (req) => req !== requestor
+      ),
+    });
     console.log('rejecting offer', id);
     // TODO: Remove ad from bokningsförfrågningarna
   };

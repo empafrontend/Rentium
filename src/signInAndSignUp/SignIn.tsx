@@ -24,7 +24,7 @@ const validationSchema = yup.object({
 });
 
 const SignIn = () => {
-  const { handleSignIn, handleGoogleSignIn, user, handleSignOut } = useUser();
+  const { handleSignIn, handleGoogleSignIn } = useUser();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   // Closes modal

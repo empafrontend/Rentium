@@ -35,7 +35,8 @@ const AdCard = (props: ExAdCard) => {
   /** Handles clicking "ja" in the warning */
   const confirmAction = (id: string) => {
     setOpenModal(false);
-    isToRemove ? removeAd(id) : rejectOffer(id);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    isToRemove ? removeAd(id) : rejectOffer(props.ad.id!, props.ad.requestor!);
   };
 
   /**  Handles clicking "nej" in the warning */
