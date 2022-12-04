@@ -1,6 +1,7 @@
 /* eslint-disable */ // delete this line when functionality is added in all functions
 import {
   addDoc,
+  arrayRemove,
   collection,
   deleteDoc,
   doc,
@@ -9,7 +10,6 @@ import {
   serverTimestamp,
   updateDoc,
 } from '@firebase/firestore';
-import { arrayRemove } from 'firebase/firestore';
 import {
   createContext,
   FC,
@@ -190,10 +190,6 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   /** Accepts a booking request */
   const acceptOffer = async (id: string, requestor: string) => {
     const docRef = doc(db, 'ads', id);
-    // const newBookingReqList = selectedAd.bookingRequests!.filter(
-    //   (req) => req !== requestor
-    // );
-    setSelectedAd((await getDoc(docRef).then((ref) => ref.data())) as Ad);
     await updateDoc(docRef, {
       isAvailable: false,
       bookingRequests: arrayRemove(requestor),
@@ -203,7 +199,6 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   /** Rejects a booking request */
   const rejectOffer = async (id: string, requestor: string) => {
     const docRef = doc(db, 'ads', id);
-    setSelectedAd((await getDoc(docRef).then((ref) => ref.data())) as Ad);
     await updateDoc(docRef, {
       bookingRequests: arrayRemove(requestor),
     });
