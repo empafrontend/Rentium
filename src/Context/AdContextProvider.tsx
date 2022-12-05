@@ -14,6 +14,7 @@ import {
   createContext,
   FC,
   PropsWithChildren,
+  useCallback,
   useContext,
   useState,
 } from 'react';
@@ -113,12 +114,6 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
     title: '',
   });
 
-  // useEffect(() => {
-  //   getAds();
-  //   // console.log('getAds() returns:', ads);
-  // }, []);
-
-  /** Gets all data from db ad collection */
   const getAds = async () => {
     const adData = await getDocs(adsCollectionRef);
     setAds(adData.docs.map((doc) => ({ ...(doc.data() as Ad), id: doc.id })));
@@ -164,7 +159,7 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   //     location: 'Centrala Göteborg',
   //     price: 999,
   //     startDate: '2022-12-25',
-  //     title: "Santa's boots lalala",
+  //     title: "Santa's boots lalalala",
   //   });
   // }, []);
 
@@ -180,29 +175,29 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   //   updateAdStatus('7TENcfLgExXjxgh7by2S');
 
   /** Removes a document from the db ad collection */
-  const removeAd = async (id: string) => {
+  const removeAd = useCallback(async (id: string) => {
     const docRef = doc(db, 'ads', id);
-    await deleteDoc(docRef);
-  };
+    await deleteDoc(docRef).then(() => getAds());
+  }, []);
   ///////// FOR TESTING ONLY
   // deleteAd('SKiiovFeRNLfqVoVBnpi');
 
   /** Accepts a booking request */
-  const acceptOffer = async (id: string, requestor: string) => {
+  const acceptOffer = useCallback(async (id: string, requestor: string) => {
     const docRef = doc(db, 'ads', id);
     await updateDoc(docRef, {
       isAvailable: false,
       bookingRequests: arrayRemove(requestor),
-    });
-  };
+    }).then(() => getAds());
+  }, []);
 
   /** Rejects a booking request */
-  const rejectOffer = async (id: string, requestor: string) => {
+  const rejectOffer = useCallback(async (id: string, requestor: string) => {
     const docRef = doc(db, 'ads', id);
     await updateDoc(docRef, {
       bookingRequests: arrayRemove(requestor),
-    });
-  };
+    }).then(() => getAds());
+  }, []);
 
   return (
     <AdContext.Provider

@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from '@mui/material';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AdContext } from '../Context/AdContextProvider';
 import { useUser } from '../Context/UserContextProvider';
@@ -24,10 +24,6 @@ const MyPage = () => {
       })
     );
   };
-
-  useEffect(() => {
-    getAds();
-  }, [acceptOffer, rejectOffer, removeAd]);
 
   return (
     <Protected>
