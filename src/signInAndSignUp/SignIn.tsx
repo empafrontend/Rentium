@@ -3,7 +3,7 @@ import firebase from 'firebase/compat/app';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as yup from 'yup';
 import { useUser } from '../Context/UserContextProvider';
@@ -29,9 +29,11 @@ const SignIn = () => {
   const { handleSignIn, handleGoogleSignIn, user, handleSignOut } = useUser();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const showToastMessage = () => {
-    toast.success('Success Notification !', {
-      position: toast.POSITION.TOP_RIGHT,
+    toast.success('Du är inloggad', {
+      position: toast.POSITION.BOTTOM_CENTER,
+      autoClose: 10000,
     });
+    console.log('toast');
   };
 
   // Closes modal
@@ -69,7 +71,10 @@ const SignIn = () => {
           >
             <Button
               variant="contained"
-              onClick={handleGoogleSignIn}
+              onClick={() => {
+                handleGoogleSignIn();
+                showToastMessage();
+              }}
               sx={{
                 background: '#fff',
                 border: 'solid #5D6DD8 2px',
@@ -77,6 +82,7 @@ const SignIn = () => {
                 '&:hover': { background: '#ECEFFF' },
               }}
             >
+              <ToastContainer />
               <img
                 alt="Google"
                 width="15px"
