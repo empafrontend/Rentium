@@ -43,12 +43,13 @@ const MyPage = () => {
             </Typography>
             <ToastContainer />
             <Button
-              variant="contained"
+              variant="outlined"
               onClick={handleSignOut}
               sx={{
                 mt: 1,
-                background: 'none',
-                color: '#5D6DD8',
+                width: '6rem',
+                backgroundColor: '#5D6DD8',
+                color: 'white',
                 '&:hover': { color: '#3335A7', background: 'none' },
               }}
             >

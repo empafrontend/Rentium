@@ -26,7 +26,10 @@ function Header() {
           <HomeOutlined className="icon" fontSize="large" />
         </Link>
         <SearchOutlined className="icon" fontSize="large" />
-        <Link to={!user.uid ? '/sign-in' : '/new-ad'}>
+        <Link
+          className={!user.uid ? 'hidden' : 'icon'}
+          to={!user.uid ? '/sign-in' : '/new-ad'}
+        >
           <AddCircleOutlineRounded className="icon" fontSize="large" />
         </Link>
         <Link to={!user.uid ? '/sign-in' : '/my-page'}>
