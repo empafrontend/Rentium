@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { Ad, useAd } from '../Context/AdContextProvider';
 
 type ExAdCard = Partial<Ad> & {
+  ad: Ad;
   isRequest?: boolean | false;
 };
 
@@ -20,10 +21,10 @@ const AdCard = (props: ExAdCard) => {
   const [isToRemove, setIsToRemove] = useState<boolean>(false);
   const { acceptOffer, rejectOffer, removeAd } = useAd();
 
-  // Closes modal
+  /** Closes modal  */
   const handleClose = () => setOpenModal(false);
 
-  // Displays warning for ad removal or offer rejection when clicking "neka" or "ta bort"
+  /** Displays warning for ad removal or offer rejection when clicking "neka" or "ta bort" */
   const displayWarning = (e: React.MouseEvent<HTMLButtonElement>) => {
     setOpenModal(true);
     e.currentTarget.innerText === 'Ta bort'
@@ -31,13 +32,14 @@ const AdCard = (props: ExAdCard) => {
       : setIsToRemove(false);
   };
 
-  // Handles clicking "ja" in the warning
+  /** Handles clicking "ja" in the warning */
   const confirmAction = (id: string) => {
     setOpenModal(false);
-    isToRemove ? removeAd(id) : rejectOffer(id);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    isToRemove ? removeAd(id) : rejectOffer(props.ad.id!, props.ad.requestor!);
   };
 
-  // Handles clicking "nej" in the warning
+  /**  Handles clicking "nej" in the warning */
   const cancelAction = () => {
     handleClose();
     setIsToRemove(false);
@@ -49,10 +51,13 @@ const AdCard = (props: ExAdCard) => {
         sx={{
           maxWidth: 250,
           minWidth: 250,
-          height: 'fit-content',
+          maxHeight: 200,
           borderRadius: '20px 20px 20px 0',
           boxShadow: '0 2px 10px #DDDBD5',
           mt: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
         }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
@@ -62,8 +67,8 @@ const AdCard = (props: ExAdCard) => {
           >
             <CardMedia
               component="img"
-              alt={props.title}
-              image={props.img}
+              alt={props.ad.title}
+              image={props.ad.img}
               sx={{ borderRadius: 3, width: 100, height: 100 }}
             />
           </Box>
@@ -73,17 +78,23 @@ const AdCard = (props: ExAdCard) => {
               flexDirection: 'column',
               placeContent: 'center',
               pl: 1,
+              maxWidth: 120,
             }}
           >
             <Typography variant="body1" fontWeight={600}>
-              {props.title}
+              {props.ad.title}
             </Typography>
             <Typography pb={3} variant="body2" color="text.secondary">
-              {props.isRequest ? props.requestor : props.createdAt}
-              {/******************************** TODO: insert date from data */}
+              {props.isRequest
+                ? props.ad.requestor
+                : 'Inlagd: ' +
+                  props.ad.createdAt
+                    .toDate()
+                    .toDateString()
+                    .replace(/^\S+\s/, '')}
             </Typography>
             <Typography variant="body1" fontWeight={400}>
-              {props.price} kr
+              {props.ad.price} kr
             </Typography>
           </CardContent>
         </Box>
@@ -91,8 +102,8 @@ const AdCard = (props: ExAdCard) => {
           <CardActions disableSpacing sx={{ p: 0, width: '100%' }}>
             <Button
               variant="contained"
-              onClick={() => acceptOffer(props.title!)}
-              // ************* TODO: here should be id that being passed ot the function
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              onClick={() => acceptOffer(props.ad.id!, props.ad.requestor!)}
               sx={{ width: '50%', borderRadius: '20px 0 0 0' }}
             >
               Acceptera
@@ -144,12 +155,12 @@ const AdCard = (props: ExAdCard) => {
 
             <CardMedia
               component="img"
-              alt={props.title}
-              image={props.img}
+              alt={props.ad.title}
+              image={props.ad.img}
               sx={{ borderRadius: 3, width: 50, height: 50, m: 'auto' }}
             />
             <Typography variant="body2" pt={1}>
-              {props.title} {props.price} kr
+              {props.ad.title} {props.ad.price} kr
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
               You action to {isToRemove ? 'remove the ad' : 'reject the offer'}{' '}
@@ -159,8 +170,8 @@ const AdCard = (props: ExAdCard) => {
           <CardActions disableSpacing sx={{ p: 0, width: '100%' }}>
             <Button
               variant="contained"
-              onClick={() => confirmAction(props.title!)}
-              // ************* TODO: here should be id that being passed ot the function
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              onClick={() => confirmAction(props.ad.id!)}
               sx={{ width: '50%', borderRadius: '0 0 0 20px' }}
             >
               Ja

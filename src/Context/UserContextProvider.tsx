@@ -1,10 +1,5 @@
 /* eslint-disable */ // delete this line when functionality is added in all functions
-import {
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithPopup,
-  signOut,
-} from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import {
   createContext,
   FC,
@@ -57,18 +52,27 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
 
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider).then(() => {
-      onAuthStateChanged(auth, (currentUser) => {
+    await signInWithPopup(auth, provider)
+      .then((result) => {
         setUser({
-          displayName: currentUser!.displayName!,
-          photoURL: currentUser!.photoURL!,
-          email: currentUser!.email!,
-          uid: currentUser!.uid,
+          displayName: result.user.displayName!,
+          photoURL: result.user.photoURL!,
+          email: result.user.email!,
+          uid: result.user.uid,
         });
         navigate('/my-page');
+      })
+      .catch((error) => {
+        // TODO!
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
       });
-    });
-    // TODO: error handling
   };
 
   const handleSignOut = async () =>

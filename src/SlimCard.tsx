@@ -1,14 +1,15 @@
 import { PlaceOutlined } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import ads from './adsData';
+
 import CategoryLength from './categoryLength';
+import { useAd } from './Context/AdContextProvider';
 import './Feed/feed.css';
 import './index.css';
 import ContentContainer from './shared/ContentContainer';
 
 const SlimCard = () => {
-  // const { ads } = useAd();
+  const { ads } = useAd();
 
   return (
     <ContentContainer>
