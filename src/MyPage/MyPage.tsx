@@ -1,8 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import { AdContext } from '../Context/AdContextProvider';
 import { useUser } from '../Context/UserContextProvider';
 import Protected from '../Protected';
@@ -14,11 +13,6 @@ const MyPage = () => {
   const { ads, getAds, acceptOffer, rejectOffer, removeAd } =
     useContext(AdContext);
   const { user, handleSignOut } = useUser();
-  const showToastMessage = () => {
-    toast.success('Success Notification !', {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
 
   const adsFromCurrentUser = () => {
     return ads.filter((ad) => ad.authorId === user.uid);
@@ -47,6 +41,7 @@ const MyPage = () => {
             <Typography component="h1" variant="h3" mb={-1} fontWeight={600}>
               Hej {user?.displayName}!
             </Typography>
+            <ToastContainer />
             <Button
               variant="contained"
               onClick={handleSignOut}

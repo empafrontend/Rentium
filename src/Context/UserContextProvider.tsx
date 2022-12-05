@@ -8,6 +8,7 @@ import {
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { auth } from '../firebase';
 
 interface User {
@@ -61,6 +62,11 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
           uid: result.user.uid,
         });
         navigate('/my-page');
+      })
+      .then(() => {
+        toast.success('Du är inloggad!', {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       })
       .catch((error) => {
         // TODO!
