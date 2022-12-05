@@ -24,7 +24,7 @@ const validationSchema = yup.object({
 });
 
 const SignIn = () => {
-  const { handleSignIn, handleGoogleSignIn, user, handleSignOut } = useUser();
+  const { handleSignIn, handleGoogleSignIn } = useUser();
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   // Closes modal
@@ -62,7 +62,9 @@ const SignIn = () => {
           >
             <Button
               variant="contained"
-              onClick={handleGoogleSignIn}
+              onClick={() => {
+                handleGoogleSignIn();
+              }}
               sx={{
                 background: '#fff',
                 border: 'solid #5D6DD8 2px',

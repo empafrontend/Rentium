@@ -1,6 +1,7 @@
 /* eslint-disable */ // delete this line when functionality is added in all functions
 import {
   addDoc,
+  arrayRemove,
   collection,
   deleteDoc,
   doc,
@@ -13,8 +14,8 @@ import {
   createContext,
   FC,
   PropsWithChildren,
+  useCallback,
   useContext,
-  useEffect,
   useState,
 } from 'react';
 import { db } from '../firebase.js';
@@ -47,8 +48,8 @@ interface AdContextValue {
   createAd: (values: Ad) => Promise<unknown>;
   updateAdStatus: (id: string) => Promise<unknown>;
   removeAd: (id: string) => Promise<unknown>;
-  acceptOffer: (id: string) => void;
-  rejectOffer: (id: string) => void;
+  acceptOffer: (id: string, requestor: string) => Promise<unknown>;
+  rejectOffer: (id: string, requestor: string) => void;
 }
 
 export const AdContext = createContext<AdContextValue>({
@@ -80,8 +81,8 @@ export const AdContext = createContext<AdContextValue>({
   createAd: (values) => Promise.resolve(),
   updateAdStatus: (id) => Promise.resolve(),
   removeAd: () => Promise.resolve(),
-  acceptOffer: () => {},
-  rejectOffer: () => {},
+  acceptOffer: (id, requestor) => Promise.resolve(),
+  rejectOffer: (id, requestor) => {},
 });
 
 const AdProvider: FC<PropsWithChildren> = (props) => {
@@ -113,12 +114,6 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
     title: '',
   });
 
-  useEffect(() => {
-    getAds();
-    // console.log('getAds() returns:', ads);
-  }, []);
-
-  /** Gets all data from db ad collection */
   const getAds = async () => {
     const adData = await getDocs(adsCollectionRef);
     setAds(adData.docs.map((doc) => ({ ...(doc.data() as Ad), id: doc.id })));
@@ -164,7 +159,7 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   //     location: 'Centrala Göteborg',
   //     price: 999,
   //     startDate: '2022-12-25',
-  //     title: "Santa's boots",
+  //     title: "Santa's boots lalalala",
   //   });
   // }, []);
 
@@ -180,22 +175,29 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   //   updateAdStatus('7TENcfLgExXjxgh7by2S');
 
   /** Removes a document from the db ad collection */
-  const removeAd = async (id: string) => {
+  const removeAd = useCallback(async (id: string) => {
     const docRef = doc(db, 'ads', id);
-    await deleteDoc(docRef);
-  };
+    await deleteDoc(docRef).then(() => getAds());
+  }, []);
   ///////// FOR TESTING ONLY
   // deleteAd('SKiiovFeRNLfqVoVBnpi');
 
-  const acceptOffer = (id: string) => {
-    console.log('accepting offer', id);
-    // TODO: Update item status in db
-  };
+  /** Accepts a booking request */
+  const acceptOffer = useCallback(async (id: string, requestor: string) => {
+    const docRef = doc(db, 'ads', id);
+    await updateDoc(docRef, {
+      isAvailable: false,
+      bookingRequests: arrayRemove(requestor),
+    }).then(() => getAds());
+  }, []);
 
-  const rejectOffer = (id: string) => {
-    console.log('rejecting offer', id);
-    // TODO: Remove ad from bokningsförfrågningarna
-  };
+  /** Rejects a booking request */
+  const rejectOffer = useCallback(async (id: string, requestor: string) => {
+    const docRef = doc(db, 'ads', id);
+    await updateDoc(docRef, {
+      bookingRequests: arrayRemove(requestor),
+    }).then(() => getAds());
+  }, []);
 
   return (
     <AdContext.Provider
