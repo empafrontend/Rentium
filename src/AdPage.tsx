@@ -1,19 +1,35 @@
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import { Box, Button, CardMedia, Container, Typography } from '@mui/material';
-import img from '../src/Assets/gk.png';
+import { Box, Button, CardMedia, Typography } from '@mui/material';
+import { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAd } from './Context/AdContextProvider';
+import { useUser } from './Context/UserContextProvider';
+import ContentContainer from './shared/ContentContainer';
 
+{
+  /* Detailpage */
+}
 function AdPage() {
+  const params = useParams<{ id: string }>();
+  const { user } = useUser();
+  const { getOneAd, singleAd } = useAd();
+
+  useEffect(() => {
+    if (params.id) {
+      getOneAd(params.id);
+    }
+  }, []);
+
+  const showToastMessage = () => {
+    toast.success('Din bokningsförfrågan har blivit skickad.', {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  };
+
   return (
-    <Container
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        rowGap: 5,
-        mt: '4rem',
-        mb: '4rem',
-      }}
-    >
+    <ContentContainer>
       <Box
         maxWidth={350}
         minWidth={300}
@@ -23,12 +39,11 @@ function AdPage() {
         {/* the border radius is not working? */}
         <CardMedia
           component="img"
-          image={img}
-          alt=""
           sx={{
             borderRadius: '1rem',
           }}
-        />
+          src={singleAd.img}
+        ></CardMedia>
         <Box
           sx={{
             display: 'flex',
@@ -53,7 +68,7 @@ function AdPage() {
                 mr: '5px',
               }}
             >
-              Inlagd: 16 Maj. 22:46
+              {/* Inlagd: {singleAd.createdAt} */}
             </Typography>
             <Typography
               variant="body1"
@@ -64,7 +79,7 @@ function AdPage() {
                 fontWeight: '300',
               }}
             >
-              Göteborg
+              {singleAd.location}
             </Typography>
           </Box>
           <Typography
@@ -77,10 +92,13 @@ function AdPage() {
               alignItems: 'center',
             }}
           >
-            <PersonOutlineIcon
-              sx={{ fontSize: '1rem', m: '2px', color: '#343232' }}
-            />
-            lindqvistsara
+            <Link to={`/profile/${singleAd.authorId}`}>
+              <PersonOutlineIcon
+                sx={{ fontSize: '1rem', m: '2px', color: '#343232' }}
+              />
+
+              {singleAd.author}
+            </Link>
           </Typography>
         </Box>
         <Box
@@ -94,7 +112,7 @@ function AdPage() {
             variant="h5"
             sx={{ color: '#343232', fontWeight: '500', fontSize: '20px' }}
           >
-            Galet snabb gräsklippare
+            {singleAd.title}
           </Typography>
           <Box
             sx={{
@@ -122,7 +140,7 @@ function AdPage() {
                 fontWeight: '300',
               }}
             >
-              22 maj 2022 - 6 juli 2022
+              {singleAd.startDate} - {singleAd.endDate}
             </Typography>
           </Box>
           <Typography
@@ -135,7 +153,7 @@ function AdPage() {
               alignItems: 'center',
             }}
           >
-            600 kr
+            {singleAd.price} kr
           </Typography>
         </Box>
         <Typography
@@ -148,17 +166,22 @@ function AdPage() {
             fontWeight: '300',
           }}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vitae
-          lectus vulputate, rhoncus velit vitae, rhoncus sapien. Fusce finibus
-          pharetra purus, venenatis sodales augue commodo et. Aliquam erat
-          volutpat. Nam consectetur magna ut dui pulvinar accumsan. Phasellus
-          condimentum dictum leo, id luctus risus hendrerit non. Orci varius
-          natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-          mus.
+          {singleAd.description}
         </Typography>
-        <Button variant="contained">Skicka bokningsförfrågan</Button>
+        {!user.uid ? (
+          <Typography>
+            You have to log in before sending a booking request.
+          </Typography>
+        ) : (
+          <>
+            <Button variant="contained" onClick={showToastMessage}>
+              Skicka bokningsförfrågan
+            </Button>
+            <ToastContainer />
+          </>
+        )}
       </Box>
-    </Container>
+    </ContentContainer>
   );
 }
 

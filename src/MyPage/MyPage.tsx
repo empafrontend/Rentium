@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AdContext } from '../Context/AdContextProvider';
@@ -9,7 +10,9 @@ import AdCard from '../shared/AdCard';
 import ContentContainer from '../shared/ContentContainer';
 
 const MyPage = () => {
-  const { ads } = useContext(AdContext);
+  const navigate = useNavigate();
+  const { ads, getAds, acceptOffer, rejectOffer, removeAd } =
+    useContext(AdContext);
   const { user, handleSignOut } = useUser();
   const showToastMessage = () => {
     toast.success('Success Notification !', {
@@ -17,14 +20,16 @@ const MyPage = () => {
     });
   };
 
+  const adsFromCurrentUser = () => {
+    return ads.filter((ad) => ad.authorId === user.uid);
+  };
+
   const generateBookingReq = () => {
-    return ads
-      .filter((ad) => ad.authorId === user.uid)
-      .flatMap((ad) =>
-        ad.bookingRequests?.map((requestor) => {
-          return { ...ad, requestor: requestor };
-        })
-      );
+    return adsFromCurrentUser().flatMap((ad) =>
+      ad.bookingRequests?.map((requestor) => {
+        return { ...ad, requestor: requestor };
+      })
+    );
   };
 
   return (
@@ -70,7 +75,7 @@ const MyPage = () => {
             </Button>
             <Button
               variant="contained"
-              onClick={() => console.log('show profile')} // TODO: insert correct function / link
+              onClick={() => navigate(`/profile/${user.uid}`)}
               sx={{
                 background: '#fff',
                 border: 'solid #5D6DD8 2px',
@@ -96,24 +101,26 @@ const MyPage = () => {
                 '::-webkit-scrollbar': { display: 'none' },
               }}
             >
-              {generateBookingReq().map((req, index) => (
-                <AdCard
-                  key={index}
-                  title={req?.title}
-                  img={req?.img}
-                  author={req?.author}
-                  price={req?.price}
-                  requestor={req?.requestor}
-                  isRequest
-                />
-              ))}
+              {!generateBookingReq().length ? (
+                <Typography alignSelf="center" mx="auto">
+                  Du har inga bokningsförfrågningar att visa.
+                </Typography>
+              ) : (
+                generateBookingReq().map((req, index) => (
+                  <AdCard
+                    key={index}
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    ad={req!}
+                    isRequest
+                  />
+                ))
+              )}
             </Box>
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography component="h2" variant="h4" mb={-1}>
-              Mina annonser (
-              {ads.filter((ad) => ad.authorId === user.uid).length})
+              Mina annonser ({adsFromCurrentUser().length})
             </Typography>
             <Box
               height={190}
@@ -125,21 +132,15 @@ const MyPage = () => {
                 '::-webkit-scrollbar': { display: 'none' },
               }}
             >
-              {ads
-                .filter((ad) => ad.authorId === user.uid)
-                .map((ad, index) => (
-                  <AdCard
-                    key={index}
-                    title={ad.title}
-                    img={ad.img}
-                    author={ad.author}
-                    price={ad.price}
-                    createdAt={ad.createdAt
-                      ?.toDate()
-                      .toDateString('')
-                      .replace(/^\S+\s/, '')}
-                  />
-                ))}
+              {!adsFromCurrentUser().length ? (
+                <Typography alignSelf="center" mx="auto">
+                  Du har inga annonser att visa.
+                </Typography>
+              ) : (
+                adsFromCurrentUser().map((ad, index) => (
+                  <AdCard key={index} ad={ad} />
+                ))
+              )}
             </Box>
           </Box>
         </Box>

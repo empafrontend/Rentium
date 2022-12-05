@@ -26,7 +26,7 @@ const validationSchema = yup.object({
 });
 
 const SignIn = () => {
-  const { handleSignIn, handleGoogleSignIn, user, handleSignOut } = useUser();
+  const { handleSignIn, handleGoogleSignIn } = useUser();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const showToastMessage = () => {
     toast.success('Du är inloggad', {
