@@ -3,18 +3,18 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AdContext } from '../Context/AdContextProvider';
 import { useUser } from '../Context/UserContextProvider';
+import { auth } from '../firebase';
 import Protected from '../Protected';
 import AdCard from '../shared/AdCard';
 import ContentContainer from '../shared/ContentContainer';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { ads, getAds, acceptOffer, rejectOffer, removeAd } =
-    useContext(AdContext);
-  const { user, handleSignOut } = useUser();
+  const { ads } = useContext(AdContext);
+  const { handleSignOut } = useUser();
 
   const adsFromCurrentUser = () => {
-    return ads.filter((ad) => ad.authorId === user.uid);
+    return ads.filter((ad) => ad.authorId === auth.currentUser?.uid);
   };
 
   const generateBookingReq = () => {
@@ -38,7 +38,7 @@ const MyPage = () => {
             }}
           >
             <Typography component="h1" variant="h3" mb={-1} fontWeight={600}>
-              Hej {user?.displayName}!
+              Hej {auth.currentUser?.displayName}!
             </Typography>
             <Button
               variant="contained"
@@ -68,7 +68,7 @@ const MyPage = () => {
             </Button>
             <Button
               variant="contained"
-              onClick={() => navigate(`/profile/${user.uid}`)}
+              onClick={() => navigate(`/profile/${auth.currentUser?.uid}`)}
               sx={{
                 background: '#fff',
                 border: 'solid #5D6DD8 2px',

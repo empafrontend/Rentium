@@ -6,11 +6,10 @@ import {
 } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useUser } from './Context/UserContextProvider';
+import { auth } from './firebase';
 import './footer.css';
 
 function Footer() {
-  const { user } = useUser();
   return (
     <Box className="footer">
       <Box className="footer-navigation">
@@ -18,18 +17,18 @@ function Footer() {
           <HomeOutlined className="icon" fontSize="large" />
         </Link>
         <SearchOutlined className="icon" fontSize="large" />
-        <Link to={!user.uid ? '/sign-in' : '/new-ad'}>
+        <Link to={!auth.currentUser ? '/sign-in' : '/new-ad'}>
           <AddCircleOutlineRounded className="icon" fontSize="large" />
         </Link>
-        <Link to={!user.uid ? '/sign-in' : '/my-page'}>
-          {!user.uid ? (
+        <Link to={!auth.currentUser ? '/sign-in' : '/my-page'}>
+          {!auth.currentUser ? (
             <PersonOutlineOutlined className="icon" fontSize="large" />
           ) : (
             <Box
               component="img"
               className="img-icon icon:hover"
-              src={user.photoURL}
-              alt={user.displayName}
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              src={auth.currentUser.photoURL!}
             />
           )}
         </Link>

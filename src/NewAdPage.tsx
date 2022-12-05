@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Ad, useAd } from './Context/AdContextProvider';
+import Protected from './Protected';
 import ContentContainer from './shared/ContentContainer';
 import InputField from './shared/InputField';
 
@@ -90,175 +91,183 @@ function NewAdPage() {
   });
 
   return (
-    // <Protected>
-    <ContentContainer>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          rowGap: 3,
-        }}
-      >
-        <Typography component="h1" variant="h2">
-          Vad vill du annonsera?
-        </Typography>
-
+    <Protected>
+      <ContentContainer>
         <Box
-          component="form"
-          maxWidth={500}
-          minWidth={300}
-          margin="auto"
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            rowGap: 4,
-            width: '90%',
+            alignItems: 'center',
+            rowGap: 3,
           }}
-          onSubmit={formik.handleSubmit}
         >
-          <FormControl>
-            <InputLabel
-              variant="standard"
-              htmlFor="category"
-              sx={{ '&.Mui-focused': { color: '#535353' } }}
-            >
-              Kategori
-            </InputLabel>
-            <Select
-              sx={{
-                background: '#F5F5F5',
-                borderRadius: 15,
-                height: 35,
-                fontSize: 13,
-                borderStyle: 'none',
-                paddingLeft: 2,
-                paddingRight: 2,
-              }}
-              disableUnderline
-              variant="standard"
-              type="category"
-              name="category"
-              defaultValue=""
-              value={formik.values.category}
-              error={formik.touched.category && Boolean(formik.errors.category)}
-              onChange={formik.handleChange}
-            >
-              {categories.map((option, index) => (
-                <MenuItem key={index} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Typography component="h1" variant="h2">
+            Vad vill du annonsera?
+          </Typography>
 
-          <InputField
-            label="Rubrik"
-            type="text"
-            id="title"
-            value={formik.values.title}
-            error={formik.touched.title && Boolean(formik.errors.title)}
-            helperText={formik.touched.title && formik.errors.title}
-            onChange={formik.handleChange}
-          />
-
-          <InputField
-            label="Beskrivning"
-            type="text"
-            id="description"
-            rows={4}
-            multiline={true}
-            value={formik.values.description}
-            error={
-              formik.touched.description && Boolean(formik.errors.description)
-            }
-            helperText={formik.touched.description && formik.errors.description}
-            onChange={formik.handleChange}
-          />
-
-          <InputField
-            label="Bild URL"
-            type="text"
-            id="img"
-            value={formik.values.img}
-            error={formik.touched.img && Boolean(formik.errors.img)}
-            helperText={formik.touched.img && formik.errors.img}
-            onChange={formik.handleChange}
-          />
-
-          <InputField
-            label="Pris"
-            type="number"
-            id="price"
-            value={formik.values.price}
-            error={formik.touched.price && Boolean(formik.errors.price)}
-            helperText={formik.touched.price && formik.errors.price}
-            onChange={formik.handleChange}
-          />
-
-          <InputField
-            label="Startdatum"
-            type="date"
-            id="startDate"
-            value={formik.values.startDate}
-            error={formik.touched.startDate && Boolean(formik.errors.startDate)}
-            helperText={formik.touched.startDate && formik.errors.startDate}
-            onChange={formik.handleChange}
-          />
-
-          <InputField
-            label="Slutdatum"
-            type="date"
-            id="endDate"
-            value={formik.values.endDate}
-            error={formik.touched.endDate && Boolean(formik.errors.endDate)}
-            helperText={formik.touched.endDate && formik.errors.endDate}
-            onChange={formik.handleChange}
-          />
-
-          <FormControl>
-            <InputLabel
-              variant="standard"
-              htmlFor="category"
-              sx={{ '&.Mui-focused': { color: '#535353' } }}
-            >
-              Plats
-            </InputLabel>
-            <Select
-              sx={{
-                background: '#F5F5F5',
-                borderRadius: 15,
-                height: 35,
-                fontSize: 13,
-                borderStyle: 'none',
-                paddingLeft: 2,
-                paddingRight: 2,
-              }}
-              disableUnderline
-              type="location"
-              name="location"
-              variant="standard"
-              value={formik.values.location}
-              error={formik.touched.location && Boolean(formik.errors.location)}
-              onChange={formik.handleChange}
-            >
-              <MenuItem value="Norra Göteborg">Norra Göteborg</MenuItem>
-              <MenuItem value="Centrala Göteborg">Centrala Göteborg</MenuItem>
-              <MenuItem value="Västra Göteborg">Västra Göteborg</MenuItem>
-            </Select>
-          </FormControl>
-
-          <Button
-            variant="contained"
-            type="submit"
-            sx={{ width: 150, alignSelf: 'center' }}
+          <Box
+            component="form"
+            maxWidth={500}
+            minWidth={300}
+            margin="auto"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              rowGap: 4,
+              width: '90%',
+            }}
+            onSubmit={formik.handleSubmit}
           >
-            Lägg upp
-          </Button>
+            <FormControl>
+              <InputLabel
+                variant="standard"
+                htmlFor="category"
+                sx={{ '&.Mui-focused': { color: '#535353' } }}
+              >
+                Kategori
+              </InputLabel>
+              <Select
+                sx={{
+                  background: '#F5F5F5',
+                  borderRadius: 15,
+                  height: 35,
+                  fontSize: 13,
+                  borderStyle: 'none',
+                  paddingLeft: 2,
+                  paddingRight: 2,
+                }}
+                disableUnderline
+                variant="standard"
+                type="category"
+                name="category"
+                defaultValue=""
+                value={formik.values.category}
+                error={
+                  formik.touched.category && Boolean(formik.errors.category)
+                }
+                onChange={formik.handleChange}
+              >
+                {categories.map((option, index) => (
+                  <MenuItem key={index} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <InputField
+              label="Rubrik"
+              type="text"
+              id="title"
+              value={formik.values.title}
+              error={formik.touched.title && Boolean(formik.errors.title)}
+              helperText={formik.touched.title && formik.errors.title}
+              onChange={formik.handleChange}
+            />
+
+            <InputField
+              label="Beskrivning"
+              type="text"
+              id="description"
+              rows={4}
+              multiline={true}
+              value={formik.values.description}
+              error={
+                formik.touched.description && Boolean(formik.errors.description)
+              }
+              helperText={
+                formik.touched.description && formik.errors.description
+              }
+              onChange={formik.handleChange}
+            />
+
+            <InputField
+              label="Bild URL"
+              type="text"
+              id="img"
+              value={formik.values.img}
+              error={formik.touched.img && Boolean(formik.errors.img)}
+              helperText={formik.touched.img && formik.errors.img}
+              onChange={formik.handleChange}
+            />
+
+            <InputField
+              label="Pris"
+              type="number"
+              id="price"
+              value={formik.values.price}
+              error={formik.touched.price && Boolean(formik.errors.price)}
+              helperText={formik.touched.price && formik.errors.price}
+              onChange={formik.handleChange}
+            />
+
+            <InputField
+              label="Startdatum"
+              type="date"
+              id="startDate"
+              value={formik.values.startDate}
+              error={
+                formik.touched.startDate && Boolean(formik.errors.startDate)
+              }
+              helperText={formik.touched.startDate && formik.errors.startDate}
+              onChange={formik.handleChange}
+            />
+
+            <InputField
+              label="Slutdatum"
+              type="date"
+              id="endDate"
+              value={formik.values.endDate}
+              error={formik.touched.endDate && Boolean(formik.errors.endDate)}
+              helperText={formik.touched.endDate && formik.errors.endDate}
+              onChange={formik.handleChange}
+            />
+
+            <FormControl>
+              <InputLabel
+                variant="standard"
+                htmlFor="category"
+                sx={{ '&.Mui-focused': { color: '#535353' } }}
+              >
+                Plats
+              </InputLabel>
+              <Select
+                sx={{
+                  background: '#F5F5F5',
+                  borderRadius: 15,
+                  height: 35,
+                  fontSize: 13,
+                  borderStyle: 'none',
+                  paddingLeft: 2,
+                  paddingRight: 2,
+                }}
+                disableUnderline
+                type="location"
+                name="location"
+                variant="standard"
+                value={formik.values.location}
+                error={
+                  formik.touched.location && Boolean(formik.errors.location)
+                }
+                onChange={formik.handleChange}
+              >
+                <MenuItem value="Norra Göteborg">Norra Göteborg</MenuItem>
+                <MenuItem value="Centrala Göteborg">Centrala Göteborg</MenuItem>
+                <MenuItem value="Västra Göteborg">Västra Göteborg</MenuItem>
+              </Select>
+            </FormControl>
+
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{ width: 150, alignSelf: 'center' }}
+            >
+              Lägg upp
+            </Button>
+          </Box>
         </Box>
-      </Box>
-    </ContentContainer>
-    // </Protected>
+      </ContentContainer>
+    </Protected>
   );
 }
 

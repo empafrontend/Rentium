@@ -19,8 +19,7 @@ import {
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../firebase.js';
-import { useUser } from './UserContextProvider';
+import { auth, db } from '../firebase.js';
 
 export interface Ad {
   author?: string;
@@ -88,7 +87,7 @@ export const AdContext = createContext<AdContextValue>({
 
 const AdProvider: FC<PropsWithChildren> = (props) => {
   const navigate = useNavigate();
-  const { user } = useUser();
+
   const adsCollectionRef = collection(db, 'ads');
   const [ads, setAds] = useState<Ad[]>([]);
   // this singleAd state is for rendering a single ad (but it may not be needed - depends on how the data is being rendered)
@@ -124,7 +123,6 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
 
   /** Gets a single documents from db ad collection */
   const getOneAd = useCallback(async (id: string) => {
-    console.log(user);
     const docRef = doc(db, 'ads', id);
     const docSnap = await getDoc(docRef);
     docSnap.exists()
@@ -142,8 +140,8 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   const createAd = useCallback(async (values: Ad) => {
     const newAd = {
       ...values,
-      author: user.displayName,
-      authorId: user.uid,
+      author: auth.currentUser!.displayName,
+      authorId: auth.currentUser!.uid,
       isAvailable: true as Boolean,
       bookingRequests: [],
       createdAt: serverTimestamp(),
