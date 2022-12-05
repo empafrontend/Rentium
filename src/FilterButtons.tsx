@@ -113,7 +113,6 @@ const FilterButtons = () => {
       {/*   <div className="flex flex-col-reverse">
         <CategoryLength />
       </div> */}
-
       <ContentContainer>
         {filterNavigation === false ? <Feed /> : <SlimCard />}
       </ContentContainer>
