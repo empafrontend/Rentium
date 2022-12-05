@@ -17,8 +17,11 @@ function Footer() {
           <HomeOutlined className="icon" fontSize="large" />
         </Link>
         <SearchOutlined className="icon" fontSize="large" />
-        <Link to={!auth.currentUser ? '/sign-in' : '/new-ad'}>
-          <AddCircleOutlineRounded className="icon" fontSize="large" />
+        <Link
+          className={!auth.currentUser ? 'hidden' : 'icon'}
+          to={!auth.currentUser ? '/sign-in' : '/new-ad'}
+        >
+          <AddCircleOutlineRounded fontSize="large" />
         </Link>
         <Link to={!auth.currentUser ? '/sign-in' : '/my-page'}>
           {!auth.currentUser ? (

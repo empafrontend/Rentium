@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { AdContext } from '../Context/AdContextProvider';
 import { useUser } from '../Context/UserContextProvider';
 import { auth } from '../firebase';
@@ -40,13 +41,15 @@ const MyPage = () => {
             <Typography component="h1" variant="h3" mb={-1} fontWeight={600}>
               Hej {auth.currentUser?.displayName}!
             </Typography>
+            <ToastContainer />
             <Button
-              variant="contained"
+              variant="outlined"
               onClick={handleSignOut}
               sx={{
                 mt: 1,
-                background: 'none',
-                color: '#5D6DD8',
+                width: '6rem',
+                backgroundColor: '#5D6DD8',
+                color: 'white',
                 '&:hover': { color: '#3335A7', background: 'none' },
               }}
             >
