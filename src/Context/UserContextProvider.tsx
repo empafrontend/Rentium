@@ -24,7 +24,7 @@ interface GoogleUser {
 }
 
 interface UserContextValue {
-  user: GoogleUser;
+  user: any;
   handleSignIn: (user: User) => void;
   handleSignUp: (user: User) => void;
   handleSignOut: () => void;
@@ -32,7 +32,7 @@ interface UserContextValue {
 }
 
 export const UserContext = createContext<UserContextValue>({
-  user: { displayName: '', email: '', photoURL: '', uid: '' },
+  user: undefined,
   handleSignIn: () => {},
   handleSignUp: () => {},
   handleSignOut: () => {},
@@ -41,26 +41,22 @@ export const UserContext = createContext<UserContextValue>({
 
 const UserProvider: FC<PropsWithChildren> = (props) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<GoogleUser>({
-    displayName: '',
-    email: '',
-    photoURL: '',
-    uid: '',
-  });
+  const [user, setUser] = useState<any>();
 
   const handleSignIn = (user: User) => console.log('signing in', user); // TODO: add function
   const handleSignUp = (user: User) => console.log('signing up', user); // TODO: add function
 
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) =>
+  //     setUser(currentUser as any)
+  //   );
+  //   return unsubscribe;
+  // }, [onAuthStateChanged, auth, user]);
+
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider)
-      .then((result) => {
-        setUser({
-          displayName: result.user.displayName!,
-          photoURL: result.user.photoURL!,
-          email: result.user.email!,
-          uid: result.user.uid,
-        });
+      .then(() => {
         navigate('/my-page');
       })
       .then(() => {
@@ -87,8 +83,8 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
   const handleSignOut = async () =>
     await signOut(auth)
       .then(() => {
-        setUser({ displayName: '', email: '', photoURL: '', uid: '' });
-        if (user !== null) navigate('/');
+        setUser(undefined);
+        if (!user) navigate('/');
       })
       .then(() => {
         toast.success('Du är utloggad!', {

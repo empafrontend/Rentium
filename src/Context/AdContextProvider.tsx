@@ -18,8 +18,8 @@ import {
   useContext,
   useState,
 } from 'react';
-import { db } from '../firebase.js';
-import { useUser } from './UserContextProvider';
+import { useNavigate } from 'react-router-dom';
+import { auth, db } from '../firebase.js';
 
 export interface Ad {
   author?: string;
@@ -86,7 +86,8 @@ export const AdContext = createContext<AdContextValue>({
 });
 
 const AdProvider: FC<PropsWithChildren> = (props) => {
-  const { user } = useUser();
+  const navigate = useNavigate();
+
   const adsCollectionRef = collection(db, 'ads');
   const [ads, setAds] = useState<Ad[]>([]);
   // this singleAd state is for rendering a single ad (but it may not be needed - depends on how the data is being rendered)
@@ -114,19 +115,20 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
     title: '',
   });
 
-  const getAds = async () => {
+  const getAds = useCallback(async () => {
     const adData = await getDocs(adsCollectionRef);
     setAds(adData.docs.map((doc) => ({ ...(doc.data() as Ad), id: doc.id })));
-  };
+    console.log('calling ads');
+  }, []);
 
   /** Gets a single documents from db ad collection */
-  const getOneAd = async (id: string) => {
+  const getOneAd = useCallback(async (id: string) => {
     const docRef = doc(db, 'ads', id);
     const docSnap = await getDoc(docRef);
     docSnap.exists()
       ? setSingleAd(docSnap.data() as Ad)
       : console.log('Data not found'); // TODO: do something...
-  };
+  }, []);
 
   ///////// FOR TESTING ONLY
   // useEffect(() => {
@@ -135,17 +137,25 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   // }, []);
 
   /** Adds new ad entry to db ad collection */
-  const createAd = async (values: Ad) => {
+  const createAd = useCallback(async (values: Ad) => {
     const newAd = {
       ...values,
-      author: user.displayName,
-      authorId: user.uid,
+      author: auth.currentUser!.displayName,
+      authorId: auth.currentUser!.uid,
       isAvailable: true as Boolean,
       bookingRequests: [],
       createdAt: serverTimestamp(),
     };
-    await addDoc(adsCollectionRef, newAd);
-  };
+    await addDoc(adsCollectionRef, newAd)
+      .then(() => {
+        navigate('/');
+        // TODO: toast
+      })
+      .catch((error) => {
+        console.log(error);
+        // TODO: toast
+      });
+  }, []);
 
   ///////// FOR TESTING ONLY
   ///////// *** IF YOU CALL THIS, remember to remove from database after!
@@ -164,13 +174,13 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   // }, []);
 
   /** Updates the variable "isAvailable" in a single doc */
-  const updateAdStatus = async (id: string) => {
+  const updateAdStatus = useCallback(async (id: string) => {
     const docRef = doc(db, 'ads', id);
     setSelectedAd((await getDoc(docRef).then((ref) => ref.data())) as Ad);
     await updateDoc(docRef, {
       isAvailable: selectedAd?.isAvailable == true ? false : true,
     });
-  };
+  }, []);
   ///////// FOR TESTING ONLY - this will be called continuously once uncommented
   //   updateAdStatus('7TENcfLgExXjxgh7by2S');
 

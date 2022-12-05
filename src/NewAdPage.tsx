@@ -9,11 +9,12 @@ import {
 import Box from '@mui/material/Box';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { Ad, useAd } from './Context/AdContextProvider';
 import Protected from './Protected';
 import ContentContainer from './shared/ContentContainer';
 import InputField from './shared/InputField';
 
-const validationSchema = yup.object({
+const validationSchema = yup.object().shape({
   category: yup.string().required('Vänligen fyll i en kategori'),
   title: yup
     .string()
@@ -34,8 +35,22 @@ const validationSchema = yup.object({
     .max(500, 'Beskrivning måste vara mellan 10 till 500 karaktärer'),
   price: yup.number().required('Vänligen fyll i detta fält'),
   location: yup.string().required('Vänligen fyll i detta fält'),
-  startDate: yup.date().required('Vänligen fyll i ett startdatum'),
-  endDate: yup.date().required('Vänligen fyll i ett slutdatum'),
+  startDate: yup
+    .date()
+    .required('Vänligen fyll i ett startdatum')
+    .min(new Date(), 'Startdatumet måste efter idag.')
+    .max(
+      new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+      'Datumet måste vara inom ett år från idag.'
+    ),
+  endDate: yup
+    .date()
+    .required('Vänligen fyll i ett slutdatum')
+    .min(yup.ref('startDate'), 'Slutdatumet måste vara senare än startdatumet')
+    .max(
+      new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+      'Datumet måste vara inom ett år från idag.'
+    ),
 });
 
 const categories = [
@@ -58,7 +73,7 @@ const categories = [
 ];
 
 function NewAdPage() {
-  const handleInput = (values: any) => console.log(values);
+  const { createAd } = useAd();
   const formik = useFormik({
     initialValues: {
       category: 'SHOES' || 'TOOLS' || 'CLOTHES' || 'VEHICLE',
@@ -72,7 +87,7 @@ function NewAdPage() {
     },
     validationSchema: validationSchema,
     validateOnMount: true,
-    onSubmit: (values) => handleInput(values),
+    onSubmit: (values: Ad) => createAd(values),
   });
 
   return (
@@ -207,15 +222,6 @@ function NewAdPage() {
               helperText={formik.touched.endDate && formik.errors.endDate}
               onChange={formik.handleChange}
             />
-
-            {/* <InputField
-            label="Plats"
-            type="location"
-            value={formik.values.location}
-            error={formik.touched.location && Boolean(formik.errors.location)}
-            helperText={formik.touched.location && formik.errors.location}
-            onChange={formik.handleChange}
-          /> */}
 
             <FormControl>
               <InputLabel
