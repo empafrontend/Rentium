@@ -8,6 +8,7 @@ import {
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { auth } from '../firebase';
 
 interface User {
@@ -62,6 +63,11 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
         });
         navigate('/my-page');
       })
+      .then(() => {
+        toast.success('Du är inloggad!', {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      })
       .catch((error) => {
         // TODO!
         // Handle Errors here.
@@ -72,14 +78,23 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
+        toast.error('Inloggningen misslyckades.', {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       });
   };
 
   const handleSignOut = async () =>
-    await signOut(auth).then(() => {
-      setUser({ displayName: '', email: '', photoURL: '', uid: '' });
-      if (user !== null) navigate('/');
-    });
+    await signOut(auth)
+      .then(() => {
+        setUser({ displayName: '', email: '', photoURL: '', uid: '' });
+        if (user !== null) navigate('/');
+      })
+      .then(() => {
+        toast.success('Du är utloggad!', {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      });
 
   return (
     <UserContext.Provider

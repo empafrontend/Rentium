@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { AdContext } from '../Context/AdContextProvider';
 import { useUser } from '../Context/UserContextProvider';
 import Protected from '../Protected';
@@ -40,6 +41,7 @@ const MyPage = () => {
             <Typography component="h1" variant="h3" mb={-1} fontWeight={600}>
               Hej {user?.displayName}!
             </Typography>
+            <ToastContainer />
             <Button
               variant="contained"
               onClick={handleSignOut}

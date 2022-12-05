@@ -62,7 +62,9 @@ const SignIn = () => {
           >
             <Button
               variant="contained"
-              onClick={handleGoogleSignIn}
+              onClick={() => {
+                handleGoogleSignIn();
+              }}
               sx={{
                 background: '#fff',
                 border: 'solid #5D6DD8 2px',
