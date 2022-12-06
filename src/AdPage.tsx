@@ -168,9 +168,19 @@ function AdPage() {
           {singleAd.description}
         </Typography>
         {!auth.currentUser ? (
-          <Typography>
+          <Button
+            type="submit"
+            sx={{
+              width: '100%',
+              alignSelf: 'center',
+              color: '#535353',
+              background: '#ADABAB',
+              p: 1.5,
+              '&:hover': { background: '#ADABAB' },
+            }}
+          >
             You have to log in before sending a booking request.
-          </Typography>
+          </Button>
         ) : (
           <>
             <Button variant="contained" onClick={showToastMessage}>
