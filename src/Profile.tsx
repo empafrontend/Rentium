@@ -146,7 +146,15 @@ function Profile() {
                 </Button>
               ) : (
                 <>
-                  <Button variant="contained" onClick={showToastMessage}>
+                  <Button
+                    sx={{
+                      width: '100%',
+                      height: 35,
+                      borderRadius: '20px 0 0 0',
+                    }}
+                    variant="contained"
+                    onClick={showToastMessage}
+                  >
                     Skicka bokningsförfrågan
                   </Button>
                   <ToastContainer />
