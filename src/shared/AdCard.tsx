@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { Ad, useAd } from '../Context/AdContextProvider';
+import IsAvailableSwitch from './IsAvailableSwitch';
 
 type ExAdCard = Partial<Ad> & {
   ad: Ad;
@@ -63,7 +64,13 @@ const AdCard = (props: ExAdCard) => {
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
           <Box
             width="50%"
-            sx={{ py: 2, display: 'flex', placeContent: 'center' }}
+            sx={{
+              pt: 2,
+              display: 'flex',
+              placeContent: !props.isRequest ? 'center' : 'start',
+              flexDirection: 'column',
+              placeItems: 'center',
+            }}
           >
             <CardMedia
               component="img"
@@ -71,6 +78,7 @@ const AdCard = (props: ExAdCard) => {
               image={props.ad.img}
               sx={{ borderRadius: 3, width: 100, height: 100 }}
             />
+            {props.isRequest ? <></> : <IsAvailableSwitch ad={props.ad} />}
           </Box>
           <CardContent
             sx={{
@@ -93,6 +101,7 @@ const AdCard = (props: ExAdCard) => {
                     .toDateString()
                     .replace(/^\S+\s/, '')}
             </Typography>
+
             <Typography variant="body1" fontWeight={400}>
               {props.ad.price} kr
             </Typography>
@@ -127,9 +136,14 @@ const AdCard = (props: ExAdCard) => {
             <Button
               variant="contained"
               onClick={(e) => displayWarning(e)}
-              sx={{ width: '100%', borderRadius: '20px 0 0 0' }}
+              sx={{
+                width: '100%',
+                borderRadius: '20px 0 0 0',
+                whiteSpace: 'nowrap',
+              }}
+              disabled={!props.ad.isAvailable}
             >
-              Ta bort
+              {props.ad.isAvailable ? 'Ta bort' : 'Bokad eller otillgänglig'}
             </Button>
           </CardActions>
         )}
