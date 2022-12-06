@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Ad, useAd } from '../Context/AdContextProvider';
 import IsAvailableSwitch from './IsAvailableSwitch';
 
@@ -72,41 +73,46 @@ const AdCard = (props: ExAdCard) => {
               placeItems: 'center',
             }}
           >
-            <CardMedia
-              component="img"
-              alt={props.ad.title}
-              image={props.ad.img}
-              sx={{ borderRadius: 3, width: 100, height: 100 }}
-            />
+            <Link to={`/ad/${props.ad.id}`}>
+              <CardMedia
+                component="img"
+                alt={props.ad.title}
+                image={props.ad.img}
+                sx={{ borderRadius: 3, width: 100, height: 100 }}
+              />
+            </Link>
             {props.isRequest ? <></> : <IsAvailableSwitch ad={props.ad} />}
           </Box>
-          <CardContent
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              placeContent: 'center',
-              pl: 1,
-              maxWidth: 120,
-            }}
-          >
-            <Typography variant="body1" fontWeight={600}>
-              {props.ad.title}
-            </Typography>
-            <Typography pb={3} variant="body2" color="text.secondary">
-              {props.isRequest
-                ? props.ad.requestor
-                : 'Inlagd: ' +
-                  props.ad.createdAt
-                    .toDate()
-                    .toDateString()
-                    .replace(/^\S+\s/, '')}
-            </Typography>
+          <Link to={`/ad/${props.ad.id}`}>
+            <CardContent
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                placeContent: 'center',
+                pl: 1,
+                maxWidth: 120,
+              }}
+            >
+              <Typography variant="body1" fontWeight={600}>
+                {props.ad.title}
+              </Typography>
+              <Typography pb={3} variant="body2" color="text.secondary">
+                {props.isRequest
+                  ? props.ad.requestor
+                  : 'Inlagd: ' +
+                    props.ad.createdAt
+                      .toDate()
+                      .toDateString()
+                      .replace(/^\S+\s/, '')}
+              </Typography>
 
-            <Typography variant="body1" fontWeight={400}>
-              {props.ad.price} kr
-            </Typography>
-          </CardContent>
+              <Typography variant="body1" fontWeight={400}>
+                {props.ad.price} kr
+              </Typography>
+            </CardContent>
+          </Link>
         </Box>
+
         {props.isRequest ? (
           <CardActions disableSpacing sx={{ p: 0, width: '100%' }}>
             <Button
