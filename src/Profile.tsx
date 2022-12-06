@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { AdContext } from './Context/AdContextProvider';
 
 import './footer.css';
@@ -20,6 +21,12 @@ function Profile() {
 
   const user = () => {
     return ads.filter((ad) => ad.authorId === params.id);
+  };
+
+  const showToastMessage = () => {
+    toast.success('Din bokningsförfrågan har blivit skickad.', {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
   };
 
   return (
@@ -125,6 +132,7 @@ function Profile() {
             >
               <Button
                 variant="contained"
+                onClick={showToastMessage}
                 sx={{ width: '100%', borderRadius: '20px 0 0 0' }}
               >
                 Skicka bokningsförfrågan
