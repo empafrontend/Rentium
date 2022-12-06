@@ -17,7 +17,8 @@ const SlimCard = () => {
       {ads.map((ads, index) => (
         <Link key={index} to={`/ad/${ads.id}`}>
           <div
-            className={`${ads.category} hidden flex flex-row justify-center items-center mb-1 p-1 mt-1`}
+            id={`${ads.category}`}
+            className={`${ads.category} hidden flex-row justify-center items-center mb-1 p-1 mt-1`}
           >
             <img
               src={ads.img}

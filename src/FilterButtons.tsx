@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
+import { useAd } from './Context/AdContextProvider';
 import { NavigationContext } from './Context/NavigationContext';
 import Feed from './Feed/Feed';
 import './filterButtons.css';
@@ -9,18 +10,55 @@ import SlimCard from './SlimCard';
 
 const FilterButtons = () => {
   const [count, setCount] = useState(0);
+  // const { ads, getAds } = useContext(AdContext);
+  // useEffect(() => {}, []);
+
+  const { ads } = useAd();
+  const [categoryList, setCategoryList] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+
   const { filterNavigation, setFilterNavigation } =
     useContext(NavigationContext);
   // console.log(count);
   // console.log(filterNavigation);
 
-  useEffect(() => {
-    Filter();
-  }, [count]);
+  // useEffect(() => {
+  //   Filter();
+  // }, [count]);
 
-  const handleView = (filterButtons: number) => {
+  const handleView = async (filterButtons: number) => {
     setCount(filterButtons);
     setFilterNavigation(true);
+
+    if (filterButtons === 1) {
+      setSelectedCategory('shoes');
+    } else if (filterButtons === 2) {
+      setSelectedCategory('hats');
+    } else if (filterButtons === 3) {
+      setSelectedCategory('tools');
+    } else if (filterButtons === 4) {
+      setSelectedCategory('housing');
+    } else if (filterButtons === 5) {
+      setSelectedCategory('vehicles');
+    }
+  };
+
+  // const setFilterList = async () => {
+  //   console.log('A');
+  // };
+
+  // console.log(selectedCategory);
+  console.log(count);
+  console.log(selectedCategory);
+
+  const getFilteredList = async () => {
+    const visibleComponents = document.querySelectorAll(
+      `div.` + selectedCategory
+    );
+    for (let i = 0; i < visibleComponents.length; i++) {
+      visibleComponents[i].classList.remove('hidden');
+      visibleComponents[i].classList.add('flex');
+    }
   };
 
   const filterButtonsList = filterButtons.map((filterButtons) => (
@@ -31,7 +69,13 @@ const FilterButtons = () => {
     >
       <div>
         <div className="flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white">
-          <div className="h-7 w-7" onClick={() => handleView(filterButtons.id)}>
+          <div
+            className="h-7 w-7"
+            onClick={() => {
+              handleView(filterButtons.id);
+              getFilteredList();
+            }}
+          >
             <img src={filterButtons.img} alt="" className="aspect-auto " />
           </div>
         </div>
@@ -49,70 +93,12 @@ const FilterButtons = () => {
     </div>
   ));
 
-  const Filter = () => {
-    const shoes = document.querySelectorAll('div.shoes');
-    const hats = document.querySelectorAll('div.hats');
-    const tools = document.querySelectorAll('div.tools');
-    const housing = document.querySelectorAll('div.housing');
-    const vehicles = document.querySelectorAll('div.vehicles');
-    const category = document.getElementById('numberOfArticles');
-    category?.classList.add('flex');
-    category?.classList.remove('hidden');
-    const categorysArray = [shoes, hats, tools, housing, vehicles];
-    for (let i = 0; i < categorysArray.length; i++) {
-      shoes[i]?.classList.add('hidden');
-      hats[i]?.classList.add('hidden');
-      tools[i]?.classList.add('hidden');
-      housing[i]?.classList.add('hidden');
-      vehicles[i]?.classList.add('hidden');
-      shoes[i]?.classList.remove('showing');
-      hats[i]?.classList.remove('showing');
-      tools[i]?.classList.remove('showing');
-      housing[i]?.classList.remove('showing');
-      vehicles[i]?.classList.remove('showing');
-    }
-
-    if (count === 1) {
-      for (let i = 0; i < shoes.length; i++) {
-        shoes[i]?.classList.add('flex');
-        shoes[i]?.classList.add('showing');
-        shoes[i]?.classList.remove('hidden');
-      }
-    } else if (count === 2) {
-      for (let i = 0; i < hats.length; i++) {
-        hats[i]?.classList.add('flex');
-        hats[i]?.classList.add('showing');
-        hats[i]?.classList.remove('hidden');
-      }
-    } else if (count === 3) {
-      for (let i = 0; i < tools.length; i++) {
-        tools[i]?.classList.add('flex');
-        tools[i]?.classList.add('showing');
-        tools[i]?.classList.remove('hidden');
-      }
-    } else if (count === 4) {
-      for (let i = 0; i < housing.length; i++) {
-        housing[i]?.classList.add('flex');
-        housing[i]?.classList.add('showing');
-        housing[i]?.classList.remove('hidden');
-      }
-    } else if (count === 5) {
-      for (let i = 0; i < vehicles.length; i++) {
-        vehicles[i]?.classList.add('flex');
-        vehicles[i]?.classList.add('showing');
-        vehicles[i]?.classList.remove('hidden');
-      }
-    }
-  };
-
   return (
     <Box>
       <div className=" flex flex-row w-full justify-center filter-buttons">
         {filterButtonsList}
       </div>
-      {/*   <div className="flex flex-col-reverse">
-        <CategoryLength />
-      </div> */}
+      <div className="flex flex-col-reverse"></div>
       <ContentContainer>
         {filterNavigation === false ? <Feed /> : <SlimCard />}
       </ContentContainer>
