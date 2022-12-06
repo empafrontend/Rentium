@@ -1,8 +1,8 @@
 import { Box, Button, Typography } from '@mui/material';
-import { useContext } from 'react';
+import { IconListDetails } from '@tabler/icons';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { AdContext } from '../Context/AdContextProvider';
+import { useAd } from '../Context/AdContextProvider';
 import { useUser } from '../Context/UserContextProvider';
 import { auth } from '../firebase';
 import Protected from '../Protected';
@@ -11,7 +11,7 @@ import ContentContainer from '../shared/ContentContainer';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { ads } = useContext(AdContext);
+  const { ads } = useAd();
   const { handleSignOut } = useUser();
 
   const adsFromCurrentUser = () => {
@@ -28,6 +28,7 @@ const MyPage = () => {
 
   return (
     <Protected>
+      <ToastContainer />
       <ContentContainer background="#F5F5F5">
         <Box sx={{ display: 'flex', flexDirection: 'column', rowGap: 5 }}>
           <Box
@@ -38,51 +39,23 @@ const MyPage = () => {
               placeItems: 'center',
             }}
           >
-            <Typography component="h1" variant="h3" mb={-1} fontWeight={600}>
-              Hej {auth.currentUser?.displayName}!
-            </Typography>
-            <ToastContainer />
-            <Button
-              variant="outlined"
-              onClick={handleSignOut}
+            <Box
               sx={{
-                mt: 1,
-                width: '6rem',
-                backgroundColor: '#5D6DD8',
-                color: 'white',
-                '&:hover': { color: '#3335A7', background: 'none' },
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
               }}
             >
-              Logga ut
-            </Button>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              gap: 3,
-            }}
-          >
-            <Button
-              variant="contained"
-              onClick={() => console.log('edit profile')} // TODO: insert correct function / link
-            >
-              Redigera profil
-            </Button>
-            <Button
-              variant="contained"
-              onClick={() => navigate(`/profile/${auth.currentUser?.uid}`)}
-              sx={{
-                background: '#fff',
-                border: 'solid #5D6DD8 2px',
-                color: '#5D6DD8',
-                '&:hover': { background: '#ECEFFF' },
-              }}
-            >
-              Visa profil
-            </Button>
-          </Box>
+              <Typography component="h1" variant="h3" mb={-1} fontWeight={600}>
+                Hej {auth.currentUser?.displayName}!
+              </Typography>
 
+              <Button variant="contained" onClick={handleSignOut}>
+                Logga ut
+              </Button>
+            </Box>
+          </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography component="h2" variant="h4" mb={-1}>
               Bokningsförfrågningar ({generateBookingReq().length})
@@ -115,9 +88,33 @@ const MyPage = () => {
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Typography component="h2" variant="h4" mb={-1}>
-              Mina annonser ({adsFromCurrentUser().length})
-            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                placeItems: 'center',
+                gap: 1,
+              }}
+            >
+              <Typography component="h2" variant="h4" mb={-1}>
+                Mina annonser ({adsFromCurrentUser().length})
+              </Typography>
+
+              <Button
+                variant="contained"
+                onClick={() => navigate(`/profile/${auth.currentUser?.uid}`)}
+                sx={{
+                  mt: 1,
+                  background: 'none',
+                  color: '#5D6DD8',
+                  '&:hover': { background: 'none', color: '#3335A7' },
+                  gap: 0.8,
+                }}
+              >
+                <IconListDetails size="16" style={{ color: '#5D6DD8' }} />
+                Visa min annonssida
+              </Button>
+            </Box>
             <Box
               height={190}
               columnGap={2}
