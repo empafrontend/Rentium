@@ -1,14 +1,31 @@
 import { Avatar, Typography } from '@mui/material';
 import { IconHome, IconPlus, IconSearch, IconUserCircle } from '@tabler/icons';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { useUser } from '../Context/UserContextProvider';
+import { NavigationContext } from '../Context/NavigationContext';
+import { auth } from '../firebase';
 import './navItems.css';
+import { useUser } from '../Context/UserContextProvider';
 
 const NavItems = () => {
+  const { filterNavigation, setFilterNavigation } =
+    useContext(NavigationContext);
+
+  const handleHeaderSize = () => {
+    if (filterNavigation === false) {
+      setFilterNavigation(true);
+    }
+  };
+
+  const goToHomeView = () => {
+    setFilterNavigation(false);
+  };
+
   const { currentUser } = useUser();
+
   return (
     <>
-      <Link to="/" className="link">
+      <Link to="/" className="link" onClick={() => goToHomeView()}>
         <IconHome size={32} stroke={1} />
         <Typography variant="h5" component="h3" mt={0.7}>
           Hem
@@ -50,7 +67,7 @@ const NavItems = () => {
           </Typography>
         </Link>
       ) : (
-        <Link to="/sign-in" className="link">
+        <Link to="/sign-in" className="link" onClick={() => handleHeaderSize()}>
           <IconUserCircle size={32} stroke={1} />
           <Typography variant="h5" component="h3" mt={0.7}>
             Logga in
