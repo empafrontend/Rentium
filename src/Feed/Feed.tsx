@@ -32,7 +32,6 @@ function Feed() {
             className="card"
             key={index}
             sx={{
-
               marginTop: '1rem',
               width: '13.5rem',
               height: '14rem',
