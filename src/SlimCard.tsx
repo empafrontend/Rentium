@@ -1,7 +1,6 @@
 import { PlaceOutlined } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-
 import CategoryLength from './categoryLength';
 import { useAd } from './Context/AdContextProvider';
 import './Feed/feed.css';
