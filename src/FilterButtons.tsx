@@ -27,29 +27,28 @@ const FilterButtons = () => {
       className=" w-16 flex flex-col items-center justify-center"
       /* onClick={() => setCount(filterButtons.id)} */
     >
-      <div>
-
-        <div className="flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white hover:cursor-pointer ">
-          <div className="h-7 w-7" onClick={() => handleView(filterButtons.id)}>
-        <button
-          onClick={() => handleView(filterButtons.id)}
-          id="button"
-          className="filter-button flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white hover:ring-4 hover:outline-none hover:ring-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-900"
-        >
-          <div className="h-7 w-7">
-            <img src={filterButtons.img} alt="" className="aspect-auto " />
-          </div>
-        </button>
-        <Typography
-          variant="body1"
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            paddingTop: '.4rem',
-          }}
-        >
-          {filterButtons.text}
-        </Typography>
+      <div className="flex items-center justify-center rounded-full hover:cursor-pointer ">
+        <div className="h-7 w-7" onClick={() => handleView(filterButtons.id)}>
+          <button
+            onClick={() => handleView(filterButtons.id)}
+            id="button"
+            className="filter-button flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white hover:ring-4 hover:outline-none hover:ring-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-900"
+          >
+            <div className="h-7 w-7">
+              <img src={filterButtons.img} alt="" className="aspect-auto " />
+            </div>
+          </button>
+          <Typography
+            variant="body1"
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              paddingTop: '.4rem',
+            }}
+          >
+            {filterButtons.text}
+          </Typography>
+        </div>
       </div>
     </div>
   ));
