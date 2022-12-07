@@ -22,22 +22,7 @@
 .navigation {
   color: white;
   display: flex;
-  gap: 3rem;
-}
-
-.icon:hover {
-  text-decoration: underline;
-  color: lightblue;
-}
-
-.img-icon {
-  width: 32px;
-  border-radius: 50px;
-  border: solid white 3px;
-}
-
-.img-icon:hover {
-  border: solid lightblue 3px;
+  gap: 1.5rem;
 }
 
 @media screen and (max-width: 900px) {
