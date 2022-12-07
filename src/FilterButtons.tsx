@@ -11,8 +11,6 @@ const FilterButtons = () => {
   const [count, setCount] = useState(0);
   const { filterNavigation, setFilterNavigation } =
     useContext(NavigationContext);
-  // console.log(count);
-  // console.log(filterNavigation);
 
   useEffect(() => {
     Filter();
@@ -23,18 +21,22 @@ const FilterButtons = () => {
     setFilterNavigation(true);
   };
 
-  const filterButtonsList = filterButtons.map((filterButtons) => (
+  const filterButtonsList = filterButtons.map((filterButtons, index) => (
     <div
       key={filterButtons.id}
       className=" w-16 flex flex-col items-center justify-center"
-      onClick={() => setCount(filterButtons.id)}
+      /* onClick={() => setCount(filterButtons.id)} */
     >
       <div>
-        <div className="flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white">
-          <div className="h-7 w-7" onClick={() => handleView(filterButtons.id)}>
+        <button
+          onClick={() => handleView(filterButtons.id)}
+          id="button"
+          className="filter-button flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white hover:ring-4 hover:outline-none hover:ring-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-900"
+        >
+          <div className="h-7 w-7">
             <img src={filterButtons.img} alt="" className="aspect-auto " />
           </div>
-        </div>
+        </button>
         <Typography
           variant="body1"
           sx={{
@@ -107,9 +109,16 @@ const FilterButtons = () => {
 
   return (
     <Box>
-      <div className=" flex flex-row w-full justify-center filter-buttons">
-        {filterButtonsList}
-      </div>
+      {filterNavigation ? (
+        <div className=" flex flex-row w-full justify-center filter-buttons">
+          {filterButtonsList}
+        </div>
+      ) : (
+        <div className=" flex flex-row w-full justify-center filter-buttons-down">
+          {filterButtonsList}
+        </div>
+      )}
+
       {/*   <div className="flex flex-col-reverse">
         <CategoryLength />
       </div> */}
@@ -119,4 +128,5 @@ const FilterButtons = () => {
     </Box>
   );
 };
+
 export default FilterButtons;

@@ -10,6 +10,30 @@
   color: transparent;
 }
 
+.expanded-header {
+  background: linear-gradient(95.91deg, #6d82c8 6.74%, #3132ab 88.88%);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 2rem;
+  height: 20rem;
+  width: 100%;
+  color: transparent;
+}
+
+.upper-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.heading {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .logo {
   width: 5rem;
   height: 5rem;

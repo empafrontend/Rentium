@@ -15,15 +15,16 @@ function Feed() {
 
   return (
     <ContentContainer>
-      <Typography variant="h5">Nya annonser</Typography>
+      <Typography variant="subtitle1" sx={{ padding: '1rem' }}>
+        Nya annonser
+      </Typography>
       <Box
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: '1rem',
+          gap: '2rem',
           justifyContent: 'center',
           width: '100%',
-          paddingBottom: '2rem',
         }}
       >
         {ads.map((ads, index) => (
@@ -31,8 +32,8 @@ function Feed() {
             className="card"
             key={index}
             sx={{
-              width: '10.2rem',
-              height: '14rem',
+              width: '11.2rem',
+              height: '15rem',
               borderRadius: '1rem',
               boxShadow: 'none',
             }}
