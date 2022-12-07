@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAd } from './Context/AdContextProvider';
-import { auth } from './firebase';
+import { useUser } from './Context/UserContextProvider';
 import ContentContainer from './shared/ContentContainer';
 
 {
@@ -14,6 +14,7 @@ import ContentContainer from './shared/ContentContainer';
 function AdPage() {
   const params = useParams<{ id: string }>();
   const { getOneAd, singleAd } = useAd();
+  const { currentUser } = useUser();
 
   useEffect(() => {
     if (params.id) {
@@ -28,7 +29,7 @@ function AdPage() {
   };
 
   return (
-    <ContentContainer>
+    <ContentContainer backButton>
       <Box
         maxWidth={350}
         minWidth={300}
@@ -67,7 +68,14 @@ function AdPage() {
                 mr: '5px',
               }}
             >
-              {/* Inlagd: {singleAd.createdAt} */}
+              Inlagd:{' '}
+              {singleAd.createdAt
+                ? singleAd.createdAt
+                    .toDate()
+                    .toDateString()
+                    .replace(/^\S+\s/, '')
+                : 'nodate'}{' '}
+              {/* this if statement should be removed in final testing */}
             </Typography>
             <Typography
               variant="body1"
@@ -167,23 +175,17 @@ function AdPage() {
         >
           {singleAd.description}
         </Typography>
-        {!auth.currentUser ? (
-          <Button
-            type="submit"
-            sx={{
-              width: '100%',
-              alignSelf: 'center',
-              color: '#535353',
-              background: '#ADABAB',
-              p: 1.5,
-              '&:hover': { background: '#ADABAB' },
-            }}
-          >
-            Du måste vara inloggad innan du kan skicka en bokningsförfrågan.
+        {!currentUser ? (
+          <Button disabled variant="contained">
+            Logga in för skicka en bokningsförfrågan
           </Button>
         ) : (
           <>
-            <Button variant="contained" onClick={showToastMessage}>
+            <Button
+              variant="contained"
+              disabled={singleAd.authorId === currentUser.uid}
+              onClick={showToastMessage}
+            >
               Skicka bokningsförfrågan
             </Button>
             <ToastContainer />

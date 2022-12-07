@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { useAd } from '../Context/AdContextProvider';
 import { useUser } from '../Context/UserContextProvider';
-import { auth } from '../firebase';
 import Protected from '../Protected';
 import AdCard from '../shared/AdCard';
 import ContentContainer from '../shared/ContentContainer';
@@ -13,9 +12,10 @@ const MyPage = () => {
   const navigate = useNavigate();
   const { ads } = useAd();
   const { handleSignOut } = useUser();
+  const { currentUser } = useUser();
 
   const adsFromCurrentUser = () => {
-    return ads.filter((ad) => ad.authorId === auth.currentUser?.uid);
+    return ads.filter((ad) => ad.authorId === currentUser?.uid);
   };
 
   const generateBookingReq = () => {
@@ -48,7 +48,7 @@ const MyPage = () => {
               }}
             >
               <Typography component="h1" variant="h3" mb={-1} fontWeight={600}>
-                Hej {auth.currentUser?.displayName}!
+                Hej {currentUser?.displayName}!
               </Typography>
 
               <Button variant="contained" onClick={handleSignOut}>
@@ -102,7 +102,7 @@ const MyPage = () => {
 
               <Button
                 variant="contained"
-                onClick={() => navigate(`/profile/${auth.currentUser?.uid}`)}
+                onClick={() => navigate(`/profile/${currentUser?.uid}`)}
                 sx={{
                   mt: 1,
                   background: 'none',

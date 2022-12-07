@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { NavigationContext } from '../Context/NavigationContext';
 import { auth } from '../firebase';
 import './navItems.css';
+import { useUser } from '../Context/UserContextProvider';
 
 const NavItems = () => {
   const { filterNavigation, setFilterNavigation } =
@@ -19,6 +20,8 @@ const NavItems = () => {
   const goToHomeView = () => {
     setFilterNavigation(false);
   };
+
+  const { currentUser } = useUser();
 
   return (
     <>
@@ -37,7 +40,7 @@ const NavItems = () => {
         </Typography>
       </Link>
 
-      {auth.currentUser ? (
+      {currentUser ? (
         <Link to="/new-ad" className="link">
           <IconPlus size={32} stroke={1} />
           <Typography variant="h5" component="h3" mt={0.7}>
@@ -46,21 +49,21 @@ const NavItems = () => {
         </Link>
       ) : null}
 
-      {auth.currentUser ? (
+      {currentUser ? (
         <Link to="/my-page" className="link">
           <Avatar
             alt={
-              auth.currentUser.displayName
-                ? auth.currentUser.displayName
+              currentUser.displayName
+                ? currentUser.displayName
                 : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                  auth.currentUser.email!
+                  currentUser.email!
             }
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            src={auth.currentUser.photoURL!}
+            src={currentUser.photoURL!}
             sx={{ width: 32, height: 32 }}
           />
           <Typography variant="h5" component="h3" mt={0.7}>
-            {auth.currentUser.displayName}
+            {currentUser.displayName}
           </Typography>
         </Link>
       ) : (
