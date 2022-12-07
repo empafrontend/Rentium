@@ -179,7 +179,7 @@ function AdPage() {
               '&:hover': { background: '#ADABAB' },
             }}
           >
-            You have to log in before sending a booking request.
+            Du måste vara inloggad innan du kan skicka en bokningsförfrågan.
           </Button>
         ) : (
           <>
