@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { NavigationContext } from './Context/NavigationContext';
 import './header.css';
@@ -8,13 +8,14 @@ import NavItems from './shared/NavItems';
 function Header() {
   const { filterNavigation, setFilterNavigation } =
     useContext(NavigationContext);
-  const [expandHeader, setExpandHeader] = useState(true);
 
-  const handleHeaderLayout = () => {
+  const handleHeaderGrow = () => {
     setFilterNavigation(false);
-    if (filterNavigation === false) {
-      setExpandHeader(true);
-    }
+  };
+
+  const handleHeaderShrink = () => {
+    setFilterNavigation(true);
+    console.log('hej');
   };
 
   return (
@@ -22,7 +23,7 @@ function Header() {
       {filterNavigation ? (
         <Box className="header">
           <Link to="/">
-            <Box className="logo" onClick={handleHeaderLayout} />
+            <Box className="logo" onClick={handleHeaderGrow} />
           </Link>
           <Box className="navigation">
             <NavItems />
@@ -32,7 +33,7 @@ function Header() {
         <Box className="expanded-header">
           <Box className="upper-content">
             <Link to="/">
-              <Box className="logo" onClick={handleHeaderLayout} />
+              <Box className="logo" onClick={handleHeaderGrow} />
             </Link>
             <Box className="navigation">
               <NavItems />
