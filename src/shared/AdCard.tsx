@@ -78,7 +78,7 @@ const AdCard = (props: ExAdCard) => {
                 component="img"
                 alt={props.ad.title}
                 image={props.ad.img}
-                sx={{ borderRadius: 3, width: 100, height: 100 }}
+                sx={{ borderRadius: 3, width: 125, height: 125 }}
               />
             </Link>
             {props.isRequest ? <></> : <IsAvailableSwitch ad={props.ad} />}
@@ -90,7 +90,7 @@ const AdCard = (props: ExAdCard) => {
                 flexDirection: 'column',
                 placeContent: 'center',
                 pl: 1,
-                maxWidth: 120,
+                maxWidth: 125,
               }}
             >
               <Typography variant="body1" fontWeight={600}>

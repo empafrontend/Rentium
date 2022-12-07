@@ -84,8 +84,8 @@ function Profile() {
                 alt="img"
                 sx={{
                   borderRadius: 3,
-                  width: 100,
-                  height: 100,
+                  width: 125,
+                  height: 125,
                 }}
               />
               <CardContent

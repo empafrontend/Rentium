@@ -32,8 +32,9 @@ function Feed() {
             className="card"
             key={index}
             sx={{
-              width: '11.2rem',
-              height: '15rem',
+              marginTop: '1rem',
+              width: '13.5rem',
+              height: '14rem',
               borderRadius: '1rem',
               boxShadow: 'none',
             }}
@@ -46,7 +47,7 @@ function Feed() {
                 sx={{
                   borderRadius: '1rem',
                   width: '100%',
-                  height: '9rem',
+                  height: '10rem',
                   objectFit: 'cover',
                   objectPosition: 'center',
                 }}
@@ -57,6 +58,7 @@ function Feed() {
                 </Typography>
                 <Box
                   sx={{
+                    width: '100%',
                     display: 'flex',
                     justifyContent: 'space-between',
                   }}
