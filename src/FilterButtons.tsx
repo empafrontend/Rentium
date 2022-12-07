@@ -30,7 +30,7 @@ const FilterButtons = () => {
       onClick={() => setCount(filterButtons.id)}
     >
       <div>
-        <div className="flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white">
+        <div className="flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white hover:cursor-pointer ">
           <div className="h-7 w-7" onClick={() => handleView(filterButtons.id)}>
             <img src={filterButtons.img} alt="" className="aspect-auto " />
           </div>
@@ -107,7 +107,7 @@ const FilterButtons = () => {
 
   return (
     <Box>
-      <div className=" flex flex-row w-full justify-center filter-buttons">
+      <div className=" flex flex-row w-full justify-center filter-buttons cursor:pointer">
         {filterButtonsList}
       </div>
       {/*   <div className="flex flex-col-reverse">
