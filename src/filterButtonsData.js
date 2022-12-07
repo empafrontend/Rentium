@@ -7,26 +7,31 @@ import tool from '../src/Assets/verktygIkon.png';
 const filterButtons = [
   {
     text: 'Skor',
+    category: 'shoes',
     img: shoe,
     id: 1,
   },
   {
     text: 'Hattar',
+    category: 'hats',
     img: hat,
     id: 2,
   },
   {
     text: 'Verktyg',
+    category: 'tools',
     img: tool,
     id: 3,
   },
   {
     text: 'Boende',
+    category: 'housing',
     img: house,
     id: 4,
   },
   {
     text: 'Fordon',
+    category: 'vehicles',
     img: car,
     id: 5,
   },
