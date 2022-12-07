@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAd } from './Context/AdContextProvider';
-import { auth } from './firebase';
+import { useUser } from './Context/UserContextProvider';
 import ContentContainer from './shared/ContentContainer';
 
 {
@@ -14,6 +14,7 @@ import ContentContainer from './shared/ContentContainer';
 function AdPage() {
   const params = useParams<{ id: string }>();
   const { getOneAd, singleAd } = useAd();
+  const { currentUser } = useUser();
 
   useEffect(() => {
     if (params.id) {
@@ -167,7 +168,7 @@ function AdPage() {
         >
           {singleAd.description}
         </Typography>
-        {!auth.currentUser ? (
+        {!currentUser ? (
           <Typography>
             You have to log in before sending a booking request.
           </Typography>

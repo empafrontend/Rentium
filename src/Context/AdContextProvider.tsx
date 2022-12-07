@@ -20,6 +20,7 @@ import {
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase.js';
+import { useUser } from './UserContextProvider';
 
 export interface Ad {
   author?: string;
@@ -79,6 +80,7 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   const navigate = useNavigate();
   const adsCollectionRef = collection(db, 'ads');
   const [ads, setAds] = useState<Ad[]>([]);
+  const { currentUser } = useUser();
   // this singleAd state is for rendering a single ad (but it may not be needed - depends on how the data is being rendered)
   const [singleAd, setSingleAd] = useState<Ad>({
     category: '',
@@ -95,7 +97,6 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   const getAds = useCallback(async () => {
     const adData = await getDocs(adsCollectionRef);
     setAds(adData.docs.map((doc) => ({ ...(doc.data() as Ad), id: doc.id })));
-    console.log('calling ads');
   }, []);
 
   /** Gets a single documents from db ad collection */
@@ -106,12 +107,6 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
       ? setSingleAd(docSnap.data() as Ad)
       : console.log('Data not found'); // TODO: do something...
   }, []);
-
-  ///////// FOR TESTING ONLY
-  // useEffect(() => {
-  //   getOneAd('9S1WP0BrmMHIKMAKWh04');
-  //   // console.log('getOneAd() returns:', singleAd);
-  // }, []);
 
   /** Adds new ad entry to db ad collection */
   const createAd = useCallback(async (values: Ad) => {
@@ -134,22 +129,6 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
       });
   }, []);
 
-  ///////// FOR TESTING ONLY
-  ///////// *** IF YOU CALL THIS, remember to remove from database after!
-  // useEffect(() => {
-  //   console.log('called');
-  //   createAd({
-  //     category: 'shoes',
-  //     description: 'jingle bells jingle bells jingle bells rock!',
-  //     endDate: '2022-01-01',
-  //     img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcfw1vik_3tGuayJWzN8q-ls3OADSufDCV8UYX03GQIhz00zCPuWL5dEHQNexk63hLrO4&usqp=CAU',
-  //     location: 'Centrala Göteborg',
-  //     price: 999,
-  //     startDate: '2022-12-25',
-  //     title: "Santa's boots lalalala",
-  //   });
-  // }, []);
-
   /** Updates the variable "isAvailable" to true in a single doc */
   const updateIsAvailableTrue = useCallback(async (id: string) => {
     const docRef = doc(db, 'ads', id);
@@ -171,8 +150,6 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
     const docRef = doc(db, 'ads', id);
     await deleteDoc(docRef).then(() => getAds());
   }, []);
-  ///////// FOR TESTING ONLY
-  // deleteAd('SKiiovFeRNLfqVoVBnpi');
 
   /** Accepts a booking request */
   const acceptOffer = useCallback(async (id: string, requestor: string) => {
