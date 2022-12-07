@@ -42,11 +42,11 @@ export interface Ad {
 interface AdContextValue {
   ads: Ad[];
   singleAd: Ad;
-  selectedAd: Ad;
   getAds: () => Promise<unknown>;
   getOneAd: (id: string) => Promise<unknown>;
   createAd: (values: Ad) => Promise<unknown>;
-  updateAdStatus: (id: string) => Promise<unknown>;
+  updateIsAvailableTrue: (id: string) => Promise<unknown>;
+  updateIsAvailableFalse: (id: string) => Promise<unknown>;
   removeAd: (id: string) => Promise<unknown>;
   acceptOffer: (id: string, requestor: string) => Promise<unknown>;
   rejectOffer: (id: string, requestor: string) => void;
@@ -65,21 +65,11 @@ export const AdContext = createContext<AdContextValue>({
     startDate: '',
     title: '',
   },
-  selectedAd: {
-    category: '',
-    description: '',
-    endDate: '',
-    img: '',
-    isAvailable: true,
-    location: '',
-    price: 0,
-    startDate: '',
-    title: '',
-  },
   getAds: () => Promise.resolve(),
   getOneAd: (id) => Promise.resolve(),
   createAd: (values) => Promise.resolve(),
-  updateAdStatus: (id) => Promise.resolve(),
+  updateIsAvailableTrue: (id) => Promise.resolve(),
+  updateIsAvailableFalse: (id) => Promise.resolve(),
   removeAd: () => Promise.resolve(),
   acceptOffer: (id, requestor) => Promise.resolve(),
   rejectOffer: (id, requestor) => {},
@@ -87,23 +77,10 @@ export const AdContext = createContext<AdContextValue>({
 
 const AdProvider: FC<PropsWithChildren> = (props) => {
   const navigate = useNavigate();
-
   const adsCollectionRef = collection(db, 'ads');
   const [ads, setAds] = useState<Ad[]>([]);
   // this singleAd state is for rendering a single ad (but it may not be needed - depends on how the data is being rendered)
   const [singleAd, setSingleAd] = useState<Ad>({
-    category: '',
-    description: '',
-    endDate: '',
-    img: '',
-    isAvailable: true,
-    location: '',
-    price: 0,
-    startDate: '',
-    title: '',
-  });
-  // this selectedAd state is for accepting or rejecting booking requests as well as removing ad
-  const [selectedAd, setSelectedAd] = useState<Ad>({
     category: '',
     description: '',
     endDate: '',
@@ -173,16 +150,21 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   //   });
   // }, []);
 
-  /** Updates the variable "isAvailable" in a single doc */
-  const updateAdStatus = useCallback(async (id: string) => {
+  /** Updates the variable "isAvailable" to true in a single doc */
+  const updateIsAvailableTrue = useCallback(async (id: string) => {
     const docRef = doc(db, 'ads', id);
-    setSelectedAd((await getDoc(docRef).then((ref) => ref.data())) as Ad);
     await updateDoc(docRef, {
-      isAvailable: selectedAd?.isAvailable == true ? false : true,
-    });
+      isAvailable: true,
+    }).then(() => getAds());
   }, []);
-  ///////// FOR TESTING ONLY - this will be called continuously once uncommented
-  //   updateAdStatus('7TENcfLgExXjxgh7by2S');
+
+  /** Updates the variable "isAvailable" to false in a single doc */
+  const updateIsAvailableFalse = useCallback(async (id: string) => {
+    const docRef = doc(db, 'ads', id);
+    await updateDoc(docRef, {
+      isAvailable: false,
+    }).then(() => getAds());
+  }, []);
 
   /** Removes a document from the db ad collection */
   const removeAd = useCallback(async (id: string) => {
@@ -214,11 +196,11 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
       value={{
         ads,
         singleAd,
-        selectedAd,
         getAds,
         getOneAd,
         createAd,
-        updateAdStatus,
+        updateIsAvailableTrue,
+        updateIsAvailableFalse,
         removeAd,
         acceptOffer,
         rejectOffer,
