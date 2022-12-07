@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAd } from './Context/AdContextProvider';
-import { useUser } from './Context/UserContextProvider';
+import { auth } from './firebase';
 import ContentContainer from './shared/ContentContainer';
 
 {
@@ -13,7 +13,6 @@ import ContentContainer from './shared/ContentContainer';
 }
 function AdPage() {
   const params = useParams<{ id: string }>();
-  const { user } = useUser();
   const { getOneAd, singleAd } = useAd();
 
   useEffect(() => {
@@ -168,10 +167,20 @@ function AdPage() {
         >
           {singleAd.description}
         </Typography>
-        {!user.uid ? (
-          <Typography>
-            You have to log in before sending a booking request.
-          </Typography>
+        {!auth.currentUser ? (
+          <Button
+            type="submit"
+            sx={{
+              width: '100%',
+              alignSelf: 'center',
+              color: '#535353',
+              background: '#ADABAB',
+              p: 1.5,
+              '&:hover': { background: '#ADABAB' },
+            }}
+          >
+            Du måste vara inloggad innan du kan skicka en bokningsförfrågan.
+          </Button>
         ) : (
           <>
             <Button variant="contained" onClick={showToastMessage}>

@@ -1,18 +1,11 @@
-import {
-  AddCircleOutlineRounded,
-  HomeOutlined,
-  PersonOutlineOutlined,
-  SearchOutlined,
-} from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { NavigationContext } from './Context/NavigationContext';
-import { useUser } from './Context/UserContextProvider';
 import './header.css';
+import NavItems from './shared/NavItems';
 
 function Header() {
-  const { user } = useUser();
   const { filterNavigation, setFilterNavigation } =
     useContext(NavigationContext);
   const [expandHeader, setExpandHeader] = useState(true);
@@ -32,28 +25,7 @@ function Header() {
             <Box className="logo" onClick={handleHeaderLayout} />
           </Link>
           <Box className="navigation">
-            <Link to="/">
-              <HomeOutlined className="icon" fontSize="large" />
-            </Link>
-            <SearchOutlined className="icon" fontSize="large" />
-            <Link
-              className={!user.uid ? 'hidden' : 'icon'}
-              to={!user.uid ? '/sign-in' : '/new-ad'}
-            >
-              <AddCircleOutlineRounded className="icon" fontSize="large" />
-            </Link>
-            <Link to={!user.uid ? '/sign-in' : '/my-page'}>
-              {!user.uid ? (
-                <PersonOutlineOutlined className="icon" fontSize="large" />
-              ) : (
-                <Box
-                  component="img"
-                  className="img-icon icon:hover"
-                  src={user.photoURL}
-                  alt={user.displayName}
-                />
-              )}
-            </Link>
+            <NavItems />
           </Box>
         </Box>
       ) : (
@@ -63,28 +35,7 @@ function Header() {
               <Box className="logo" onClick={handleHeaderLayout} />
             </Link>
             <Box className="navigation">
-              <Link to="/">
-                <HomeOutlined className="icon" fontSize="large" />
-              </Link>
-              <SearchOutlined className="icon" fontSize="large" />
-              <Link
-                className={!user.uid ? 'hidden' : 'icon'}
-                to={!user.uid ? '/sign-in' : '/new-ad'}
-              >
-                <AddCircleOutlineRounded className="icon" fontSize="large" />
-              </Link>
-              <Link to={!user.uid ? '/sign-in' : '/my-page'}>
-                {!user.uid ? (
-                  <PersonOutlineOutlined className="icon" fontSize="large" />
-                ) : (
-                  <Box
-                    component="img"
-                    className="img-icon icon:hover"
-                    src={user.photoURL}
-                    alt={user.displayName}
-                  />
-                )}
-              </Link>
+              <NavItems />
             </Box>
           </Box>
           <Box className="heading">
