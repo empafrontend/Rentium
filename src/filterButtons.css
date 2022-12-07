@@ -2,6 +2,7 @@
   position: absolute;
   top: 6.5rem;
   z-index: 1;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 600px) {
