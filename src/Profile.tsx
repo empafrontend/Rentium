@@ -9,7 +9,9 @@ import {
 } from '@mui/material';
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { AdContext } from './Context/AdContextProvider';
+import { auth } from './firebase';
 
 import './footer.css';
 import ContentContainer from './shared/ContentContainer';
@@ -20,6 +22,12 @@ function Profile() {
 
   const user = () => {
     return ads.filter((ad) => ad.authorId === params.id);
+  };
+
+  const showToastMessage = () => {
+    toast.success('Din bokningsförfrågan har blivit skickad.', {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
   };
 
   return (
@@ -123,13 +131,35 @@ function Profile() {
                 mt: 1,
               }}
             >
-              <Button
-                variant="contained"
-                sx={{ width: '100%', borderRadius: '20px 0 0 0' }}
-              >
-                Skicka bokningsförfrågan
-                {/* To be added: some sort of confirmation when this button is clicked */}
-              </Button>
+              {!auth.currentUser ? (
+                <Button
+                  sx={{
+                    width: '100%',
+                    height: 35,
+                    borderRadius: '20px 0 0 0',
+                    color: '#535353',
+                    background: '#ADABAB',
+                    '&:hover': { background: '#ADABAB' },
+                  }}
+                >
+                  Logga in för skicka en bokningsförfrågan
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    sx={{
+                      width: '100%',
+                      height: 35,
+                      borderRadius: '20px 0 0 0',
+                    }}
+                    variant="contained"
+                    onClick={showToastMessage}
+                  >
+                    Skicka bokningsförfrågan
+                  </Button>
+                  <ToastContainer />
+                </>
+              )}
             </Box>
           </Card>
         ))}
