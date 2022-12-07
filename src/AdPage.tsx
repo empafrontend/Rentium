@@ -29,7 +29,7 @@ function AdPage() {
   };
 
   return (
-    <ContentContainer>
+    <ContentContainer backButton>
       <Box
         maxWidth={350}
         minWidth={300}
