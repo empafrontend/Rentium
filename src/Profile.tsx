@@ -11,12 +11,14 @@ import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { AdContext } from './Context/AdContextProvider';
+import { useUser } from './Context/UserContextProvider';
 import { auth } from './firebase';
 
 import './footer.css';
 import ContentContainer from './shared/ContentContainer';
 
 function Profile() {
+  const { currentUser } = useUser();
   const { ads } = useContext(AdContext);
   const params = useParams<{ id: string }>();
 
@@ -59,10 +61,12 @@ function Profile() {
               flexDirection: 'column',
               alignItems: 'flex-start',
               width: '60%',
+              minWidth: 340,
               height: 'fit-content',
               borderRadius: '20px 20px 20px 0',
               boxShadow: '0 2px 10px #DDDBD5',
               mt: 1,
+              mb: 2,
             }}
           >
             <Box
@@ -120,40 +124,29 @@ function Profile() {
                   color="text.secondary"
                   sx={{ textAlign: 'right' }}
                 >
-                  {'Inlagd 24-11-2022'} {/* insert date from data */}
+                  Inlagd:{' '}
+                  {ad.createdAt
+                    .toDate()
+                    .toDateString()
+                    .replace(/^\S+\s/, '')}{' '}
                 </Typography>
               </CardContent>
             </Box>
-            <Box
-              sx={{
-                width: '100%',
-                height: 35,
-                mt: 1,
-              }}
-            >
-              {!auth.currentUser ? (
+            <Box sx={{ width: '100%', height: 35, mt: 1 }}>
+              {!currentUser ? (
                 <Button
-                  sx={{
-                    width: '100%',
-                    height: 35,
-                    borderRadius: '20px 0 0 0',
-                    color: '#535353',
-                    background: '#ADABAB',
-                    '&:hover': { background: '#ADABAB' },
-                  }}
+                  disabled={!auth.currentUser}
+                  variant="contained"
+                  sx={{ width: '100%', borderRadius: '20px 0 0 0' }}
                 >
-                  Du måste vara inloggad innan du kan skicka en
-                  bokningsförfrågan.
+                  Logga in för skicka en bokningsförfrågan
                 </Button>
               ) : (
                 <>
                   <Button
-                    sx={{
-                      width: '100%',
-                      height: 35,
-                      borderRadius: '20px 0 0 0',
-                    }}
+                    sx={{ width: '100%', borderRadius: '20px 0 0 0' }}
                     variant="contained"
+                    disabled={ad.authorId === currentUser.uid}
                     onClick={showToastMessage}
                   >
                     Skicka bokningsförfrågan

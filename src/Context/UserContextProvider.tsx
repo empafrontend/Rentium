@@ -5,6 +5,7 @@ import {
   FC,
   PropsWithChildren,
   useContext,
+  useEffect,
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -15,16 +16,8 @@ interface User {
   username: string;
   password: string;
 }
-
-interface GoogleUser {
-  displayName: string;
-  email: string;
-  photoURL: string;
-  uid: string;
-}
-
 interface UserContextValue {
-  user: any;
+  currentUser: any;
   handleSignIn: (user: User) => void;
   handleSignUp: (user: User) => void;
   handleSignOut: () => void;
@@ -32,7 +25,7 @@ interface UserContextValue {
 }
 
 export const UserContext = createContext<UserContextValue>({
-  user: undefined,
+  currentUser: undefined,
   handleSignIn: () => {},
   handleSignUp: () => {},
   handleSignOut: () => {},
@@ -40,18 +33,17 @@ export const UserContext = createContext<UserContextValue>({
 });
 
 const UserProvider: FC<PropsWithChildren> = (props) => {
-  const navigate = useNavigate();
-  const [user, setUser] = useState<any>();
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+    });
+    return unsubscribe;
+  }, []);
 
+  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState<any>();
   const handleSignIn = (user: User) => console.log('signing in', user); // TODO: add function
   const handleSignUp = (user: User) => console.log('signing up', user); // TODO: add function
-
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) =>
-  //     setUser(currentUser as any)
-  //   );
-  //   return unsubscribe;
-  // }, [onAuthStateChanged, auth, user]);
 
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
@@ -65,16 +57,8 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
         });
       })
       .catch((error) => {
-        // TODO!
-        // Handle Errors here.
         const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-        toast.error('Inloggningen misslyckades.', {
+        toast.error(`Inloggningen misslyckades. (${errorCode})`, {
           position: toast.POSITION.BOTTOM_CENTER,
         });
       });
@@ -83,8 +67,8 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
   const handleSignOut = async () =>
     await signOut(auth)
       .then(() => {
-        setUser(undefined);
-        if (!user) navigate('/');
+        setCurrentUser(undefined);
+        if (!currentUser) navigate('/');
       })
       .then(() => {
         toast.success('Du är utloggad!', {
@@ -95,7 +79,7 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
   return (
     <UserContext.Provider
       value={{
-        user,
+        currentUser,
         handleSignIn,
         handleSignUp,
         handleSignOut,
