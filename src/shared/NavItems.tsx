@@ -3,9 +3,8 @@ import { IconHome, IconPlus, IconSearch, IconUserCircle } from '@tabler/icons';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { NavigationContext } from '../Context/NavigationContext';
-import { auth } from '../firebase';
-import './navItems.css';
 import { useUser } from '../Context/UserContextProvider';
+import './navItems.css';
 
 const NavItems = () => {
   const { filterNavigation, setFilterNavigation } =
@@ -34,6 +33,7 @@ const NavItems = () => {
 
       <Link to="/" className="link">
         {/* link to be adjusted */}
+        {/* put this when link for search is implemented: onClick={() => handleHeaderSize()} */}
         <IconSearch size={32} stroke={1} />
         <Typography variant="h5" component="h3" mt={0.7}>
           Sök
@@ -41,7 +41,7 @@ const NavItems = () => {
       </Link>
 
       {currentUser ? (
-        <Link to="/new-ad" className="link">
+        <Link to="/new-ad" className="link" onClick={() => handleHeaderSize()}>
           <IconPlus size={32} stroke={1} />
           <Typography variant="h5" component="h3" mt={0.7}>
             Lägg till
@@ -50,7 +50,7 @@ const NavItems = () => {
       ) : null}
 
       {currentUser ? (
-        <Link to="/my-page" className="link">
+        <Link to="/my-page" className="link" onClick={() => handleHeaderSize()}>
           <Avatar
             alt={
               currentUser.displayName
