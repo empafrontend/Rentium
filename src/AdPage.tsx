@@ -68,7 +68,14 @@ function AdPage() {
                 mr: '5px',
               }}
             >
-              {/* Inlagd: {singleAd.createdAt} */}
+              Inlagd:{' '}
+              {singleAd.createdAt
+                ? singleAd.createdAt
+                    .toDate()
+                    .toDateString()
+                    .replace(/^\S+\s/, '')
+                : 'nodate'}{' '}
+              {/* this if statement should be removed in final testing */}
             </Typography>
             <Typography
               variant="body1"
@@ -169,22 +176,16 @@ function AdPage() {
           {singleAd.description}
         </Typography>
         {!currentUser ? (
-          <Button
-            type="submit"
-            sx={{
-              width: '100%',
-              alignSelf: 'center',
-              color: '#535353',
-              background: '#ADABAB',
-              p: 1.5,
-              '&:hover': { background: '#ADABAB' },
-            }}
-          >
+          <Button disabled variant="contained">
             Logga in för skicka en bokningsförfrågan
           </Button>
         ) : (
           <>
-            <Button variant="contained" onClick={showToastMessage}>
+            <Button
+              variant="contained"
+              disabled={singleAd.authorId === currentUser.uid}
+              onClick={showToastMessage}
+            >
               Skicka bokningsförfrågan
             </Button>
             <ToastContainer />
