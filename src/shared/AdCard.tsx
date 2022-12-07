@@ -78,7 +78,7 @@ const AdCard = (props: ExAdCard) => {
                 component="img"
                 alt={props.ad.title}
                 image={props.ad.img}
-                sx={{ borderRadius: 3, width: 125, height: 125 }}
+                sx={{ borderRadius: 3, width: 100, height: 100 }}
               />
             </Link>
             {props.isRequest ? <></> : <IsAvailableSwitch ad={props.ad} />}
