@@ -4,8 +4,19 @@
   z-index: 1;
 }
 
+.filter-buttons-down {
+  position: absolute;
+  top: 18.5rem;
+  z-index: 1;
+}
+
 @media screen and (max-width: 600px) {
   .filter-buttons {
     top: 3.5rem;
+  }
+  .filter-buttons-down {
+    position: absolute;
+    top: 18.5rem;
+    z-index: 1;
   }
 }
