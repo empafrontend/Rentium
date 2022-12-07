@@ -107,7 +107,7 @@ const FilterButtons = () => {
 
   return (
     <Box>
-      <div className=" flex flex-row w-full justify-center filter-buttons cursor:pointer">
+      <div className=" flex flex-row w-full justify-center filter-buttons">
         {filterButtonsList}
       </div>
       {/*   <div className="flex flex-col-reverse">
