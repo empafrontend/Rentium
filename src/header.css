@@ -55,9 +55,11 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 550px) {
   .header {
-    height: 5rem;
+    justify-content: center;
+    align-items: flex-start;
+    height: 7rem;
     border-radius: 0px 0px 0px 40px;
   }
   .logo {
