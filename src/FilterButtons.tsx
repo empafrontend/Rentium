@@ -24,11 +24,12 @@ const FilterButtons = () => {
   const filterButtonsList = filterButtons.map((filterButtons, index) => (
     <div
       key={filterButtons.id}
-      className=" w-16 flex flex-col items-center justify-center"
+      className="button-container"
       /* onClick={() => setCount(filterButtons.id)} */
+      /* flex items-center justify-center */
     >
-      <div className="flex items-center justify-center rounded-full hover:cursor-pointer ">
-        <div className="h-7 w-7" onClick={() => handleView(filterButtons.id)}>
+      <div className="rounded-full hover:cursor-pointer">
+        <div onClick={() => handleView(filterButtons.id)}>
           <button
             onClick={() => handleView(filterButtons.id)}
             id="button"
@@ -112,11 +113,11 @@ const FilterButtons = () => {
   return (
     <Box>
       {filterNavigation ? (
-        <div className=" flex flex-row w-full justify-center filter-buttons">
+        <div className=" button-div flex flex-row filter-buttons">
           {filterButtonsList}
         </div>
       ) : (
-        <div className=" flex flex-row w-full justify-center filter-buttons-down">
+        <div className=" button-div flex flex-row filter-buttons-down">
           {filterButtonsList}
         </div>
       )}
