@@ -10,9 +10,17 @@
   z-index: 1;
 }
 
-@media screen and (max-width: 600px) {
+.button-div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+@media screen and (max-width: 550px) {
   .filter-buttons {
-    top: 3.5rem;
+    top: 5.5rem;
   }
   .filter-buttons-down {
     position: absolute;

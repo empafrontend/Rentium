@@ -25,7 +25,7 @@ const NavItems = () => {
   return (
     <>
       <Link to="/" className="link" onClick={() => goToHomeView()}>
-        <IconHome size={32} stroke={1} />
+        <IconHome size={28} stroke={1} />
         <Typography variant="h5" component="h3" mt={0.7}>
           Hem
         </Typography>
@@ -34,7 +34,7 @@ const NavItems = () => {
       <Link to="/" className="link">
         {/* link to be adjusted */}
         {/* put this when link for search is implemented: onClick={() => handleHeaderSize()} */}
-        <IconSearch size={32} stroke={1} />
+        <IconSearch size={28} stroke={1} />
         <Typography variant="h5" component="h3" mt={0.7}>
           Sök
         </Typography>
@@ -42,7 +42,7 @@ const NavItems = () => {
 
       {currentUser ? (
         <Link to="/new-ad" className="link" onClick={() => handleHeaderSize()}>
-          <IconPlus size={32} stroke={1} />
+          <IconPlus size={28} stroke={1} />
           <Typography variant="h5" component="h3" mt={0.7}>
             Lägg till
           </Typography>
@@ -60,7 +60,7 @@ const NavItems = () => {
             }
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             src={currentUser.photoURL!}
-            sx={{ width: 32, height: 32 }}
+            sx={{ width: 28, height: 28 }}
           />
           <Typography variant="h5" component="h3" mt={0.7}>
             {currentUser.displayName}
@@ -68,7 +68,7 @@ const NavItems = () => {
         </Link>
       ) : (
         <Link to="/sign-in" className="link" onClick={() => handleHeaderSize()}>
-          <IconUserCircle size={32} stroke={1} />
+          <IconUserCircle size={28} stroke={1} />
           <Typography variant="h5" component="h3" mt={0.7}>
             Logga in
           </Typography>

@@ -3,11 +3,15 @@ import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AdContext } from '../Context/AdContextProvider';
+import { NavigationContext } from '../Context/NavigationContext';
 import ContentContainer from '../shared/ContentContainer';
 import './feed.css';
 
 function Feed() {
   const { ads, getAds } = useContext(AdContext);
+
+  const { filterNavigation, setFilterNavigation } =
+    useContext(NavigationContext);
 
   useEffect(() => {
     getAds();
@@ -38,6 +42,7 @@ function Feed() {
               borderRadius: '1rem',
               boxShadow: 'none',
             }}
+            onClick={() => setFilterNavigation(true)}
           >
             <Link to={`/ad/${ads.id}`}>
               <CardMedia
