@@ -11,7 +11,7 @@ import {
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Ad, useAd } from '../Context/AdContextProvider';
-import { formatZeroPrice } from '../helper';
+import { formatZeroPrice, onImageError } from '../helper';
 import IsAvailableSwitch from './IsAvailableSwitch';
 
 type ExAdCard = Partial<Ad> & {
@@ -80,6 +80,7 @@ const AdCard = (props: ExAdCard) => {
             <Link to={`/ad/${props.ad.id}`}>
               <CardMedia
                 component="img"
+                onError={onImageError}
                 alt={props.ad.title}
                 image={props.ad.img}
                 sx={{ borderRadius: 3, width: 100, height: 100 }}
@@ -179,6 +180,7 @@ const AdCard = (props: ExAdCard) => {
 
             <CardMedia
               component="img"
+              onError={onImageError}
               alt={props.ad.title}
               image={props.ad.img}
               sx={{ borderRadius: 3, width: 50, height: 50, m: 'auto' }}

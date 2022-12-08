@@ -17,7 +17,7 @@ import { useUser } from './Context/UserContextProvider';
 import { auth } from './firebase';
 
 import './footer.css';
-import { formatZeroPrice } from './helper';
+import { formatZeroPrice, onImageError } from './helper';
 import ContentContainer from './shared/ContentContainer';
 import IsAvailableSwitch from './shared/IsAvailableSwitch';
 
@@ -77,6 +77,7 @@ function Profile() {
                 component="img"
                 image={ad.img}
                 alt="img"
+                onError={onImageError}
                 sx={{
                   borderRadius: 3,
                   width: 125,
@@ -203,6 +204,7 @@ function Profile() {
 
                   <CardMedia
                     component="img"
+                    onError={onImageError}
                     alt={ad.title}
                     image={ad.img}
                     sx={{ borderRadius: 3, width: 50, height: 50, m: 'auto' }}

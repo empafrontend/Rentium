@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BookingRequest, useAd } from './Context/AdContextProvider';
 import { useUser } from './Context/UserContextProvider';
-import { formatZeroPrice } from './helper';
+import { formatZeroPrice, onImageError } from './helper';
 import ContentContainer from './shared/ContentContainer';
 
 {
@@ -33,6 +33,7 @@ function AdPage() {
       >
         <CardMedia
           component="img"
+          onError={onImageError}
           sx={{ borderRadius: '1rem' }}
           src={singleAd.img}
         />

@@ -1,5 +1,6 @@
 import { Box, Button, CardMedia, Container, Typography } from '@mui/material';
 import img from '../src/Assets/gk.png';
+import { onImageError } from './helper';
 
 function MyAd() {
   return (
@@ -21,11 +22,10 @@ function MyAd() {
       >
         <CardMedia
           component="img"
+          onError={onImageError}
           image={img}
           alt=""
-          sx={{
-            borderRadius: '1rem',
-          }}
+          sx={{ borderRadius: '1rem' }}
         />
         <Box
           sx={{
