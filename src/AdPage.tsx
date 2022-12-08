@@ -2,9 +2,9 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Box, Button, CardMedia, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useAd } from './Context/AdContextProvider';
+import { BookingRequest, useAd } from './Context/AdContextProvider';
 import { useUser } from './Context/UserContextProvider';
 import ContentContainer from './shared/ContentContainer';
 
@@ -13,20 +13,14 @@ import ContentContainer from './shared/ContentContainer';
 }
 function AdPage() {
   const params = useParams<{ id: string }>();
-  const { getOneAd, singleAd } = useAd();
+  const { getOneAd, singleAd, sendOffer } = useAd();
   const { currentUser } = useUser();
 
   useEffect(() => {
     if (params.id) {
       getOneAd(params.id);
     }
-  }, []);
-
-  const showToastMessage = () => {
-    toast.success('Din bokningsförfrågan har blivit skickad.', {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
-  };
+  }, [sendOffer]);
 
   return (
     <ContentContainer backButton>
@@ -36,37 +30,30 @@ function AdPage() {
         margin="auto"
         sx={{ display: 'flex', flexDirection: 'column', rowGap: 0.5 }}
       >
-        {/* the border radius is not working? */}
         <CardMedia
           component="img"
-          sx={{
-            borderRadius: '1rem',
-          }}
+          sx={{ borderRadius: '1rem' }}
           src={singleAd.img}
-        ></CardMedia>
+        />
         <Box
+          mx=".5rem"
           sx={{
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
-            mr: '.5rem',
-            ml: '.5rem',
           }}
         >
           <Box
             sx={{
               display: 'flex',
               flexDirection: 'row',
+              placeContent: 'center',
             }}
           >
             <Typography
-              variant="body1"
-              sx={{
-                fontSize: '12px',
-                display: 'flex',
-                fontWeight: '300',
-                mr: '5px',
-              }}
+              mr="5px"
+              variant="body2"
+              sx={{ fontSize: '12px', display: 'flex' }}
             >
               Inlagd:{' '}
               {singleAd.createdAt
@@ -78,19 +65,18 @@ function AdPage() {
               {/* this if statement should be removed in final testing */}
             </Typography>
             <Typography
-              variant="body1"
+              variant="body2"
               sx={{
                 color: '#6860CC',
                 fontSize: '12px',
                 display: 'flex',
-                fontWeight: '300',
               }}
             >
               {singleAd.location}
             </Typography>
           </Box>
           <Typography
-            variant="body1"
+            variant="body2"
             sx={{
               color: '#343232',
               fontSize: '12px',
@@ -101,65 +87,39 @@ function AdPage() {
           >
             <Link to={`/profile/${singleAd.authorId}`}>
               <PersonOutlineIcon
-                sx={{ fontSize: '1rem', m: '2px', color: '#343232' }}
+                sx={{ fontSize: '1rem', mx: '2px', color: '#343232' }}
               />
-
               {singleAd.author}
             </Link>
           </Typography>
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            mt: '2rem',
-          }}
-        >
-          <Typography
-            variant="h5"
-            sx={{ color: '#343232', fontWeight: '500', fontSize: '20px' }}
-          >
+        <Box mt="2rem" sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography variant="h3" component="h1" sx={{ fontWeight: '500' }}>
             {singleAd.title}
           </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-            }}
-          >
+          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
             <Typography
-              variant="body1"
+              variant="body2"
               sx={{
                 fontSize: '12px',
                 display: 'flex',
-                fontWeight: '300',
                 mr: '5px',
               }}
             >
               Datum:
             </Typography>
             <Typography
-              variant="body1"
+              variant="body2"
               sx={{
                 color: '#6860CC',
                 fontSize: '12px',
                 display: 'flex',
-                fontWeight: '300',
               }}
             >
               {singleAd.startDate} - {singleAd.endDate}
             </Typography>
           </Box>
-          <Typography
-            variant="body1"
-            sx={{
-              color: '#2D3142',
-              display: 'flex',
-              fontSize: '14px',
-              fontWeight: '700',
-              alignItems: 'center',
-            }}
-          >
+          <Typography variant="body1" fontWeight={700}>
             {singleAd.price} kr
           </Typography>
         </Box>
@@ -167,10 +127,8 @@ function AdPage() {
           variant="body2"
           sx={{
             fontSize: '13px',
-            mt: '1rem',
-            mb: '1rem',
+            my: '1rem',
             lineHeight: '22px',
-            fontWeight: '300',
           }}
         >
           {singleAd.description}
@@ -179,12 +137,20 @@ function AdPage() {
           <Button disabled variant="contained">
             Logga in för skicka en bokningsförfrågan
           </Button>
+        ) : currentUser &&
+          singleAd.bookingRequests?.some(
+            (req: BookingRequest) => req.uid === currentUser.uid
+          ) ? (
+          <Button disabled variant="contained">
+            Bokningsförfrågan har skickat
+          </Button>
         ) : (
           <>
             <Button
               variant="contained"
               disabled={singleAd.authorId === currentUser.uid}
-              onClick={showToastMessage}
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              onClick={() => sendOffer(singleAd.id!)}
             >
               Skicka bokningsförfrågan
             </Button>

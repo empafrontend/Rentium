@@ -15,50 +15,52 @@ const IsAvailableSwitch = (props: Props) => {
   };
 
   return (
-    <FormGroup sx={{ pt: 1, pl: 1 }}>
+    <FormGroup sx={{ pl: 1, pt: 1 }}>
       <FormControlLabel
         control={
           <Switch
+            sx={{ p: 0, height: 15 }}
             checked={props.ad.isAvailable}
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             onChange={() => handleChange(props.ad.id!)}
           />
         }
         label={
-          <Typography fontSize={9} ml={-2}>
+          <Typography fontSize={9} ml={-3.5}>
             Tillgänglig
           </Typography>
         }
         sx={{
-          height: 15,
           display: 'flex',
           '& .MuiSwitch-switchBase': {
-            padding: 1,
+            background: 'none',
             '&.Mui-checked': {
               transform: 'translateX(11px)',
               color: '#fff',
+              background: 'none',
               '& + .MuiSwitch-track': {
                 opacity: 1,
-                backgroundColor: '#5D6DD8',
+                background: '#5D6DD8',
               },
             },
           },
           '& .MuiSwitch-thumb': {
+            transform: 'translateX(-8px)',
+            mt: -0.95,
             boxShadow: '0 2px 4px 0 rgb(0 35 11 / 20%)',
             width: 12,
             height: 12,
             borderRadius: 6,
-            marginTop: 0.6,
-            marginLeft: 0.6,
             transition: theme.transitions.create(['width'], {
               duration: 200,
             }),
           },
           '& .MuiSwitch-track': {
             width: 25,
+            height: 15,
             borderRadius: 16 / 2,
             opacity: 1,
-            backgroundColor: '#ECECEC',
+            background: '#ECECEC',
             boxSizing: 'border-box',
           },
         }}
