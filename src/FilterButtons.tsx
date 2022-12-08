@@ -41,6 +41,7 @@ const FilterButtons = () => {
           <Typography
             variant="body1"
             sx={{
+              marginLeft: '1.2rem',
               display: 'flex',
               justifyContent: 'center',
               paddingTop: '.4rem',
