@@ -1,7 +1,6 @@
 /* eslint-disable */ // delete this line when functionality is added in all functions
 import {
   addDoc,
-  arrayRemove,
   collection,
   deleteDoc,
   doc,
@@ -25,8 +24,8 @@ import { useUser } from './UserContextProvider';
 export interface Ad {
   author?: string;
   authorId?: string;
-  bookingRequests?: string[];
-  requestor?: string;
+  bookingRequests?: BookingRequest[];
+  requestor?: BookingRequest;
   category: string;
   description: string;
   endDate: string;
@@ -39,6 +38,12 @@ export interface Ad {
   title: string;
   createdAt?: any | string;
 }
+export interface BookingRequest {
+  uid: string;
+  displayName: string;
+  isAccepted?: boolean;
+  isRejected?: boolean;
+}
 
 interface AdContextValue {
   ads: Ad[];
@@ -49,8 +54,8 @@ interface AdContextValue {
   updateIsAvailableTrue: (id: string) => Promise<unknown>;
   updateIsAvailableFalse: (id: string) => Promise<unknown>;
   removeAd: (id: string) => Promise<unknown>;
-  acceptOffer: (id: string, requestor: string) => Promise<unknown>;
-  rejectOffer: (id: string, requestor: string) => void;
+  acceptOffer: (id: string, requestor: BookingRequest) => Promise<unknown>;
+  rejectOffer: (id: string, requestor: BookingRequest) => void;
 }
 
 export const AdContext = createContext<AdContextValue>({
@@ -152,21 +157,43 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   }, []);
 
   /** Accepts a booking request */
-  const acceptOffer = useCallback(async (id: string, requestor: string) => {
-    const docRef = doc(db, 'ads', id);
-    await updateDoc(docRef, {
-      isAvailable: false,
-      bookingRequests: arrayRemove(requestor),
-    }).then(() => getAds());
-  }, []);
+  const acceptOffer = useCallback(
+    async (adId: string, requestor: BookingRequest) => {
+      const docRef = doc(db, 'ads', adId);
+      const docSnap = await getDoc(docRef);
+      const ad = docSnap.data();
+      const selectedReq = ad!.bookingRequests.filter(
+        (req: any) => req.uid === requestor.uid
+      );
+      selectedReq[0].isAccepted = true;
+      selectedReq[0].isRejected = false;
+
+      await updateDoc(docRef, {
+        isAvailable: false,
+        bookingRequests: ad!.bookingRequests,
+      }).then(() => getAds());
+    },
+    []
+  );
 
   /** Rejects a booking request */
-  const rejectOffer = useCallback(async (id: string, requestor: string) => {
-    const docRef = doc(db, 'ads', id);
-    await updateDoc(docRef, {
-      bookingRequests: arrayRemove(requestor),
-    }).then(() => getAds());
-  }, []);
+  const rejectOffer = useCallback(
+    async (adId: string, requestor: BookingRequest) => {
+      const docRef = doc(db, 'ads', adId);
+      const docSnap = await getDoc(docRef);
+      const ad = docSnap.data();
+      const selectedReq = ad!.bookingRequests.filter(
+        (req: any) => req.uid === requestor.uid
+      );
+      selectedReq[0].isRejected = true;
+      selectedReq[0].isAccepted = false;
+
+      await updateDoc(docRef, {
+        bookingRequests: ad!.bookingRequests,
+      }).then(() => getAds());
+    },
+    []
+  );
 
   return (
     <AdContext.Provider

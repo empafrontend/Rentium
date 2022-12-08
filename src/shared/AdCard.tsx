@@ -16,6 +16,7 @@ import IsAvailableSwitch from './IsAvailableSwitch';
 type ExAdCard = Partial<Ad> & {
   ad: Ad;
   isRequest?: boolean | false;
+  hideButtons?: boolean | false;
 };
 
 const AdCard = (props: ExAdCard) => {
@@ -37,8 +38,10 @@ const AdCard = (props: ExAdCard) => {
   /** Handles clicking "ja" in the warning */
   const confirmAction = (id: string) => {
     setOpenModal(false);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    isToRemove ? removeAd(id) : rejectOffer(props.ad.id!, props.ad.requestor!);
+    isToRemove
+      ? removeAd(id)
+      : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        rejectOffer(props.ad.id!, props.ad.requestor!);
   };
 
   /**  Handles clicking "nej" in the warning */
@@ -53,8 +56,8 @@ const AdCard = (props: ExAdCard) => {
         sx={{
           maxWidth: 250,
           minWidth: 250,
-          maxHeight: 200,
-          borderRadius: '20px 20px 20px 0',
+          maxHeight: props.hideButtons ? 135 : 210,
+          borderRadius: props.hideButtons ? '20px' : '20px 20px 20px 0',
           boxShadow: '0 2px 10px #DDDBD5',
           mt: 1,
           display: 'flex',
@@ -98,7 +101,7 @@ const AdCard = (props: ExAdCard) => {
               </Typography>
               <Typography pb={3} variant="body2" color="text.secondary">
                 {props.isRequest
-                  ? props.ad.requestor
+                  ? props.ad.requestor?.displayName
                   : 'Inlagd: ' +
                     props.ad.createdAt
                       .toDate()
@@ -113,7 +116,7 @@ const AdCard = (props: ExAdCard) => {
           </Link>
         </Box>
 
-        {props.isRequest ? (
+        {props.isRequest && props.hideButtons ? null : props.isRequest ? (
           <CardActions disableSpacing sx={{ p: 0, width: '100%' }}>
             <Button
               variant="contained"
