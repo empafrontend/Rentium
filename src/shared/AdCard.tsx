@@ -187,8 +187,9 @@ const AdCard = (props: ExAdCard) => {
               {props.ad.title} {formatZeroPrice(props.ad.price)}
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              You action to {isToRemove ? 'remove the ad' : 'reject the offer'}{' '}
-              cannot be reverted.
+              Din åtgärd för att
+              {isToRemove ? ' ta bort annonsen ' : ' avvisa bokningsförfrågan '}
+              kan inte återställas.
             </Typography>
           </Box>
           <CardActions disableSpacing sx={{ p: 0, width: '100%' }}>

@@ -211,7 +211,7 @@ function Profile() {
                     {ad.title} {formatZeroPrice(ad.price)}
                   </Typography>
                   <Typography variant="body1" sx={{ mt: 2 }}>
-                    You action to remove the ad cannot be reverted.
+                    Din åtgärd för att ta bort annonsen kan inte återställas.
                   </Typography>
                 </Box>
                 <CardActions disableSpacing sx={{ p: 0, width: '100%' }}>
