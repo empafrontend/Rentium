@@ -33,6 +33,7 @@ function Feed() {
       >
         {ads.map((ads, index) => (
           <Card
+            id="card"
             className="card"
             key={index}
             sx={{
