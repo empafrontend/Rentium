@@ -14,15 +14,47 @@ const MyPage = () => {
   const { handleSignOut } = useUser();
   const { currentUser } = useUser();
 
-  const adsFromCurrentUser = () => {
-    return ads.filter((ad) => ad.authorId === currentUser?.uid);
+  const adsFromCurrentUser = () =>
+    ads.filter((ad) => ad.authorId === currentUser?.uid);
+
+  const generatePendingReq = () => {
+    return adsFromCurrentUser().flatMap((ad) =>
+      ad.bookingRequests
+        ?.filter(
+          (req) => req.isAccepted === undefined && req.isRejected === undefined
+        )
+        .map((req) => {
+          return {
+            ...ad,
+            requestor: { uid: req.uid, displayName: req.displayName },
+          };
+        })
+    );
   };
 
-  const generateBookingReq = () => {
+  const generateAcceptedReq = () => {
     return adsFromCurrentUser().flatMap((ad) =>
-      ad.bookingRequests?.map((requestor) => {
-        return { ...ad, requestor: requestor };
-      })
+      ad.bookingRequests
+        ?.filter((req) => req.isAccepted === true)
+        .map((req) => {
+          return {
+            ...ad,
+            requestor: { uid: req.uid, displayName: req.displayName },
+          };
+        })
+    );
+  };
+
+  const generateRejectedReq = () => {
+    return adsFromCurrentUser().flatMap((ad) =>
+      ad.bookingRequests
+        ?.filter((req) => req.isRejected === true)
+        .map((req) => {
+          return {
+            ...ad,
+            requestor: { uid: req.uid, displayName: req.displayName },
+          };
+        })
     );
   };
 
@@ -58,7 +90,7 @@ const MyPage = () => {
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography component="h2" variant="h4" mb={-1}>
-              Bokningsförfrågningar ({generateBookingReq().length})
+              Väntande bokningsförfrågningar ({generatePendingReq().length})
             </Typography>
             <Box
               height={190}
@@ -70,13 +102,77 @@ const MyPage = () => {
                 '::-webkit-scrollbar': { display: 'none' },
               }}
             >
-              {!generateBookingReq().length ? (
+              {!generatePendingReq().length ? (
                 <Typography alignSelf="center" mx="auto">
-                  Du har inga bokningsförfrågningar att visa.
+                  Du har inga väntande bokningsförfrågningar att visa.
                 </Typography>
               ) : (
-                generateBookingReq().map((req, index) => (
+                generatePendingReq().map((req, index) => (
                   <AdCard
+                    key={index}
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    ad={req!}
+                    isRequest
+                  />
+                ))
+              )}
+            </Box>
+          </Box>
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Typography component="h2" variant="h4" mb={-1}>
+              Accepterade bokningsförfrågningar ({generateAcceptedReq().length})
+            </Typography>
+            <Box
+              height={170}
+              columnGap={2}
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                overflowX: 'scroll',
+                '::-webkit-scrollbar': { display: 'none' },
+              }}
+            >
+              {!generateAcceptedReq().length ? (
+                <Typography alignSelf="center" mx="auto">
+                  Du har inga accepterade bokningsförfrågningar att visa.
+                </Typography>
+              ) : (
+                generateAcceptedReq().map((req, index) => (
+                  <AdCard
+                    hideButtons
+                    key={index}
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    ad={req!}
+                    isRequest
+                  />
+                ))
+              )}
+            </Box>
+          </Box>
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Typography component="h2" variant="h4" mb={-1}>
+              Avvisade bokningsförfrågningar ({generateRejectedReq().length})
+            </Typography>
+            <Box
+              height={170}
+              columnGap={2}
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                overflowX: 'scroll',
+                '::-webkit-scrollbar': { display: 'none' },
+              }}
+            >
+              {!generateRejectedReq().length ? (
+                <Typography alignSelf="center" mx="auto">
+                  Du har inga avvisade bokningsförfrågningar att visa.
+                </Typography>
+              ) : (
+                generateRejectedReq().map((req, index) => (
+                  <AdCard
+                    hideButtons
                     key={index}
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     ad={req!}
@@ -96,7 +192,7 @@ const MyPage = () => {
                 gap: 1,
               }}
             >
-              <Typography component="h2" variant="h4" mb={-1}>
+              <Typography component="h2" variant="h4">
                 Mina annonser ({adsFromCurrentUser().length})
               </Typography>
 
@@ -104,7 +200,6 @@ const MyPage = () => {
                 variant="contained"
                 onClick={() => navigate(`/profile/${currentUser?.uid}`)}
                 sx={{
-                  mt: 1,
                   background: 'none',
                   color: '#5D6DD8',
                   '&:hover': { background: 'none', color: '#3335A7' },

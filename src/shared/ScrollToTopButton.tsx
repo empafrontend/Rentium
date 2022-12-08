@@ -7,7 +7,7 @@ const ScrollToTopButton = () => {
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
-      window.pageYOffset > 400
+      window.pageYOffset > 200
         ? setDisplayButton(true)
         : setDisplayButton(false);
     });
@@ -24,6 +24,7 @@ const ScrollToTopButton = () => {
         minWidth: 35,
         maxWidth: 35,
         padding: 0,
+        zIndex: 999,
         background: '#F6AF27',
         '&:hover': {
           background: '#FDD63C',

@@ -33,7 +33,7 @@ const IsAvailableSwitch = (props: Props) => {
           height: 15,
           display: 'flex',
           '& .MuiSwitch-switchBase': {
-            padding: 1.05,
+            padding: 1,
             '&.Mui-checked': {
               transform: 'translateX(11px)',
               color: '#fff',
