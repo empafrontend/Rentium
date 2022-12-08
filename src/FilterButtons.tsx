@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { AdContext } from './Context/AdContextProvider';
 import { NavigationContext } from './Context/NavigationContext';
 import Feed from './Feed/Feed';
@@ -10,32 +10,24 @@ import SlimCard from './SlimCard';
 
 const FilterButtons = () => {
   const [count, setCount] = useState(0);
-  // const { ads, getAds } = useContext(AdContext);
-  // useEffect(() => {}, []);
 
-  const [categoryList, setCategoryList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const { ads } = useContext(AdContext);
 
   const filterAds = () => {
-    return ads.filter((ad) => ad.category === selectedCategory);
+    const filteredAds = ads.filter((ad) => ad.category === selectedCategory);
+    return filteredAds;
   };
 
   const filteredList = useMemo(filterAds, [selectedCategory]);
 
   const { filterNavigation, setFilterNavigation } =
     useContext(NavigationContext);
-  // console.log(count);
-  // console.log(filterNavigation);
 
-  // useEffect(() => {
-  //   Filter();
-  // }, [selectedCategory]);
+  useEffect(() => {
+    Filter();
+  }, [selectedCategory]);
 
-  // const handleView = async (filterButtons: number) => {
-  // };
-
-  console.log(filterAds());
   const Filter = async () => {
     const checkbox = document.getElementById(
       selectedCategory
@@ -52,38 +44,7 @@ const FilterButtons = () => {
       setSelectedCategory('');
       console.log('not filtered');
     }
-
-    // if (count === 1) {
-    //   setSelectedCategory('shoes');
-    // } else if (count === 2) {
-    //   setSelectedCategory('hats');
-    // } else if (count === 3) {
-    //   setSelectedCategory('tools');
-    // } else if (count === 4) {
-    //   setSelectedCategory('housing');
-    // } else if (count === 5) {
-    //   setSelectedCategory('vehicles');
-    // } else if (count === 0) {
-    //   setSelectedCategory('');
-    //   // checkbox?.checked === false;
-    // }
   };
-
-  // console.log(selectedCategory);
-  // console.log(count);
-  console.log(selectedCategory);
-
-  // const getFilteredList = async () => {
-  //   if (filterNavigation === true) {
-  //     const visibleComponents = document.querySelectorAll(
-  //       `#${selectedCategory}`
-  //     );
-  //     for (let i = 0; i < visibleComponents.length; i++) {
-  //       visibleComponents[i].classList.remove('hidden');
-  //       visibleComponents[i].classList.add('flex');
-  //     }
-  //   }
-  // };
 
   const filterButtonsList = filterButtons.map((filterButtons) => (
     <div
@@ -93,15 +54,15 @@ const FilterButtons = () => {
       <div>
         <div className="flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white">
           <input
-            className="absolute w-12 h-12"
+            className={`check absolute w-12 h-12 cursor-pointer`}
             type="checkbox"
             id={filterButtons.category}
+            checked={selectedCategory === filterButtons.category}
             onChange={() => {
               setSelectedCategory(filterButtons.category);
               filterAds();
             }}
             onClick={() => Filter()}
-            // onChange={() => Filter()}
           />
           <div className="h-7 w-7">
             <img src={filterButtons.img} alt="" className="aspect-auto " />
@@ -127,12 +88,8 @@ const FilterButtons = () => {
         {filterButtonsList}
       </div>
       <div className="flex flex-col-reverse"></div>
-      {filteredList.map((element, index) => (
-        <SlimCard {...element} key={index} />
-      ))}
-      <Feed />
       <ContentContainer>
-        {/* {filterNavigation === false ? <Feed /> : <SlimCard />} */}
+        {filterNavigation === false ? <Feed /> : <SlimCard />}
       </ContentContainer>
     </Box>
   );
