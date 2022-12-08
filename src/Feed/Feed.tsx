@@ -4,6 +4,7 @@ import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AdContext } from '../Context/AdContextProvider';
 import { NavigationContext } from '../Context/NavigationContext';
+import { formatZeroPrice } from '../helper';
 import ContentContainer from '../shared/ContentContainer';
 import './feed.css';
 
@@ -72,7 +73,9 @@ function Feed() {
                     <LocationOnOutlined sx={{ fontSize: '.8rem' }} />{' '}
                     {ads.location}
                   </Typography>
-                  <Typography variant="caption">{ads.price} kr</Typography>
+                  <Typography variant="caption">
+                    {formatZeroPrice(ads.price)}
+                  </Typography>
                 </Box>
               </CardContent>
             </Link>

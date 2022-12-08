@@ -11,6 +11,7 @@ import {
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Ad, useAd } from '../Context/AdContextProvider';
+import { formatZeroPrice } from '../helper';
 import IsAvailableSwitch from './IsAvailableSwitch';
 
 type ExAdCard = Partial<Ad> & {
@@ -110,7 +111,7 @@ const AdCard = (props: ExAdCard) => {
               </Typography>
 
               <Typography variant="body1" fontWeight={400}>
-                {props.ad.price} kr
+                {formatZeroPrice(props.ad.price)}
               </Typography>
             </CardContent>
           </Link>
@@ -183,7 +184,7 @@ const AdCard = (props: ExAdCard) => {
               sx={{ borderRadius: 3, width: 50, height: 50, m: 'auto' }}
             />
             <Typography variant="body2" pt={1}>
-              {props.ad.title} {props.ad.price} kr
+              {props.ad.title} {formatZeroPrice(props.ad.price)}
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
               You action to {isToRemove ? 'remove the ad' : 'reject the offer'}{' '}

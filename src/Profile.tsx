@@ -17,6 +17,7 @@ import { useUser } from './Context/UserContextProvider';
 import { auth } from './firebase';
 
 import './footer.css';
+import { formatZeroPrice } from './helper';
 import ContentContainer from './shared/ContentContainer';
 import IsAvailableSwitch from './shared/IsAvailableSwitch';
 
@@ -117,7 +118,7 @@ function Profile() {
                   }}
                 >
                   <Typography variant="body1" fontWeight={400}>
-                    {ad.price} kr
+                    {formatZeroPrice(ad.price)}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -207,7 +208,7 @@ function Profile() {
                     sx={{ borderRadius: 3, width: 50, height: 50, m: 'auto' }}
                   />
                   <Typography variant="body2" pt={1}>
-                    {ad.title} {ad.price} kr
+                    {ad.title} {formatZeroPrice(ad.price)}
                   </Typography>
                   <Typography variant="body1" sx={{ mt: 2 }}>
                     You action to remove the ad cannot be reverted.

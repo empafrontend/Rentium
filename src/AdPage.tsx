@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BookingRequest, useAd } from './Context/AdContextProvider';
 import { useUser } from './Context/UserContextProvider';
+import { formatZeroPrice } from './helper';
 import ContentContainer from './shared/ContentContainer';
 
 {
@@ -120,7 +121,7 @@ function AdPage() {
             </Typography>
           </Box>
           <Typography variant="body1" fontWeight={700}>
-            {singleAd.price} kr
+            {formatZeroPrice(singleAd.price)}
           </Typography>
         </Box>
         <Typography
