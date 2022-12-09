@@ -1,8 +1,10 @@
 import { Box, Button, Typography } from '@mui/material';
 import { IconListDetails } from '@tabler/icons';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { useAd } from '../Context/AdContextProvider';
+import { NavigationContext } from '../Context/NavigationContext';
 import { useUser } from '../Context/UserContextProvider';
 import Protected from '../Protected';
 import AdCard from '../shared/AdCard';
@@ -13,6 +15,7 @@ const MyPage = () => {
   const { ads } = useAd();
   const { handleSignOut } = useUser();
   const { currentUser } = useUser();
+  const { setFilterNavigation } = useContext(NavigationContext);
 
   const adsFromCurrentUser = () =>
     ads.filter((ad) => ad.authorId === currentUser?.uid);
@@ -58,6 +61,12 @@ const MyPage = () => {
     );
   };
 
+  //Log out user and navigate to landing page
+  const goToHomeView = () => {
+    setFilterNavigation(false);
+    handleSignOut();
+  };
+
   return (
     <Protected>
       <ToastContainer />
@@ -83,7 +92,7 @@ const MyPage = () => {
                 Hej {currentUser?.displayName}!
               </Typography>
 
-              <Button variant="contained" onClick={handleSignOut}>
+              <Button variant="contained" onClick={goToHomeView}>
                 Logga ut
               </Button>
             </Box>
