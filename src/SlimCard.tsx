@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import CategoryLength from './categoryLength';
 import { useAd } from './Context/AdContextProvider';
 import './Feed/feed.css';
+import { formatZeroPrice } from './helper';
 import './index.css';
 import ContentContainer from './shared/ContentContainer';
 
@@ -33,7 +34,7 @@ const SlimCard = () => {
 
               <div className="flex flex-row justify-between mr-8">
                 <Typography variant="caption" className="text-lg">
-                  {ads.price} kr
+                  {formatZeroPrice(ads.price)}
                 </Typography>
 
                 <Typography variant="caption" className="text-sm text-blue-500">
