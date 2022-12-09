@@ -10,12 +10,15 @@ import SlimCard from './SlimCard';
 
 const FilterButtons = () => {
   const [count, setCount] = useState(0);
-
   const [selectedCategory, setSelectedCategory] = useState('');
   const { ads } = useContext(AdContext);
 
   const filterAds = () => {
-    const filteredAds = ads.filter((ad) => ad.category === selectedCategory);
+    const filteredAds = ads.filter(
+      (ad) =>
+        ad.category.toLowerCase() === selectedCategory &&
+        ad.isAvailable === true
+    );
     return filteredAds;
   };
 
@@ -35,14 +38,10 @@ const FilterButtons = () => {
 
     if (checkbox?.checked) {
       setFilterNavigation(true);
-      console.log('filtered');
-      console.log(selectedCategory);
-      console.log(filteredList);
     } else {
       setCount(0);
       setFilterNavigation(false);
       setSelectedCategory('');
-      console.log('not filtered');
     }
   };
 
@@ -54,7 +53,7 @@ const FilterButtons = () => {
       <div>
         <div className="flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white">
           <input
-            className={`check absolute w-12 h-12 cursor-pointer`}
+            className={`check opacity-0 absolute w-12 h-12 cursor-pointer`}
             type="checkbox"
             id={filterButtons.category}
             checked={selectedCategory === filterButtons.category}
@@ -82,14 +81,21 @@ const FilterButtons = () => {
     </div>
   ));
 
+  const filterLength = `Antal produkter (${filteredList.length})`;
+
   return (
     <Box>
       <div className=" flex flex-row w-full justify-center filter-buttons">
         {filterButtonsList}
       </div>
+      {filterLength}
       <div className="flex flex-col-reverse"></div>
       <ContentContainer>
-        {filterNavigation === false ? <Feed /> : <SlimCard />}
+        {filterNavigation === false ? (
+          <Feed />
+        ) : (
+          filteredList.map((ads, index) => <SlimCard key={index} ad={ads!} />)
+        )}
       </ContentContainer>
     </Box>
   );

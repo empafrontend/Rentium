@@ -2,44 +2,47 @@ import { PlaceOutlined } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-import CategoryLength from './categoryLength';
-import { useAd } from './Context/AdContextProvider';
+import { Ad, useAd } from './Context/AdContextProvider';
 import './Feed/feed.css';
 import './index.css';
 import ContentContainer from './shared/ContentContainer';
 
-const SlimCard = () => {
+type SlimcardProps = Partial<Ad> & {
+  ad: Ad;
+};
+
+const SlimCard = (props: SlimcardProps) => {
   const { ads } = useAd();
 
   return (
     <ContentContainer>
-      <CategoryLength />
       {ads.map((ads, index) => (
         <Link key={index} to={`/ad/${ads.id}`}>
           <div
-            id={`${ads.category}`}
-            className={`${ads.category} hidden flex-row justify-center items-center mb-1 p-1 mt-1`}
+            id={`${props.ad.category}`}
+            className={`${props.ad.category} flex flex-row justify-center items-center mb-1 p-1 mt-1`}
           >
             <img
-              src={ads.img}
-              alt={ads.title}
+              src={props.ad.img}
+              alt={props.ad.title}
               className="w-32 h-32 aspect-auto rounded-lg mx-8"
             />
             <div className="flex flex-col w-2/5">
               <div className="mb-4">
-                <Typography variant="subtitle2">{ads.title}</Typography>
+                <Typography variant="subtitle2">{props.ad.title}</Typography>
                 <Typography variant="body2" className="text-sm hind">
-                  {ads.description}
+                  {props.ad.description}
                 </Typography>
               </div>
 
               <div className="flex flex-row justify-between mr-8">
                 <Typography variant="caption" className="text-lg">
-                  {ads.price} kr
+                  {props.ad.price} kr
                 </Typography>
 
                 <Typography variant="caption" className="text-sm text-blue-500">
-                  <PlaceOutlined sx={{ fontSize: '.8rem' }} /> {ads.location}
+                  <PlaceOutlined sx={{ fontSize: '.8rem' }} />{' '}
+                  {props.ad.location}
                 </Typography>
               </div>
             </div>

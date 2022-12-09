@@ -31,7 +31,7 @@ const filterButtons = [
   },
   {
     text: 'Fordon',
-    category: 'vehicles',
+    category: 'vehicle',
     img: car,
     id: 5,
   },
