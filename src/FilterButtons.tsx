@@ -1,5 +1,9 @@
+import { PlaceOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import free from './Assets/free-tag.png';
+import { useAd } from './Context/AdContextProvider';
 import { NavigationContext } from './Context/NavigationContext';
 import Feed from './Feed/Feed';
 import './filterButtons.css';
@@ -9,8 +13,65 @@ import SlimCard from './SlimCard';
 
 const FilterButtons = () => {
   const [count, setCount] = useState(0);
-  const { filterNavigation, setFilterNavigation } =
+  const { filterNavigation, setFilterNavigation, showFreeAds, setShowFreeAds } =
     useContext(NavigationContext);
+  const { ads } = useAd();
+  console.log(showFreeAds);
+
+  const freeItems = ads.filter((ad) => ad.price === 0);
+  const freeStuff = freeItems.map((item, index) => (
+    <Box
+      key={index}
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'center',
+      }}
+    >
+      <Link to={`/ad/${item.id}`}>
+        <Box sx={{ width: '30rem', display: 'flex', marginTop: '3rem' }}>
+          <img
+            src={item.img}
+            alt={item.title}
+            className="w-32 h-32 aspect-auto rounded-lg mx-8"
+          />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '18rem',
+              gap: '1rem',
+            }}
+          >
+            <Box>
+              <Typography variant="subtitle2">{item.title}</Typography>
+              <Typography variant="body2" className="text-sm hind">
+                {item.description}
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                widht: '100%',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Typography variant="caption" className="text-lg">
+                {item.price} kr
+              </Typography>
+
+              <Typography variant="caption" className="text-sm text-blue-500">
+                <PlaceOutlined sx={{ fontSize: '.8rem' }} /> {item.location}
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+      </Link>
+    </Box>
+  ));
 
   useEffect(() => {
     Filter();
@@ -19,15 +80,11 @@ const FilterButtons = () => {
   const handleView = (filterButtons: number) => {
     setCount(filterButtons);
     setFilterNavigation(true);
+    setShowFreeAds(false);
   };
 
   const filterButtonsList = filterButtons.map((filterButtons, index) => (
-    <div
-      key={filterButtons.id}
-      className="button-container"
-      /* onClick={() => setCount(filterButtons.id)} */
-      /* flex items-center justify-center */
-    >
+    <div key={filterButtons.id} className="button-container">
       <div className="rounded-full hover:cursor-pointer">
         <div onClick={() => handleView(filterButtons.id)}>
           <button
@@ -42,7 +99,6 @@ const FilterButtons = () => {
           <Typography
             variant="body1"
             sx={{
-              marginLeft: '1.2rem',
               display: 'flex',
               justifyContent: 'center',
               paddingTop: '.4rem',
@@ -58,9 +114,9 @@ const FilterButtons = () => {
   const Filter = () => {
     const shoes = document.querySelectorAll('div.shoes');
     const hats = document.querySelectorAll('div.hats');
-    const tools = document.querySelectorAll('div.tools');
+    const tools = document.querySelectorAll('div.TOOLS');
     const housing = document.querySelectorAll('div.housing');
-    const vehicles = document.querySelectorAll('div.vehicles');
+    const vehicles = document.querySelectorAll('div.VEHICLE');
     const category = document.getElementById('numberOfArticles');
     category?.classList.add('flex');
     category?.classList.remove('hidden');
@@ -116,18 +172,41 @@ const FilterButtons = () => {
       {filterNavigation ? (
         <div className=" button-div flex flex-row filter-buttons">
           {filterButtonsList}
+
+          <button
+            id="free-tag"
+            className="h-14 w-14 mb-6 flex justify-center hover:animate-spin rounded-full focus:border-dashed focus:border-2 focus:border-orange-300"
+            onClick={() => setShowFreeAds(true)}
+          >
+            <img src={free} alt="" className="aspect-auto p-1" />
+          </button>
         </div>
       ) : (
         <div className=" button-div flex flex-row filter-buttons-down">
           {filterButtonsList}
+
+          <button
+            id="free-tag"
+            className="h-14 w-14 mb-6 flex justify-center hover:animate-spin rounded-full focus:border-dashed focus:border-2 focus:border-orange-300"
+            onClick={() => setShowFreeAds(true)}
+          >
+            <img src={free} alt="" className="aspect-auto p-1" />
+          </button>
         </div>
       )}
-
-      {/*   <div className="flex flex-col-reverse">
-        <CategoryLength />
-      </div> */}
       <ContentContainer>
-        {filterNavigation === false ? <Feed /> : <SlimCard />}
+        {showFreeAds === true ? (
+          <>
+            <ContentContainer>
+              {/* <CategoryLength /> */}
+              <Box sx={{ width: '100%' }}>{freeStuff}</Box>
+            </ContentContainer>
+          </>
+        ) : filterNavigation === false ? (
+          <Feed />
+        ) : (
+          <SlimCard />
+        )}
       </ContentContainer>
     </Box>
   );
