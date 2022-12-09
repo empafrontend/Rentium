@@ -58,6 +58,11 @@ interface AdContextValue {
   acceptOffer: (id: string, requestor: BookingRequest) => Promise<unknown>;
   rejectOffer: (id: string, requestor: BookingRequest) => void;
   sendOffer: (id: string) => void;
+  adsFromCurrentUser: () => any;
+  generateAcceptedReq: () => any;
+  generatePendingReq: () => any;
+  generateRejectedReq: () => any;
+  generateSentRequests: () => any;
 }
 
 export const AdContext = createContext<AdContextValue>({
@@ -82,6 +87,11 @@ export const AdContext = createContext<AdContextValue>({
   acceptOffer: (id, requestor) => Promise.resolve(),
   rejectOffer: (id, requestor) => {},
   sendOffer: (id) => Promise.resolve(),
+  adsFromCurrentUser: () => {},
+  generateAcceptedReq: () => {},
+  generatePendingReq: () => {},
+  generateRejectedReq: () => {},
+  generateSentRequests: () => {},
 });
 
 const AdProvider: FC<PropsWithChildren> = (props) => {
@@ -231,6 +241,61 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
     });
   }, []);
 
+  const adsFromCurrentUser = () =>
+    ads.filter((ad) => ad.authorId === auth.currentUser!.uid);
+
+  const generateSentRequests = () => {
+    const adsFromOthers = ads.filter(
+      (ad) => ad.authorId !== auth.currentUser!.uid
+    );
+    return adsFromOthers.flatMap((ad) =>
+      ad.bookingRequests
+        ?.filter((req) => req.uid === auth.currentUser!.uid)
+        .map(() => ad)
+    );
+  };
+
+  const generatePendingReq = () => {
+    return adsFromCurrentUser().flatMap((ad) =>
+      ad.bookingRequests
+        ?.filter(
+          (req) => req.isAccepted === undefined && req.isRejected === undefined
+        )
+        .map((req) => {
+          return {
+            ...ad,
+            requestor: { uid: req.uid, displayName: req.displayName },
+          };
+        })
+    );
+  };
+
+  const generateAcceptedReq = () => {
+    return adsFromCurrentUser().flatMap((ad) =>
+      ad.bookingRequests
+        ?.filter((req) => req.isAccepted === true)
+        .map((req) => {
+          return {
+            ...ad,
+            requestor: { uid: req.uid, displayName: req.displayName },
+          };
+        })
+    );
+  };
+
+  const generateRejectedReq = () => {
+    return adsFromCurrentUser().flatMap((ad) =>
+      ad.bookingRequests
+        ?.filter((req) => req.isRejected === true)
+        .map((req) => {
+          return {
+            ...ad,
+            requestor: { uid: req.uid, displayName: req.displayName },
+          };
+        })
+    );
+  };
+
   return (
     <AdContext.Provider
       value={{
@@ -245,6 +310,11 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
         acceptOffer,
         rejectOffer,
         sendOffer,
+        adsFromCurrentUser,
+        generateAcceptedReq,
+        generatePendingReq,
+        generateRejectedReq,
+        generateSentRequests,
       }}
     >
       {props.children}
