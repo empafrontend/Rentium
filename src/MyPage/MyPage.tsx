@@ -51,9 +51,10 @@ const MyPage = () => {
             </Box>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Typography component="h3" variant="h4" mb={-1}>
+            <Typography variant="h3" component="h2" textAlign="center" mb={1}>
               Skickade bokningsförfrågningar ({generateSentRequests().length})
             </Typography>
+
             <Box
               height={170}
               columnGap={2}
@@ -82,7 +83,7 @@ const MyPage = () => {
             </Box>
           </Box>
           <Typography variant="h3" component="h2" textAlign="center">
-            Hantera dina annonser
+            Hantera annonser
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography component="h3" variant="h4" mb={-1}>
