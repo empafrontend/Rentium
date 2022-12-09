@@ -62,6 +62,7 @@ function Profile() {
               borderRadius: '20px 20px 20px 0',
               boxShadow: '0 2px 10px #DDDBD5',
               mb: 2,
+              background: ad.isAvailable ? '#fff' : '#f7f7f7',
             }}
           >
             <Box
