@@ -16,7 +16,7 @@ const FilterButtons = () => {
   const { filterNavigation, setFilterNavigation, showFreeAds, setShowFreeAds } =
     useContext(NavigationContext);
   const { ads } = useAd();
-  console.log(showFreeAds);
+  // console.log(showFreeAds);
 
   const freeItems = ads.filter((ad) => ad.price === 0);
   const freeStuff = freeItems.map((item, index) => (

@@ -1,6 +1,24 @@
-import { createContext, FC, PropsWithChildren, useState } from 'react';
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useContext,
+  useState,
+} from 'react';
 
-export const NavigationContext = createContext<any>(null);
+interface NavigationContextValue {
+  filterNavigation: boolean;
+  setFilterNavigation: React.Dispatch<React.SetStateAction<boolean>>;
+  showFreeAds: boolean;
+  setShowFreeAds: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const NavigationContext = createContext<NavigationContextValue>({
+  filterNavigation: false,
+  setFilterNavigation: () => undefined,
+  showFreeAds: false,
+  setShowFreeAds: () => undefined,
+});
 
 const NavigationContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [filterNavigation, setFilterNavigation] = useState<boolean>(false);
@@ -21,3 +39,4 @@ const NavigationContextProvider: FC<PropsWithChildren> = ({ children }) => {
 };
 
 export default NavigationContextProvider;
+export const useNavi = () => useContext(NavigationContext);
