@@ -245,14 +245,17 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
     ads.filter((ad) => ad.authorId === auth.currentUser!.uid);
 
   const generateSentRequests = () => {
-    const adsFromOthers = ads.filter(
-      (ad) => ad.authorId !== auth.currentUser!.uid
-    );
-    return adsFromOthers.flatMap((ad) =>
-      ad.bookingRequests
-        ?.filter((req) => req.uid === auth.currentUser!.uid)
-        .map(() => ad)
-    );
+    if (auth.currentUser) {
+      const adsFromOthers = ads.filter(
+        (ad) => ad.authorId !== auth.currentUser!.uid
+      );
+      return adsFromOthers.flatMap((ad) =>
+        ad.bookingRequests
+          ?.filter((req) => req.uid === auth.currentUser!.uid)
+          .map(() => ad)
+      );
+    }
+    return;
   };
 
   const generatePendingReq = () => {

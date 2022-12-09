@@ -71,7 +71,7 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
       .then(() => {
         setFilterNavigation(false);
         setCurrentUser(undefined);
-        if (!currentUser) navigate('/');
+        navigate('/');
       })
       .then(() => {
         toast.success('Du är utloggad!', {
