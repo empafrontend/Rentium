@@ -1,5 +1,11 @@
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import { Box, Button, CardMedia, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CardMedia,
+  CircularProgress,
+  Typography,
+} from '@mui/material';
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -14,16 +20,25 @@ import ContentContainer from './shared/ContentContainer';
 }
 function AdPage() {
   const params = useParams<{ id: string }>();
-  const { getOneAd, singleAd, sendOffer } = useAd();
+  const { getOneAd, singleAd, sendOffer, isLoadingAd, setIsLoadingAd } =
+    useAd();
   const { currentUser } = useUser();
 
   useEffect(() => {
+    setIsLoadingAd(true);
     if (params.id) {
       getOneAd(params.id);
     }
   }, [sendOffer]);
 
-  return (
+  return isLoadingAd ? (
+    <ContentContainer>
+      <CircularProgress
+        color="inherit"
+        sx={{ display: 'flex', m: 'auto', mt: 10 }}
+      />
+    </ContentContainer>
+  ) : (
     <ContentContainer backButton>
       <Box
         maxWidth={350}

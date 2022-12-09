@@ -20,7 +20,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { auth, db } from '../firebase.js';
-import { useUser } from './UserContextProvider';
 
 export interface Ad {
   author?: string;
@@ -63,6 +62,8 @@ interface AdContextValue {
   generatePendingReq: () => any;
   generateRejectedReq: () => any;
   generateSentRequests: () => any;
+  setIsLoadingAd: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoadingAd: boolean;
 }
 
 export const AdContext = createContext<AdContextValue>({
@@ -92,14 +93,15 @@ export const AdContext = createContext<AdContextValue>({
   generatePendingReq: () => {},
   generateRejectedReq: () => {},
   generateSentRequests: () => {},
+  setIsLoadingAd: () => undefined,
+  isLoadingAd: false,
 });
 
 const AdProvider: FC<PropsWithChildren> = (props) => {
   const navigate = useNavigate();
   const adsCollectionRef = collection(db, 'ads');
   const [ads, setAds] = useState<Ad[]>([]);
-  const { currentUser } = useUser();
-  // this singleAd state is for rendering a single ad (but it may not be needed - depends on how the data is being rendered)
+  const [isLoadingAd, setIsLoadingAd] = useState<boolean>(false);
   const [singleAd, setSingleAd] = useState<Ad>({
     category: '',
     description: '',
@@ -121,9 +123,10 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
   const getOneAd = useCallback(async (id: string) => {
     const docRef = doc(db, 'ads', id);
     const docSnap = await getDoc(docRef);
-    docSnap.exists()
-      ? setSingleAd({ ...(docSnap.data() as Ad), id: id })
-      : console.log('Data not found'); // TODO: do something...
+    if (docSnap.exists()) {
+      setSingleAd({ ...(docSnap.data() as Ad), id: id });
+      setIsLoadingAd(false);
+    }
   }, []);
 
   /** Adds new ad entry to db ad collection */
@@ -318,6 +321,8 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
         generatePendingReq,
         generateRejectedReq,
         generateSentRequests,
+        setIsLoadingAd,
+        isLoadingAd,
       }}
     >
       {props.children}
