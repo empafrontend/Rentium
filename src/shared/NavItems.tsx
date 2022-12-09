@@ -1,7 +1,8 @@
-import { Avatar, Typography } from '@mui/material';
+import { Avatar, Badge, Typography } from '@mui/material';
 import { IconHome, IconPlus, IconSearch, IconUserCircle } from '@tabler/icons';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useAd } from '../Context/AdContextProvider';
 import { NavigationContext } from '../Context/NavigationContext';
 import { useUser } from '../Context/UserContextProvider';
 import './navItems.css';
@@ -21,6 +22,7 @@ const NavItems = () => {
   };
 
   const { currentUser } = useUser();
+  const { generatePendingReq } = useAd();
 
   return (
     <>
@@ -51,17 +53,25 @@ const NavItems = () => {
 
       {currentUser ? (
         <Link to="/my-page" className="link" onClick={() => handleHeaderSize()}>
-          <Avatar
-            alt={
-              currentUser.displayName
-                ? currentUser.displayName
-                : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                  currentUser.email!
-            }
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            src={currentUser.photoURL!}
-            sx={{ width: 28, height: 28 }}
-          />
+          <Badge
+            badgeContent={generatePendingReq().length}
+            color="warning"
+            sx={{
+              '& .MuiBadge-badge': { fontSize: 9, height: 15, minWidth: 15 },
+            }}
+          >
+            <Avatar
+              alt={
+                currentUser.displayName
+                  ? currentUser.displayName
+                  : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    currentUser.email!
+              }
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              src={currentUser.photoURL!}
+              sx={{ width: 28, height: 28 }}
+            />
+          </Badge>
           <Typography variant="h5" component="h3" mt={0.7}>
             {currentUser.displayName}
           </Typography>

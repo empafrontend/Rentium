@@ -8,6 +8,7 @@ import { NavigationContext } from './Context/NavigationContext';
 import Feed from './Feed/Feed';
 import './filterButtons.css';
 import filterButtons from './filterButtonsData';
+import { formatZeroPrice } from './helper';
 import ContentContainer from './shared/ContentContainer';
 import SlimCard from './SlimCard';
 
@@ -16,7 +17,7 @@ const FilterButtons = () => {
   const { filterNavigation, setFilterNavigation, showFreeAds, setShowFreeAds } =
     useContext(NavigationContext);
   const { ads } = useAd();
-  console.log(showFreeAds);
+  // console.log(showFreeAds);
 
   const freeItems = ads.filter((ad) => ad.price === 0);
   const freeStuff = freeItems.map((item, index) => (
@@ -60,7 +61,7 @@ const FilterButtons = () => {
               }}
             >
               <Typography variant="caption" className="text-lg">
-                {item.price} kr
+                {formatZeroPrice(item.price)}
               </Typography>
 
               <Typography variant="caption" className="text-sm text-blue-500">

@@ -11,6 +11,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { auth } from '../firebase';
+import { useNavi } from './NavigationContext';
 
 interface User {
   username: string;
@@ -44,6 +45,7 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
   const [currentUser, setCurrentUser] = useState<any>();
   const handleSignIn = (user: User) => console.log('signing in', user); // TODO: add function
   const handleSignUp = (user: User) => console.log('signing up', user); // TODO: add function
+  const { setFilterNavigation } = useNavi();
 
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
@@ -67,8 +69,9 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
   const handleSignOut = async () =>
     await signOut(auth)
       .then(() => {
+        setFilterNavigation(false);
         setCurrentUser(undefined);
-        if (!currentUser) navigate('/');
+        navigate('/');
       })
       .then(() => {
         toast.success('Du är utloggad!', {

@@ -11,6 +11,7 @@ import {
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Ad, useAd } from '../Context/AdContextProvider';
+import { useUser } from '../Context/UserContextProvider';
 import { formatZeroPrice, onImageError } from '../helper';
 import IsAvailableSwitch from './IsAvailableSwitch';
 
@@ -24,6 +25,7 @@ const AdCard = (props: ExAdCard) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [isToRemove, setIsToRemove] = useState<boolean>(false);
   const { acceptOffer, rejectOffer, removeAd } = useAd();
+  const { currentUser } = useUser();
 
   /** Closes modal  */
   const handleClose = () => setOpenModal(false);
@@ -49,6 +51,18 @@ const AdCard = (props: ExAdCard) => {
   const cancelAction = () => {
     handleClose();
     setIsToRemove(false);
+  };
+
+  const test = () => {
+    const hi = props.ad.bookingRequests?.some(
+      (req) => req.uid === currentUser.uid && req.isAccepted === true
+    );
+    // const notMyAd = props.isRequest && currentUser.uid !== props.authorId;
+    // const hi = props.ad.bookingRequests
+    //   ?.filter((req) => req.isAccepted === true)
+    //   .map((req) => props.ad);
+
+    console.log(hi);
   };
 
   return (
@@ -96,13 +110,16 @@ const AdCard = (props: ExAdCard) => {
                 placeContent: 'center',
                 pl: 1,
                 maxWidth: 125,
+                height: '100%',
               }}
             >
               <Typography variant="body1" fontWeight={600}>
                 {props.ad.title}
               </Typography>
-              <Typography pb={3} variant="body2" color="text.secondary">
-                {props.isRequest
+              <Typography variant="body2">
+                {props.isRequest && currentUser.uid !== props.authorId
+                  ? props.ad.author
+                  : props.isRequest
                   ? props.ad.requestor?.displayName
                   : 'Inlagd: ' +
                     props.ad.createdAt
@@ -110,9 +127,22 @@ const AdCard = (props: ExAdCard) => {
                       .toDateString()
                       .replace(/^\S+\s/, '')}
               </Typography>
-
-              <Typography variant="body1" fontWeight={400}>
+              <Typography variant="body1" pt={2} pb={0.5} fontWeight={400}>
                 {formatZeroPrice(props.ad.price)}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="#48BC5B"
+                lineHeight={1.2}
+                textAlign="end"
+                fontWeight={400}
+              >
+                {props.ad.bookingRequests?.some(
+                  (req) =>
+                    req.uid === currentUser.uid && req.isAccepted === true
+                )
+                  ? 'Accepterad \n Kontakta säljaren'
+                  : null}
               </Typography>
             </CardContent>
           </Link>

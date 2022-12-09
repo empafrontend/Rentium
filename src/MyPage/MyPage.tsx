@@ -1,10 +1,8 @@
 import { Box, Button, Typography } from '@mui/material';
 import { IconListDetails } from '@tabler/icons';
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { useAd } from '../Context/AdContextProvider';
-import { NavigationContext } from '../Context/NavigationContext';
+import { Ad, useAd } from '../Context/AdContextProvider';
 import { useUser } from '../Context/UserContextProvider';
 import Protected from '../Protected';
 import AdCard from '../shared/AdCard';
@@ -12,60 +10,15 @@ import ContentContainer from '../shared/ContentContainer';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { ads } = useAd();
+  const {
+    adsFromCurrentUser,
+    generateAcceptedReq,
+    generatePendingReq,
+    generateRejectedReq,
+    generateSentRequests,
+  } = useAd();
   const { handleSignOut } = useUser();
   const { currentUser } = useUser();
-  const { setFilterNavigation } = useContext(NavigationContext);
-
-  const adsFromCurrentUser = () =>
-    ads.filter((ad) => ad.authorId === currentUser?.uid);
-
-  const generatePendingReq = () => {
-    return adsFromCurrentUser().flatMap((ad) =>
-      ad.bookingRequests
-        ?.filter(
-          (req) => req.isAccepted === undefined && req.isRejected === undefined
-        )
-        .map((req) => {
-          return {
-            ...ad,
-            requestor: { uid: req.uid, displayName: req.displayName },
-          };
-        })
-    );
-  };
-
-  const generateAcceptedReq = () => {
-    return adsFromCurrentUser().flatMap((ad) =>
-      ad.bookingRequests
-        ?.filter((req) => req.isAccepted === true)
-        .map((req) => {
-          return {
-            ...ad,
-            requestor: { uid: req.uid, displayName: req.displayName },
-          };
-        })
-    );
-  };
-
-  const generateRejectedReq = () => {
-    return adsFromCurrentUser().flatMap((ad) =>
-      ad.bookingRequests
-        ?.filter((req) => req.isRejected === true)
-        .map((req) => {
-          return {
-            ...ad,
-            requestor: { uid: req.uid, displayName: req.displayName },
-          };
-        })
-    );
-  };
-
-  //Log out user and navigate to landing page
-  const goToHomeView = () => {
-    setFilterNavigation(false);
-    handleSignOut();
-  };
 
   return (
     <Protected>
@@ -92,13 +45,48 @@ const MyPage = () => {
                 Hej {currentUser?.displayName}!
               </Typography>
 
-              <Button variant="contained" onClick={goToHomeView}>
+              <Button variant="contained" onClick={handleSignOut}>
                 Logga ut
               </Button>
             </Box>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Typography component="h2" variant="h4" mb={-1}>
+            <Typography variant="h3" component="h2" textAlign="center" mb={1}>
+              Skickade bokningsförfrågningar ({generateSentRequests().length})
+            </Typography>
+
+            <Box
+              height={170}
+              columnGap={2}
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                overflowX: 'scroll',
+                '::-webkit-scrollbar': { display: 'none' },
+              }}
+            >
+              {!generateSentRequests().length ? (
+                <Typography alignSelf="center" mx="auto">
+                  Du har inte skickat en bokningsförfrågning ännu.
+                </Typography>
+              ) : (
+                generateSentRequests().map((req: Ad, index: number) => (
+                  <AdCard
+                    hideButtons
+                    key={index}
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    ad={req!}
+                    isRequest
+                  />
+                ))
+              )}
+            </Box>
+          </Box>
+          <Typography variant="h3" component="h2" textAlign="center">
+            Hantera annonser
+          </Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Typography component="h3" variant="h4" mb={-1}>
               Väntande bokningsförfrågningar ({generatePendingReq().length})
             </Typography>
             <Box
@@ -116,7 +104,7 @@ const MyPage = () => {
                   Du har inga väntande bokningsförfrågningar att visa.
                 </Typography>
               ) : (
-                generatePendingReq().map((req, index) => (
+                generatePendingReq().map((req: Ad, index: number) => (
                   <AdCard
                     key={index}
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -129,7 +117,7 @@ const MyPage = () => {
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Typography component="h2" variant="h4" mb={-1}>
+            <Typography component="h3" variant="h4" mb={-1}>
               Accepterade bokningsförfrågningar ({generateAcceptedReq().length})
             </Typography>
             <Box
@@ -147,7 +135,7 @@ const MyPage = () => {
                   Du har inga accepterade bokningsförfrågningar att visa.
                 </Typography>
               ) : (
-                generateAcceptedReq().map((req, index) => (
+                generateAcceptedReq().map((req: Ad, index: number) => (
                   <AdCard
                     hideButtons
                     key={index}
@@ -161,7 +149,7 @@ const MyPage = () => {
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Typography component="h2" variant="h4" mb={-1}>
+            <Typography component="h3" variant="h4" mb={-1}>
               Avvisade bokningsförfrågningar ({generateRejectedReq().length})
             </Typography>
             <Box
@@ -179,7 +167,7 @@ const MyPage = () => {
                   Du har inga avvisade bokningsförfrågningar att visa.
                 </Typography>
               ) : (
-                generateRejectedReq().map((req, index) => (
+                generateRejectedReq().map((req: Ad, index: number) => (
                   <AdCard
                     hideButtons
                     key={index}
@@ -201,7 +189,7 @@ const MyPage = () => {
                 gap: 1,
               }}
             >
-              <Typography component="h2" variant="h4">
+              <Typography component="h3" variant="h4">
                 Mina annonser ({adsFromCurrentUser().length})
               </Typography>
 
@@ -234,7 +222,7 @@ const MyPage = () => {
                   Du har inga annonser att visa.
                 </Typography>
               ) : (
-                adsFromCurrentUser().map((ad, index) => (
+                adsFromCurrentUser().map((ad: Ad, index: number) => (
                   <AdCard key={index} ad={ad} />
                 ))
               )}
