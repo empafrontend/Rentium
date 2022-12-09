@@ -4,6 +4,7 @@ import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AdContext } from '../Context/AdContextProvider';
 import { NavigationContext } from '../Context/NavigationContext';
+import { formatZeroPrice, onImageError } from '../helper';
 import ContentContainer from '../shared/ContentContainer';
 import './feed.css';
 
@@ -39,7 +40,7 @@ function Feed() {
               marginTop: '1rem',
               width: '13.5rem',
               height: '14rem',
-              borderRadius: '1rem',
+              borderRadius: 3,
               boxShadow: 'none',
             }}
             onClick={() => setFilterNavigation(true)}
@@ -47,10 +48,11 @@ function Feed() {
             <Link to={`/ad/${ads.id}`}>
               <CardMedia
                 component="img"
+                onError={onImageError}
                 image={ads.img}
                 alt={ads.title}
                 sx={{
-                  borderRadius: '1rem',
+                  borderRadius: 3,
                   width: '100%',
                   height: '10rem',
                   objectFit: 'cover',
@@ -72,7 +74,9 @@ function Feed() {
                     <LocationOnOutlined sx={{ fontSize: '.8rem' }} />{' '}
                     {ads.location}
                   </Typography>
-                  <Typography variant="caption">{ads.price} kr</Typography>
+                  <Typography variant="caption">
+                    {formatZeroPrice(ads.price)}
+                  </Typography>
                 </Box>
               </CardContent>
             </Link>

@@ -11,6 +11,7 @@ import {
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Ad, useAd } from '../Context/AdContextProvider';
+import { formatZeroPrice, onImageError } from '../helper';
 import IsAvailableSwitch from './IsAvailableSwitch';
 
 type ExAdCard = Partial<Ad> & {
@@ -79,6 +80,7 @@ const AdCard = (props: ExAdCard) => {
             <Link to={`/ad/${props.ad.id}`}>
               <CardMedia
                 component="img"
+                onError={onImageError}
                 alt={props.ad.title}
                 image={props.ad.img}
                 sx={{ borderRadius: 3, width: 100, height: 100 }}
@@ -110,7 +112,7 @@ const AdCard = (props: ExAdCard) => {
               </Typography>
 
               <Typography variant="body1" fontWeight={400}>
-                {props.ad.price} kr
+                {formatZeroPrice(props.ad.price)}
               </Typography>
             </CardContent>
           </Link>
@@ -178,16 +180,18 @@ const AdCard = (props: ExAdCard) => {
 
             <CardMedia
               component="img"
+              onError={onImageError}
               alt={props.ad.title}
               image={props.ad.img}
               sx={{ borderRadius: 3, width: 50, height: 50, m: 'auto' }}
             />
             <Typography variant="body2" pt={1}>
-              {props.ad.title} {props.ad.price} kr
+              {props.ad.title} {formatZeroPrice(props.ad.price)}
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              You action to {isToRemove ? 'remove the ad' : 'reject the offer'}{' '}
-              cannot be reverted.
+              Din åtgärd för att
+              {isToRemove ? ' ta bort annonsen ' : ' avvisa bokningsförfrågan '}
+              kan inte återställas.
             </Typography>
           </Box>
           <CardActions disableSpacing sx={{ p: 0, width: '100%' }}>

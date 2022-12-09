@@ -18,6 +18,7 @@ import {
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { auth, db } from '../firebase.js';
 import { useUser } from './UserContextProvider';
 
@@ -56,6 +57,7 @@ interface AdContextValue {
   removeAd: (id: string) => Promise<unknown>;
   acceptOffer: (id: string, requestor: BookingRequest) => Promise<unknown>;
   rejectOffer: (id: string, requestor: BookingRequest) => void;
+  sendOffer: (id: string) => void;
 }
 
 export const AdContext = createContext<AdContextValue>({
@@ -79,6 +81,7 @@ export const AdContext = createContext<AdContextValue>({
   removeAd: () => Promise.resolve(),
   acceptOffer: (id, requestor) => Promise.resolve(),
   rejectOffer: (id, requestor) => {},
+  sendOffer: (id) => Promise.resolve(),
 });
 
 const AdProvider: FC<PropsWithChildren> = (props) => {
@@ -109,7 +112,7 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
     const docRef = doc(db, 'ads', id);
     const docSnap = await getDoc(docRef);
     docSnap.exists()
-      ? setSingleAd(docSnap.data() as Ad)
+      ? setSingleAd({ ...(docSnap.data() as Ad), id: id })
       : console.log('Data not found'); // TODO: do something...
   }, []);
 
@@ -183,7 +186,7 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
       const docSnap = await getDoc(docRef);
       const ad = docSnap.data();
       const selectedReq = ad!.bookingRequests.filter(
-        (req: any) => req.uid === requestor.uid
+        (req: BookingRequest) => req.uid === requestor.uid
       );
       selectedReq[0].isRejected = true;
       selectedReq[0].isAccepted = false;
@@ -194,6 +197,39 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
     },
     []
   );
+
+  const sendOffer = useCallback(async (adId: string) => {
+    const docRef = doc(db, 'ads', adId);
+    const docSnap = await getDoc(docRef);
+    const ad = docSnap.data();
+
+    // check duplicate
+    const duplicate = ad!.bookingRequests.some(
+      (req: BookingRequest) => req.uid === auth.currentUser?.uid
+    );
+    if (duplicate) {
+      toast.warning(
+        'Du kan inte skicka mer än en förfrågan till samma annons.',
+        { position: toast.POSITION.BOTTOM_CENTER }
+      );
+      return;
+    }
+    const requestor = {
+      displayName: auth.currentUser!.displayName || auth.currentUser!.email!,
+      uid: auth.currentUser!.uid,
+    };
+    const newList: BookingRequest[] = [];
+    newList.push(requestor);
+
+    await updateDoc(docRef, {
+      bookingRequests: newList,
+    }).then(() => {
+      getOneAd(adId);
+      toast.success('Din bokningsförfrågan har blivit skickad.', {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+    });
+  }, []);
 
   return (
     <AdContext.Provider
@@ -208,6 +244,7 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
         removeAd,
         acceptOffer,
         rejectOffer,
+        sendOffer,
       }}
     >
       {props.children}
