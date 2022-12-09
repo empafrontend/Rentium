@@ -10,7 +10,6 @@ import Feed from './Feed/Feed';
 import FilterButtons from './FilterButtons';
 import './index.css';
 import Layout from './Layout';
-import MyAd from './MyAd';
 import MyPage from './MyPage/MyPage';
 import NewAdPage from './NewAdPage';
 import NotFound from './notFound';
@@ -34,7 +33,6 @@ function App() {
                     <Route path="/sign-up" element={<SignUp />} />
                     <Route path="/my-page" element={<MyPage />} />
                     <Route path="/ad/:id" element={<AdPage />} />
-                    <Route path="/my-ad" element={<MyAd />} />
                     <Route path="/profile/:id" element={<Profile />} />
                     <Route path="/filter" element={<AdFilterFeed />} />
                     <Route path="/feed" element={<Feed />} />
