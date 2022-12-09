@@ -17,6 +17,15 @@ const MyPage = () => {
   const adsFromCurrentUser = () =>
     ads.filter((ad) => ad.authorId === currentUser?.uid);
 
+  const generateSentRequests = () => {
+    const adsFromOthers = ads.filter((ad) => ad.authorId !== currentUser?.uid);
+    return adsFromOthers.flatMap((ad) =>
+      ad.bookingRequests
+        ?.filter((req) => req.uid === currentUser.uid)
+        .map(() => ad)
+    );
+  };
+
   const generatePendingReq = () => {
     return adsFromCurrentUser().flatMap((ad) =>
       ad.bookingRequests
@@ -88,6 +97,38 @@ const MyPage = () => {
               </Button>
             </Box>
           </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Typography component="h2" variant="h4" mb={-1}>
+              Skickade bokningsförfrågningar ({generateSentRequests().length})
+            </Typography>
+            <Box
+              height={170}
+              columnGap={2}
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                overflowX: 'scroll',
+                '::-webkit-scrollbar': { display: 'none' },
+              }}
+            >
+              {!generateSentRequests().length ? (
+                <Typography alignSelf="center" mx="auto">
+                  Du har inga väntande bokningsförfrågningar att visa.
+                </Typography>
+              ) : (
+                generateSentRequests().map((req, index) => (
+                  <AdCard
+                    hideButtons
+                    key={index}
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    ad={req!}
+                    isRequest
+                  />
+                ))
+              )}
+            </Box>
+          </Box>
+
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography component="h2" variant="h4" mb={-1}>
               Väntande bokningsförfrågningar ({generatePendingReq().length})
