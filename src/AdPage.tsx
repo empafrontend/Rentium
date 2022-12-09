@@ -111,34 +111,56 @@ function AdPage() {
           </Typography>
         </Box>
         <Box mt="2rem" sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography variant="h3" component="h1" sx={{ fontWeight: '500' }}>
-            {singleAd.title}
-          </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontSize: '12px',
-                display: 'flex',
-                mr: '5px',
-              }}
-            >
-              Datum:
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography variant="h3" component="h1" sx={{ fontWeight: '500' }}>
+              {singleAd.title}
             </Typography>
-            <Typography
-              variant="body2"
-              sx={{
-                color: '#6860CC',
-                fontSize: '12px',
-                display: 'flex',
-              }}
-            >
-              {singleAd.startDate} - {singleAd.endDate}
+            <Typography variant="body1" fontWeight={700}>
+              {formatZeroPrice(singleAd.price)}
             </Typography>
           </Box>
-          <Typography variant="body1" fontWeight={700}>
-            {formatZeroPrice(singleAd.price)}
-          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: '12px',
+                  display: 'flex',
+                  mr: '5px',
+                }}
+              >
+                Datum:
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: '#6860CC',
+                  fontSize: '12px',
+                  display: 'flex',
+                }}
+              >
+                {singleAd.startDate} - {singleAd.endDate}
+              </Typography>
+            </Box>
+            <Typography
+              variant="body2"
+              color={!singleAd.isAvailable ? '#ff8a00' : 'inherit'}
+            >
+              {singleAd.isAvailable ? 'Tillgänglig' : 'Otillgänglig'}
+            </Typography>
+          </Box>
         </Box>
         <Typography
           variant="body2"
