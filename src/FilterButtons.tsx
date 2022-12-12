@@ -17,7 +17,6 @@ const FilterButtons = () => {
   const { filterNavigation, setFilterNavigation, showFreeAds, setShowFreeAds } =
     useContext(NavigationContext);
   const { ads } = useAd();
-  // console.log(showFreeAds);
 
   const freeItems = ads.filter((ad) => ad.price === 0);
   const freeStuff = freeItems.map((item, index) => (
@@ -96,7 +95,11 @@ const FilterButtons = () => {
             className="filter-button flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white hover:ring-4 hover:outline-none hover:ring-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-900"
           >
             <div className="h-7 w-7">
-              <img src={filterButtons.img} alt="" className="aspect-auto " />
+              <img
+                src={filterButtons.img}
+                alt={filterButtons.text}
+                className="aspect-auto "
+              />
             </div>
           </button>
           <Typography
@@ -181,7 +184,7 @@ const FilterButtons = () => {
             className="h-14 w-14 mb-6 flex justify-center hover:animate-spin rounded-full focus:border-dashed focus:border-2 focus:border-orange-300"
             onClick={() => setShowFreeAds(true)}
           >
-            <img src={free} alt="" className="aspect-auto p-1" />
+            <img src={free} alt="Gratis" className="aspect-auto p-1" />
           </button>
         </div>
       ) : (
@@ -193,7 +196,7 @@ const FilterButtons = () => {
             className="h-14 w-14 mb-6 flex justify-center hover:animate-spin rounded-full focus:border-dashed focus:border-2 focus:border-orange-300"
             onClick={() => setShowFreeAds(true)}
           >
-            <img src={free} alt="" className="aspect-auto p-1" />
+            <img src={free} alt="Gratis" className="aspect-auto p-1" />
           </button>
         </div>
       )}
@@ -201,7 +204,6 @@ const FilterButtons = () => {
         {showFreeAds === true ? (
           <>
             <ContentContainer>
-              {/* <CategoryLength /> */}
               <Box sx={{ width: '100%' }}>{freeStuff}</Box>
             </ContentContainer>
           </>
