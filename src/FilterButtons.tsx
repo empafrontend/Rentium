@@ -94,7 +94,7 @@ const FilterButtons = () => {
   }, [selectedCategory, count]);
 
   const borderButton = document.querySelectorAll('.borderButton');
-  if (showFreeAds === true) {
+  if (showFreeAds === true || filterNavigation === false) {
     for (let i = 0; i < borderButton.length; i++) {
       borderButton[i].classList.remove('activeButton');
     }
