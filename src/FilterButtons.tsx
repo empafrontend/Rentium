@@ -210,7 +210,6 @@ const FilterButtons = () => {
           </button>
         </div>
       )}
-      <div className="flex flex-col-reverse"></div>
       <ContentContainer>
         {filterNavigation === true ? filterLength : empty}
         {showFreeAds === true ? (
