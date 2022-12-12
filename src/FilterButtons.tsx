@@ -82,19 +82,20 @@ const FilterButtons = () => {
   ));
 
   const filterLength = `Antal produkter (${filteredList.length})`;
+  const empty = ``;
 
   return (
     <Box>
       <div className=" flex flex-row w-full justify-center filter-buttons">
         {filterButtonsList}
       </div>
-      {filterLength}
+      {filterNavigation === true ? filterLength : empty}
       <div className="flex flex-col-reverse"></div>
       <ContentContainer>
         {filterNavigation === false ? (
           <Feed />
         ) : (
-          filteredList.map((ads, index) => <SlimCard key={index} ad={ads!} />)
+          filteredList.map((ad, index) => <SlimCard key={index} ad={ad!} />)
         )}
       </ContentContainer>
     </Box>
