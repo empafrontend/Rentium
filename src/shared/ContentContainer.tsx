@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import { Container } from '@mui/system';
 import { FC, PropsWithChildren } from 'react';
 import BackButton from './BackButton';
@@ -10,28 +11,38 @@ interface Props {
 const ContentContainer: FC<PropsWithChildren<Props>> = (props) => {
   return (
     <Container
+      maxWidth={false}
       sx={{
         background: props.background ? props.background : '#fff',
-        minHeight: { xs: 'calc(100vh - 11rem)', sm: 'calc(100vh - 18rem)' },
-        // TODO: adjust minHeight based on header and footer height
+        minHeight: { xs: 'calc(100vh - 12rem)', sm: 'calc(100vh - 13rem)' },
         py: 5,
+        position: 'relative',
       }}
     >
-      <Container
-        maxWidth={false}
+      <Box
         sx={{
+          width: '100%',
           position: 'absolute',
           zIndex: -999,
           left: 0,
-          top: 0,
+          top: '-8rem',
           background: props.background ? props.background : '#fff',
-          mt: -5,
-          minHeight: '100vh',
-          maxHeight: 'fit-content',
+          height: '8rem',
+        }}
+      />
+      <Box
+        sx={{
+          width: '100%',
+          position: 'absolute',
+          zIndex: -999,
+          right: 0,
+          bottom: '-5rem',
+          background: props.background ? props.background : '#fff',
+          height: '5rem',
         }}
       />
       {props.backButton ? <BackButton /> : null}
-      {props.children}
+      <Container>{props.children}</Container>
     </Container>
   );
 };
