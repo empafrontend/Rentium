@@ -1,10 +1,9 @@
 import { FC, PropsWithChildren } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useUser } from './Context/UserContextProvider';
+import { auth } from './firebase';
 
 const Protected: FC<PropsWithChildren> = (props) => {
-  const { user } = useUser();
-  return !user.email ? <Navigate to="/" /> : <>{props.children}</>;
+  return !auth.currentUser ? <Navigate to="/" /> : <>{props.children}</>;
 };
 
 export default Protected;
