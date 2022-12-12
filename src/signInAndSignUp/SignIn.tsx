@@ -14,7 +14,7 @@ firebase.initializeApp(firebaseConfig);
 const validationSchema = yup.object({
   username: yup
     .string()
-    .required('Required')
+    .required('Användarnamn krävs')
     .min(3, 'Användarnamn måste vara mellan 3 till 20 karaktärer')
     .max(20, 'Användarnamn måste vara mellan 3 till 20 karaktärer'),
   password: yup

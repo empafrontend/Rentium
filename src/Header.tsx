@@ -20,7 +20,7 @@ function Header() {
   }; */
 
   return (
-    <Box>
+    <header>
       {filterNavigation ? (
         <Box className="header">
           <Link to="/">
@@ -41,7 +41,7 @@ function Header() {
             </Box>
           </Box>
           <Box className="heading">
-            <Typography variant="h2" sx={{ color: 'white' }}>
+            <Typography variant="h2" component="h1" sx={{ color: 'white' }}>
               Välkommen till Rentium!
             </Typography>
             <Typography variant="subtitle2" sx={{ color: 'white' }}>
@@ -50,7 +50,7 @@ function Header() {
           </Box>
         </Box>
       )}
-    </Box>
+    </header>
   );
 }
 

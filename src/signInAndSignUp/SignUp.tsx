@@ -9,10 +9,10 @@ import InputField from '../shared/InputField';
 const validationSchema = yup.object({
   username: yup
     .string()
-    .required('Required')
+    .required('Användarnamn krävs')
     .min(3, 'Användarnamn måste vara mellan 3 till 20 karaktärer')
     .max(20, 'Användarnamn måste vara mellan 3 till 20 karaktärer'),
-  email: yup.string().email().required('Required'),
+  email: yup.string().email().required('Email krävs'),
   password: yup
     .string()
     .required('Vänligen fyll i ditt lösenord')
