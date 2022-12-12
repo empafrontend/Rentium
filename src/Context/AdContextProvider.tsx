@@ -211,6 +211,7 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
     []
   );
 
+  /** Sends a booking request to the ad owner */
   const sendOffer = useCallback(async (adId: string) => {
     const docRef = doc(db, 'ads', adId);
     const docSnap = await getDoc(docRef);

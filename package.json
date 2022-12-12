@@ -45,7 +45,9 @@
     "eject": "react-scripts eject",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "lint": "eslint . --ext .tsx"
+    "lint": "eslint . --ext .tsx",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "eslintConfig": {
     "extends": [

@@ -6,7 +6,7 @@ import './header.css';
 import NavItems from './shared/NavItems';
 
 function Header() {
-  const { filterNavigation, setFilterNavigation, showFreeAds, setShowFreeAds } =
+  const { filterNavigation, setFilterNavigation, setShowFreeAds } =
     useContext(NavigationContext);
 
   const handleHeaderGrow = () => {
@@ -14,13 +14,8 @@ function Header() {
     setShowFreeAds(false);
   };
 
-  /*   const handleHeaderShrink = () => {
-    setFilterNavigation(true);
-    console.log('hej');
-  }; */
-
   return (
-    <Box>
+    <header>
       {filterNavigation ? (
         <Box className="header">
           <Link to="/">
@@ -41,7 +36,7 @@ function Header() {
             </Box>
           </Box>
           <Box className="heading">
-            <Typography variant="h2" sx={{ color: 'white' }}>
+            <Typography variant="h2" component="h1" sx={{ color: 'white' }}>
               Välkommen till Rentium!
             </Typography>
             <Typography variant="subtitle2" sx={{ color: 'white' }}>
@@ -50,7 +45,7 @@ function Header() {
           </Box>
         </Box>
       )}
-    </Box>
+    </header>
   );
 }
 

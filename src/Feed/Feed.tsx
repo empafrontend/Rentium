@@ -30,56 +30,58 @@ function Feed() {
           width: '100%',
         }}
       >
-        {ads.map((ads, index) => (
-          <Card
-            className="card"
-            key={index}
-            sx={{
-              marginTop: '1rem',
-              width: '13.5rem',
-              height: '14rem',
-              borderRadius: 3,
-              boxShadow: 'none',
-            }}
-            onClick={() => setFilterNavigation(true)}
-          >
-            <Link to={`/ad/${ads.id}`}>
-              <CardMedia
-                component="img"
-                onError={onImageError}
-                image={ads.img}
-                alt={ads.title}
-                sx={{
-                  borderRadius: 3,
-                  width: '100%',
-                  height: '10rem',
-                  objectFit: 'cover',
-                  objectPosition: 'center',
-                }}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="subtitle2">
-                  {ads.title}
-                </Typography>
-                <Box
+        {ads
+          .filter((ad) => ad.isAvailable === true)
+          .map((ads, index) => (
+            <Card
+              className="card"
+              key={index}
+              sx={{
+                marginTop: '1rem',
+                width: '13.5rem',
+                height: '14rem',
+                borderRadius: 3,
+                boxShadow: 'none',
+              }}
+              onClick={() => setFilterNavigation(true)}
+            >
+              <Link to={`/ad/${ads.id}`}>
+                <CardMedia
+                  component="img"
+                  onError={onImageError}
+                  image={ads.img}
+                  alt={ads.title}
                   sx={{
+                    borderRadius: 3,
                     width: '100%',
-                    display: 'flex',
-                    justifyContent: 'space-between',
+                    height: '10rem',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
                   }}
-                >
-                  <Typography variant="caption" sx={{ color: 'grey' }}>
-                    <LocationOnOutlined sx={{ fontSize: '.8rem' }} />{' '}
-                    {ads.location}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="subtitle2">
+                    {ads.title}
                   </Typography>
-                  <Typography variant="caption">
-                    {formatZeroPrice(ads.price)}
-                  </Typography>
-                </Box>
-              </CardContent>
-            </Link>
-          </Card>
-        ))}
+                  <Box
+                    sx={{
+                      width: '100%',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <Typography variant="caption" sx={{ color: 'grey' }}>
+                      <LocationOnOutlined sx={{ fontSize: '.8rem' }} />{' '}
+                      {ads.location}
+                    </Typography>
+                    <Typography variant="caption">
+                      {formatZeroPrice(ads.price)}
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Link>
+            </Card>
+          ))}
       </Box>
     </ContentContainer>
   );

@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import free from './Assets/free-tag.png';
-import { AdContext } from './Context/AdContextProvider';
+import { useAd } from './Context/AdContextProvider';
 import { NavigationContext } from './Context/NavigationContext';
 import Feed from './Feed/Feed';
 import './filterButtons.css';
@@ -15,7 +15,7 @@ import SlimCard from './SlimCard';
 const FilterButtons = () => {
   const [count, setCount] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState('');
-  const { ads } = useContext(AdContext);
+  const { ads } = useAd();
 
   const filterAds = () => {
     const filteredAds = ads.filter(
@@ -27,10 +27,8 @@ const FilterButtons = () => {
   };
 
   const filteredList = useMemo(filterAds, [selectedCategory]);
-
   const { filterNavigation, setFilterNavigation, showFreeAds, setShowFreeAds } =
     useContext(NavigationContext);
-  // console.log(showFreeAds);
 
   const freeItems = ads.filter((ad) => ad.price === 0);
   const freeStuff = freeItems.map((item, index) => (
@@ -158,7 +156,7 @@ const FilterButtons = () => {
             className="h-14 w-14 mb-6 flex justify-center hover:animate-spin rounded-full focus:border-dashed focus:border-2 focus:border-orange-300"
             onClick={() => setShowFreeAds(true)}
           >
-            <img src={free} alt="" className="aspect-auto p-1" />
+            <img src={free} alt="Gratis" className="aspect-auto p-1" />
           </button>
         </div>
       ) : (
@@ -170,24 +168,30 @@ const FilterButtons = () => {
             className="h-14 w-14 mb-6 flex justify-center hover:animate-spin rounded-full focus:border-dashed focus:border-2 focus:border-orange-300"
             onClick={() => setShowFreeAds(true)}
           >
-            <img src={free} alt="" className="aspect-auto p-1" />
+            <img src={free} alt="Gratis" className="aspect-auto p-1" />
           </button>
         </div>
       )}
-      {filterNavigation === true ? filterLength : empty}
-      <div className="flex flex-col-reverse"></div>
+
       <ContentContainer>
         {showFreeAds === true ? (
           <>
-            <ContentContainer>
-              {/* <CategoryLength /> */}
-              <Box sx={{ width: '100%' }}>{freeStuff}</Box>
-            </ContentContainer>
+            <Typography variant="body2" mt={5} mb={2} textAlign="center">
+              Antal produkter ({freeStuff.length})
+            </Typography>
+            <Box sx={{ width: '100%' }}>{freeStuff}</Box>
           </>
         ) : filterNavigation === false ? (
           <Feed />
         ) : (
-          filteredList.map((ad, index) => <SlimCard key={index} ad={ad!} />)
+          <>
+            <Typography variant="body2" mt={5} mb={2} textAlign="center">
+              {filterNavigation === true ? filterLength : empty}
+            </Typography>
+            {filteredList.map((ad, index) => (
+              <SlimCard key={index} ad={ad} />
+            ))}
+          </>
         )}
       </ContentContainer>
     </Box>

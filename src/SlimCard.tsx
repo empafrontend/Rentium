@@ -1,10 +1,9 @@
 import { PlaceOutlined } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-
-import { Ad, useAd } from './Context/AdContextProvider';
+import { Ad } from './Context/AdContextProvider';
 import './Feed/feed.css';
-import { formatZeroPrice } from './helper';
+import { formatZeroPrice, onImageError } from './helper';
 import './index.css';
 
 type SlimcardProps = Partial<Ad> & {
@@ -12,8 +11,6 @@ type SlimcardProps = Partial<Ad> & {
 };
 
 const SlimCard = (props: SlimcardProps) => {
-  const { ads } = useAd();
-  console.log(ads);
   return (
     <Link key={props.ad.id} to={`/ad/${props.ad.id}`}>
       <div
@@ -23,13 +20,16 @@ const SlimCard = (props: SlimcardProps) => {
         <img
           src={props.ad.img}
           alt={props.ad.title}
-          className="w-32 h-32 aspect-auto rounded-lg mx-8"
+          onError={onImageError}
+          className="w-32 h-32 aspect-auto object-cover rounded-lg mx-8"
         />
         <div className="flex flex-col w-2/5">
           <div className="mb-4">
             <Typography variant="subtitle2">{props.ad.title}</Typography>
             <Typography variant="body2" className="text-sm hind">
-              {props.ad.description}
+              {props.ad.description.length > 150
+                ? props.ad.description.substring(0, 150) + ' ...'
+                : props.ad.description}
             </Typography>
           </div>
 

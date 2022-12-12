@@ -47,6 +47,7 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
   const handleSignUp = (user: User) => console.log('signing up', user); // TODO: add function
   const { setFilterNavigation } = useNavi();
 
+  /** Signs in the user via Google */
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider)
@@ -66,6 +67,7 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
       });
   };
 
+  /** Signs out the user via Google */
   const handleSignOut = async () =>
     await signOut(auth)
       .then(() => {
