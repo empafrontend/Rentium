@@ -1,6 +1,6 @@
 import { PlaceOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import free from './Assets/free-tag.png';
 import { useAd } from './Context/AdContextProvider';
@@ -14,9 +14,21 @@ import SlimCard from './SlimCard';
 
 const FilterButtons = () => {
   const [count, setCount] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const { ads } = useAd();
+
+  const filterAds = () => {
+    const filteredAds = ads.filter(
+      (ad) =>
+        ad.category.toLowerCase() === selectedCategory &&
+        ad.isAvailable === true
+    );
+    return filteredAds;
+  };
+
+  const filteredList = useMemo(filterAds, [selectedCategory]);
   const { filterNavigation, setFilterNavigation, showFreeAds, setShowFreeAds } =
     useContext(NavigationContext);
-  const { ads } = useAd();
 
   const freeItems = ads.filter((ad) => ad.price === 0);
   const freeStuff = freeItems.map((item, index) => (
@@ -77,101 +89,61 @@ const FilterButtons = () => {
 
   useEffect(() => {
     Filter();
-  }, [count]);
+  }, [selectedCategory]);
 
-  const handleView = (filterButtons: number) => {
-    setCount(filterButtons);
-    setFilterNavigation(true);
-    setShowFreeAds(false);
+  const Filter = async () => {
+    const checkbox = document.getElementById(
+      selectedCategory
+    ) as HTMLInputElement | null;
+
+    if (checkbox?.checked) {
+      setFilterNavigation(true);
+      setShowFreeAds(false);
+    } else {
+      setCount(0);
+      setFilterNavigation(false);
+      setSelectedCategory('');
+    }
   };
 
-  const filterButtonsList = filterButtons.map((filterButtons, index) => (
-    <div key={filterButtons.id} className="button-container">
-      <div className="rounded-full hover:cursor-pointer">
-        <div onClick={() => handleView(filterButtons.id)}>
-          <button
-            onClick={() => handleView(filterButtons.id)}
-            id="button"
-            className="filter-button flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white hover:ring-4 hover:outline-none hover:ring-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-900"
-          >
-            <div className="h-7 w-7">
-              <img
-                src={filterButtons.img}
-                alt={filterButtons.text}
-                className="aspect-auto "
-              />
-            </div>
-          </button>
-          <Typography
-            variant="body1"
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              paddingTop: '.4rem',
+  const filterButtonsList = filterButtons.map((filterButtons) => (
+    <div
+      key={filterButtons.id}
+      className=" w-16 flex flex-col items-center justify-center"
+    >
+      <div>
+        <div className="flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white">
+          <input
+            className={`check opacity-0 absolute w-12 h-12 cursor-pointer`}
+            type="checkbox"
+            id={filterButtons.category}
+            checked={selectedCategory === filterButtons.category}
+            onChange={() => {
+              setSelectedCategory(filterButtons.category);
+              filterAds();
             }}
-          >
-            {filterButtons.text}
-          </Typography>
+            onClick={() => Filter()}
+          />
+          <div className="h-7 w-7">
+            <img src={filterButtons.img} alt="" className="aspect-auto " />
+          </div>
         </div>
       </div>
+      <Typography
+        variant="body1"
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          paddingTop: '.4rem',
+        }}
+      >
+        {filterButtons.text}
+      </Typography>
     </div>
   ));
 
-  const Filter = () => {
-    const shoes = document.querySelectorAll('div.shoes');
-    const hats = document.querySelectorAll('div.hats');
-    const tools = document.querySelectorAll('div.TOOLS');
-    const housing = document.querySelectorAll('div.housing');
-    const vehicles = document.querySelectorAll('div.VEHICLE');
-    const category = document.getElementById('numberOfArticles');
-    category?.classList.add('flex');
-    category?.classList.remove('hidden');
-    const categorysArray = [shoes, hats, tools, housing, vehicles];
-    for (let i = 0; i < categorysArray.length; i++) {
-      shoes[i]?.classList.add('hidden');
-      hats[i]?.classList.add('hidden');
-      tools[i]?.classList.add('hidden');
-      housing[i]?.classList.add('hidden');
-      vehicles[i]?.classList.add('hidden');
-      shoes[i]?.classList.remove('showing');
-      hats[i]?.classList.remove('showing');
-      tools[i]?.classList.remove('showing');
-      housing[i]?.classList.remove('showing');
-      vehicles[i]?.classList.remove('showing');
-    }
-
-    if (count === 1) {
-      for (let i = 0; i < shoes.length; i++) {
-        shoes[i]?.classList.add('flex');
-        shoes[i]?.classList.add('showing');
-        shoes[i]?.classList.remove('hidden');
-      }
-    } else if (count === 2) {
-      for (let i = 0; i < hats.length; i++) {
-        hats[i]?.classList.add('flex');
-        hats[i]?.classList.add('showing');
-        hats[i]?.classList.remove('hidden');
-      }
-    } else if (count === 3) {
-      for (let i = 0; i < tools.length; i++) {
-        tools[i]?.classList.add('flex');
-        tools[i]?.classList.add('showing');
-        tools[i]?.classList.remove('hidden');
-      }
-    } else if (count === 4) {
-      for (let i = 0; i < housing.length; i++) {
-        housing[i]?.classList.add('flex');
-        housing[i]?.classList.add('showing');
-        housing[i]?.classList.remove('hidden');
-      }
-    } else if (count === 5) {
-      for (let i = 0; i < vehicles.length; i++) {
-        vehicles[i]?.classList.add('flex');
-        vehicles[i]?.classList.add('showing');
-        vehicles[i]?.classList.remove('hidden');
-      }
-    }
-  };
+  const filterLength = `Antal produkter (${filteredList.length})`;
+  const empty = ``;
 
   return (
     <Box>
@@ -200,6 +172,8 @@ const FilterButtons = () => {
           </button>
         </div>
       )}
+      {filterNavigation === true ? filterLength : empty}
+      <div className="flex flex-col-reverse"></div>
       <ContentContainer>
         {showFreeAds === true ? (
           <>
@@ -210,11 +184,10 @@ const FilterButtons = () => {
         ) : filterNavigation === false ? (
           <Feed />
         ) : (
-          <SlimCard />
+          filteredList.map((ad, index) => <SlimCard key={index} ad={ad!} />)
         )}
       </ContentContainer>
     </Box>
   );
 };
-
 export default FilterButtons;
