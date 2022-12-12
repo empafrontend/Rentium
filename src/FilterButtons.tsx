@@ -143,27 +143,29 @@ const FilterButtons = () => {
       key={filterButtons.id}
       className="w-16 flex flex-col items-center justify-center"
     >
-      <div>
-        <button className="borderButton flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white">
-          <input
-            className={` z-0 check opacity-0 absolute w-12 h-12 cursor-pointer`}
-            type="checkbox"
-            id={filterButtons.category}
-            checked={selectedCategory === filterButtons.category}
-            onChange={() => {
-              setSelectedCategory(filterButtons.category);
-              filterAds();
-            }}
-            onClick={() => {
-              Filter();
-              setCount(filterButtons.id);
-            }}
+      <button className="borderButton flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white">
+        <input
+          className={` z-0 check opacity-0 absolute w-12 h-12 cursor-pointer`}
+          type="checkbox"
+          id={filterButtons.category}
+          checked={selectedCategory === filterButtons.category}
+          onChange={() => {
+            setSelectedCategory(filterButtons.category);
+            filterAds();
+          }}
+          onClick={() => {
+            Filter();
+            setCount(filterButtons.id);
+          }}
+        />
+        <div className="h-7 w-7">
+          <img
+            src={filterButtons.img}
+            alt={filterButtons.text}
+            className="aspect-auto "
           />
-          <div className="h-7 w-7">
-            <img src={filterButtons.img} alt="" className="aspect-auto " />
-          </div>
-        </button>
-      </div>
+        </div>
+      </button>
       <Typography
         variant="body1"
         sx={{
