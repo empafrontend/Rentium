@@ -10,9 +10,7 @@ import './feed.css';
 
 function Feed() {
   const { ads, getAds } = useContext(AdContext);
-
-  const { filterNavigation, setFilterNavigation } =
-    useContext(NavigationContext);
+  const { setFilterNavigation } = useContext(NavigationContext);
 
   useEffect(() => {
     getAds();

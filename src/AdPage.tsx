@@ -1,5 +1,11 @@
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import { Box, Button, CardMedia, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CardMedia,
+  CircularProgress,
+  Typography,
+} from '@mui/material';
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -14,16 +20,25 @@ import ContentContainer from './shared/ContentContainer';
 }
 function AdPage() {
   const params = useParams<{ id: string }>();
-  const { getOneAd, singleAd, sendOffer } = useAd();
+  const { getOneAd, singleAd, sendOffer, isLoadingAd, setIsLoadingAd } =
+    useAd();
   const { currentUser } = useUser();
 
   useEffect(() => {
+    setIsLoadingAd(true);
     if (params.id) {
       getOneAd(params.id);
     }
   }, [sendOffer]);
 
-  return (
+  return isLoadingAd ? (
+    <ContentContainer>
+      <CircularProgress
+        color="inherit"
+        sx={{ display: 'flex', m: 'auto', mt: 10 }}
+      />
+    </ContentContainer>
+  ) : (
     <ContentContainer backButton>
       <Box
         maxWidth={350}
@@ -96,34 +111,56 @@ function AdPage() {
           </Typography>
         </Box>
         <Box mt="2rem" sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography variant="h3" component="h1" sx={{ fontWeight: '500' }}>
-            {singleAd.title}
-          </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontSize: '12px',
-                display: 'flex',
-                mr: '5px',
-              }}
-            >
-              Datum:
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Typography variant="h3" component="h1" sx={{ fontWeight: '500' }}>
+              {singleAd.title}
             </Typography>
-            <Typography
-              variant="body2"
-              sx={{
-                color: '#6860CC',
-                fontSize: '12px',
-                display: 'flex',
-              }}
-            >
-              {singleAd.startDate} - {singleAd.endDate}
+            <Typography variant="body1" fontWeight={700}>
+              {formatZeroPrice(singleAd.price)}
             </Typography>
           </Box>
-          <Typography variant="body1" fontWeight={700}>
-            {formatZeroPrice(singleAd.price)}
-          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: '12px',
+                  display: 'flex',
+                  mr: '5px',
+                }}
+              >
+                Datum:
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: '#6860CC',
+                  fontSize: '12px',
+                  display: 'flex',
+                }}
+              >
+                {singleAd.startDate} - {singleAd.endDate}
+              </Typography>
+            </Box>
+            <Typography
+              variant="body2"
+              color={!singleAd.isAvailable ? '#ff8a00' : 'inherit'}
+            >
+              {singleAd.isAvailable ? 'Tillgänglig' : 'Otillgänglig'}
+            </Typography>
+          </Box>
         </Box>
         <Typography
           variant="body2"

@@ -48,7 +48,9 @@ const FilterButtons = () => {
             <Box>
               <Typography variant="subtitle2">{item.title}</Typography>
               <Typography variant="body2" className="text-sm hind">
-                {item.description}
+                {item.description.length > 150
+                  ? item.description.substring(0, 150) + ' ...'
+                  : item.description}
               </Typography>
             </Box>
 

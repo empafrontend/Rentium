@@ -1,12 +1,20 @@
 import { Button } from '@mui/material';
 import { IconChevronLeft } from '@tabler/icons';
 import { useNavigate } from 'react-router-dom';
+import { useNavi } from '../Context/NavigationContext';
 
 const BackButton = () => {
   const navigate = useNavigate();
+  const { setFilterNavigation } = useNavi();
+
+  const handleClick = () => {
+    setFilterNavigation(false);
+    navigate(-1);
+  };
+
   return (
     <Button
-      onClick={() => navigate(-1)}
+      onClick={handleClick}
       variant="contained"
       sx={{
         position: 'absolute',

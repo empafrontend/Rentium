@@ -53,18 +53,6 @@ const AdCard = (props: ExAdCard) => {
     setIsToRemove(false);
   };
 
-  const test = () => {
-    const hi = props.ad.bookingRequests?.some(
-      (req) => req.uid === currentUser.uid && req.isAccepted === true
-    );
-    // const notMyAd = props.isRequest && currentUser.uid !== props.authorId;
-    // const hi = props.ad.bookingRequests
-    //   ?.filter((req) => req.isAccepted === true)
-    //   .map((req) => props.ad);
-
-    console.log(hi);
-  };
-
   return (
     <>
       <Card
@@ -78,6 +66,7 @@ const AdCard = (props: ExAdCard) => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
+          background: props.ad.isAvailable ? '#fff' : '#f7f7f7',
         }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
