@@ -137,7 +137,6 @@ const FilterButtons = () => {
       borderButton[4].classList.add('activeButton');
     }
   };
-  console.log(selectedCategory);
 
   const filterButtonsList = filterButtons.map((filterButtons) => (
     <div
