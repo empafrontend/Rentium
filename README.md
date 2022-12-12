@@ -17,7 +17,11 @@ Open up terminal and add following command
 `npm i`
 <br>
 `npm start`
+<br>
 
+If you want to run Cypress
+<br>
+`npm run cypress:open`
 <br>
 
 ### Collaborators
