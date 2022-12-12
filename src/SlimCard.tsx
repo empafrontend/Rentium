@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { Ad, useAd } from './Context/AdContextProvider';
 import './Feed/feed.css';
+import { formatZeroPrice } from './helper';
 import './index.css';
 
 type SlimcardProps = Partial<Ad> & {
@@ -34,7 +35,7 @@ const SlimCard = (props: SlimcardProps) => {
 
           <div className="flex flex-row justify-between mr-8">
             <Typography variant="caption" className="text-lg">
-              {props.ad.price} kr
+              {formatZeroPrice(props.ad.price)}
             </Typography>
 
             <Typography variant="caption" className="text-sm text-blue-500">

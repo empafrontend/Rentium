@@ -1,8 +1,10 @@
 import { Container } from '@mui/system';
 import { FC, PropsWithChildren } from 'react';
+import BackButton from './BackButton';
 
 interface Props {
   background?: string;
+  backButton?: boolean;
 }
 
 const ContentContainer: FC<PropsWithChildren<Props>> = (props) => {
@@ -25,8 +27,10 @@ const ContentContainer: FC<PropsWithChildren<Props>> = (props) => {
           background: props.background ? props.background : '#fff',
           mt: -5,
           minHeight: '100vh',
+          maxHeight: 'fit-content',
         }}
       />
+      {props.backButton ? <BackButton /> : null}
       {props.children}
     </Container>
   );

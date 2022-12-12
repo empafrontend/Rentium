@@ -9,17 +9,23 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Ad, useAd } from '../Context/AdContextProvider';
+import { useUser } from '../Context/UserContextProvider';
+import { formatZeroPrice, onImageError } from '../helper';
+import IsAvailableSwitch from './IsAvailableSwitch';
 
 type ExAdCard = Partial<Ad> & {
   ad: Ad;
   isRequest?: boolean | false;
+  hideButtons?: boolean | false;
 };
 
 const AdCard = (props: ExAdCard) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [isToRemove, setIsToRemove] = useState<boolean>(false);
   const { acceptOffer, rejectOffer, removeAd } = useAd();
+  const { currentUser } = useUser();
 
   /** Closes modal  */
   const handleClose = () => setOpenModal(false);
@@ -35,8 +41,10 @@ const AdCard = (props: ExAdCard) => {
   /** Handles clicking "ja" in the warning */
   const confirmAction = (id: string) => {
     setOpenModal(false);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    isToRemove ? removeAd(id) : rejectOffer(props.ad.id!, props.ad.requestor!);
+    isToRemove
+      ? removeAd(id)
+      : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        rejectOffer(props.ad.id!, props.ad.requestor!);
   };
 
   /**  Handles clicking "nej" in the warning */
@@ -51,54 +59,85 @@ const AdCard = (props: ExAdCard) => {
         sx={{
           maxWidth: 250,
           minWidth: 250,
-          maxHeight: 200,
-          borderRadius: '20px 20px 20px 0',
+          maxHeight: props.hideButtons ? 135 : 210,
+          borderRadius: props.hideButtons ? '20px' : '20px 20px 20px 0',
           boxShadow: '0 2px 10px #DDDBD5',
           mt: 1,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
+          background: props.ad.isAvailable ? '#fff' : '#f7f7f7',
         }}
       >
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
           <Box
             width="50%"
-            sx={{ py: 2, display: 'flex', placeContent: 'center' }}
-          >
-            <CardMedia
-              component="img"
-              alt={props.ad.title}
-              image={props.ad.img}
-              sx={{ borderRadius: 3, width: 100, height: 100 }}
-            />
-          </Box>
-          <CardContent
             sx={{
+              pt: 2,
               display: 'flex',
+              placeContent: !props.isRequest ? 'center' : 'start',
               flexDirection: 'column',
-              placeContent: 'center',
-              pl: 1,
-              maxWidth: 120,
+              placeItems: 'center',
             }}
           >
-            <Typography variant="body1" fontWeight={600}>
-              {props.ad.title}
-            </Typography>
-            <Typography pb={3} variant="body2" color="text.secondary">
-              {props.isRequest
-                ? props.ad.requestor
-                : 'Inlagd: ' +
-                  props.ad.createdAt
-                    .toDate()
-                    .toDateString()
-                    .replace(/^\S+\s/, '')}
-            </Typography>
-            <Typography variant="body1" fontWeight={400}>
-              {props.ad.price} kr
-            </Typography>
-          </CardContent>
+            <Link to={`/ad/${props.ad.id}`}>
+              <CardMedia
+                component="img"
+                onError={onImageError}
+                alt={props.ad.title}
+                image={props.ad.img}
+                sx={{ borderRadius: 3, width: 100, height: 100 }}
+              />
+            </Link>
+            {props.isRequest ? <></> : <IsAvailableSwitch ad={props.ad} />}
+          </Box>
+          <Link to={`/ad/${props.ad.id}`}>
+            <CardContent
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                placeContent: 'center',
+                pl: 1,
+                maxWidth: 125,
+                height: '100%',
+              }}
+            >
+              <Typography variant="body1" fontWeight={600}>
+                {props.ad.title}
+              </Typography>
+              <Typography variant="body2">
+                {props.isRequest && currentUser.uid !== props.authorId
+                  ? props.ad.author
+                  : props.isRequest
+                  ? props.ad.requestor?.displayName
+                  : 'Inlagd: ' +
+                    props.ad.createdAt
+                      .toDate()
+                      .toDateString()
+                      .replace(/^\S+\s/, '')}
+              </Typography>
+              <Typography variant="body1" pt={2} pb={0.5} fontWeight={400}>
+                {formatZeroPrice(props.ad.price)}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="#48BC5B"
+                lineHeight={1.2}
+                textAlign="end"
+                fontWeight={400}
+              >
+                {props.ad.bookingRequests?.some(
+                  (req) =>
+                    req.uid === currentUser.uid && req.isAccepted === true
+                )
+                  ? 'Accepterad \n Kontakta säljaren'
+                  : null}
+              </Typography>
+            </CardContent>
+          </Link>
         </Box>
-        {props.isRequest ? (
+
+        {props.isRequest && props.hideButtons ? null : props.isRequest ? (
           <CardActions disableSpacing sx={{ p: 0, width: '100%' }}>
             <Button
               variant="contained"
@@ -127,9 +166,14 @@ const AdCard = (props: ExAdCard) => {
             <Button
               variant="contained"
               onClick={(e) => displayWarning(e)}
-              sx={{ width: '100%', borderRadius: '20px 0 0 0' }}
+              sx={{
+                width: '100%',
+                borderRadius: '20px 0 0 0',
+                whiteSpace: 'nowrap',
+              }}
+              disabled={!props.ad.isAvailable}
             >
-              Ta bort
+              {props.ad.isAvailable ? 'Ta bort' : 'Bokad eller otillgänglig'}
             </Button>
           </CardActions>
         )}
@@ -155,16 +199,18 @@ const AdCard = (props: ExAdCard) => {
 
             <CardMedia
               component="img"
+              onError={onImageError}
               alt={props.ad.title}
               image={props.ad.img}
               sx={{ borderRadius: 3, width: 50, height: 50, m: 'auto' }}
             />
             <Typography variant="body2" pt={1}>
-              {props.ad.title} {props.ad.price} kr
+              {props.ad.title} {formatZeroPrice(props.ad.price)}
             </Typography>
             <Typography variant="body1" sx={{ mt: 2 }}>
-              You action to {isToRemove ? 'remove the ad' : 'reject the offer'}{' '}
-              cannot be reverted.
+              Din åtgärd för att
+              {isToRemove ? ' ta bort annonsen ' : ' avvisa bokningsförfrågan '}
+              kan inte återställas.
             </Typography>
           </Box>
           <CardActions disableSpacing sx={{ p: 0, width: '100%' }}>

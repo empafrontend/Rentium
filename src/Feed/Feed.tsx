@@ -3,11 +3,14 @@ import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AdContext } from '../Context/AdContextProvider';
+import { NavigationContext } from '../Context/NavigationContext';
+import { formatZeroPrice, onImageError } from '../helper';
 import ContentContainer from '../shared/ContentContainer';
 import './feed.css';
 
 function Feed() {
   const { ads, getAds } = useContext(AdContext);
+  const { setFilterNavigation } = useContext(NavigationContext);
 
   useEffect(() => {
     getAds();
@@ -15,15 +18,16 @@ function Feed() {
 
   return (
     <ContentContainer>
-      <Typography variant="h5">Nya annonser</Typography>
+      <Typography variant="subtitle1" sx={{ padding: '1rem' }}>
+        Nya annonser
+      </Typography>
       <Box
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: '1rem',
+          gap: '2rem',
           justifyContent: 'center',
           width: '100%',
-          paddingBottom: '2rem',
         }}
       >
         {ads.map((ads, index) => (
@@ -31,21 +35,24 @@ function Feed() {
             className="card"
             key={index}
             sx={{
-              width: '10.2rem',
+              marginTop: '1rem',
+              width: '13.5rem',
               height: '14rem',
-              borderRadius: '1rem',
+              borderRadius: 3,
               boxShadow: 'none',
             }}
+            onClick={() => setFilterNavigation(true)}
           >
             <Link to={`/ad/${ads.id}`}>
               <CardMedia
                 component="img"
+                onError={onImageError}
                 image={ads.img}
                 alt={ads.title}
                 sx={{
-                  borderRadius: '1rem',
+                  borderRadius: 3,
                   width: '100%',
-                  height: '9rem',
+                  height: '10rem',
                   objectFit: 'cover',
                   objectPosition: 'center',
                 }}
@@ -56,6 +63,7 @@ function Feed() {
                 </Typography>
                 <Box
                   sx={{
+                    width: '100%',
                     display: 'flex',
                     justifyContent: 'space-between',
                   }}
@@ -64,7 +72,9 @@ function Feed() {
                     <LocationOnOutlined sx={{ fontSize: '.8rem' }} />{' '}
                     {ads.location}
                   </Typography>
-                  <Typography variant="caption">{ads.price} kr</Typography>
+                  <Typography variant="caption">
+                    {formatZeroPrice(ads.price)}
+                  </Typography>
                 </Box>
               </CardContent>
             </Link>

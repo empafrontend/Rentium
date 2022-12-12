@@ -70,13 +70,17 @@ const categories = [
     value: 'VEHICLE',
     label: 'Fordon',
   },
+  {
+    value: 'HATS',
+    label: 'Hattar',
+  },
 ];
 
 function NewAdPage() {
   const { createAd } = useAd();
   const formik = useFormik({
     initialValues: {
-      category: 'SHOES' || 'TOOLS' || 'CLOTHES' || 'VEHICLE',
+      category: 'SHOES' || 'TOOLS' || 'CLOTHES' || 'VEHICLE' || 'HATS',
       title: '',
       description: '',
       img: '',

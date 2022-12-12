@@ -1,0 +1,14 @@
+.link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  width: 55px;
+}
+
+.link:hover {
+  text-decoration: none;
+  color: lightblue;
+}

@@ -4,29 +4,15 @@
   align-items: center;
   justify-content: center;
   border-radius: 0px 70px 0px 0px;
-  height: 10rem;
+  height: 5rem;
   width: 100%;
 }
 
 .footer-navigation {
   color: white;
   display: flex;
-  gap: 3rem;
+  gap: 1.5rem;
   place-items: center;
-}
-
-.icon:hover {
-  color: lightblue;
-}
-
-.img-icon {
-  width: 32px;
-  border-radius: 50px;
-  border: solid white 3px;
-}
-
-.img-icon:hover {
-  border: solid lightblue 3px;
 }
 
 @media screen and (min-width: 900px) {
@@ -37,7 +23,9 @@
 
 @media screen and (max-width: 600px) {
   .footer {
-    height: 6rem;
+    height: 5rem;
     border-radius: 0px 70px 0px 0px;
+    position: fixed;
+    bottom: 0;
   }
 }
