@@ -24,8 +24,8 @@ const filterButtons = [
     id: 3,
   },
   {
-    text: 'Boende',
-    category: 'housing',
+    text: 'Kläder',
+    category: 'clothes',
     img: house,
     id: 4,
   },
