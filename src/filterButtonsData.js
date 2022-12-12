@@ -1,5 +1,5 @@
+import clothes from '../src/Assets/clothesIcon.png';
 import hat from '../src/Assets/hattIkon.png';
-import house from '../src/Assets/husIkon.png';
 import car from '../src/Assets/moppeIkon.png';
 import shoe from '../src/Assets/skoIkon.png';
 import tool from '../src/Assets/verktygIkon.png';
@@ -24,9 +24,9 @@ const filterButtons = [
     id: 3,
   },
   {
-    text: 'Boende',
-    category: 'housing',
-    img: house,
+    text: 'Kläder',
+    category: 'clothes',
+    img: clothes,
     id: 4,
   },
   {

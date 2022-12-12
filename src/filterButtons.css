@@ -18,6 +18,11 @@
   gap: 0.8rem;
 }
 
+.activeButton {
+  border: 2px dashed;
+  border-color: rgb(253 186 116);
+}
+
 @media screen and (max-width: 550px) {
   .filter-buttons {
     top: 5.5rem;

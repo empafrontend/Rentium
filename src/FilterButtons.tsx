@@ -46,7 +46,7 @@ const FilterButtons = () => {
           <img
             src={item.img}
             alt={item.title}
-            className="w-32 h-32 aspect-auto rounded-lg mx-8"
+            className="w-32 h-32 aspect-auto object-cover rounded-lg mx-8"
           />
           <Box
             sx={{
@@ -89,13 +89,18 @@ const FilterButtons = () => {
 
   useEffect(() => {
     Filter();
-  }, [selectedCategory]);
+  }, [selectedCategory, count]);
 
+  const borderButton = document.querySelectorAll('.borderButton');
+  if (showFreeAds === true || filterNavigation === false) {
+    for (let i = 0; i < borderButton.length; i++) {
+      borderButton[i].classList.remove('activeButton');
+    }
+  }
   const Filter = async () => {
     const checkbox = document.getElementById(
       selectedCategory
     ) as HTMLInputElement | null;
-
     if (checkbox?.checked) {
       setFilterNavigation(true);
       setShowFreeAds(false);
@@ -104,17 +109,45 @@ const FilterButtons = () => {
       setFilterNavigation(false);
       setSelectedCategory('');
     }
+
+    if (selectedCategory === 'shoes') {
+      for (let i = 0; i < borderButton.length; i++) {
+        borderButton[i].classList.remove('activeButton');
+      }
+      borderButton[0].classList.add('activeButton');
+    } else if (selectedCategory === 'hats') {
+      for (let i = 0; i < borderButton.length; i++) {
+        borderButton[i].classList.remove('activeButton');
+      }
+      borderButton[1].classList.add('activeButton');
+    } else if (selectedCategory === 'tools') {
+      for (let i = 0; i < borderButton.length; i++) {
+        borderButton[i].classList.remove('activeButton');
+      }
+      borderButton[2].classList.add('activeButton');
+    } else if (selectedCategory === 'clothes') {
+      for (let i = 0; i < borderButton.length; i++) {
+        borderButton[i].classList.remove('activeButton');
+      }
+      borderButton[3].classList.add('activeButton');
+    } else if (selectedCategory === 'vehicle') {
+      for (let i = 0; i < borderButton.length; i++) {
+        borderButton[i].classList.remove('activeButton');
+      }
+      borderButton[4].classList.add('activeButton');
+    }
   };
+  console.log(selectedCategory);
 
   const filterButtonsList = filterButtons.map((filterButtons) => (
     <div
       key={filterButtons.id}
-      className=" w-16 flex flex-col items-center justify-center"
+      className="w-16 flex flex-col items-center justify-center"
     >
       <div>
-        <div className="flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white">
+        <button className="borderButton flex items-center justify-center rounded-full h-12 w-12 shadow-lg bg-white">
           <input
-            className={`check opacity-0 absolute w-12 h-12 cursor-pointer`}
+            className={` z-0 check opacity-0 absolute w-12 h-12 cursor-pointer`}
             type="checkbox"
             id={filterButtons.category}
             checked={selectedCategory === filterButtons.category}
@@ -122,12 +155,15 @@ const FilterButtons = () => {
               setSelectedCategory(filterButtons.category);
               filterAds();
             }}
-            onClick={() => Filter()}
+            onClick={() => {
+              Filter();
+              setCount(filterButtons.id);
+            }}
           />
           <div className="h-7 w-7">
             <img src={filterButtons.img} alt="" className="aspect-auto " />
           </div>
-        </div>
+        </button>
       </div>
       <Typography
         variant="body1"
@@ -174,6 +210,7 @@ const FilterButtons = () => {
       )}
 
       <ContentContainer>
+        {filterNavigation === true ? filterLength : empty}
         {showFreeAds === true ? (
           <>
             <Typography variant="body2" mt={5} mb={2} textAlign="center">
