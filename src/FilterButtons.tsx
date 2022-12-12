@@ -172,19 +172,26 @@ const FilterButtons = () => {
           </button>
         </div>
       )}
-      {filterNavigation === true ? filterLength : empty}
-      <div className="flex flex-col-reverse"></div>
+
       <ContentContainer>
         {showFreeAds === true ? (
           <>
-            <ContentContainer>
-              <Box sx={{ width: '100%' }}>{freeStuff}</Box>
-            </ContentContainer>
+            <Typography variant="body2" mt={5} mb={2} textAlign="center">
+              Antal produkter ({freeStuff.length})
+            </Typography>
+            <Box sx={{ width: '100%' }}>{freeStuff}</Box>
           </>
         ) : filterNavigation === false ? (
           <Feed />
         ) : (
-          filteredList.map((ad, index) => <SlimCard key={index} ad={ad!} />)
+          <>
+            <Typography variant="body2" mt={5} mb={2} textAlign="center">
+              {filterNavigation === true ? filterLength : empty}
+            </Typography>
+            {filteredList.map((ad, index) => (
+              <SlimCard key={index} ad={ad} />
+            ))}
+          </>
         )}
       </ContentContainer>
     </Box>
