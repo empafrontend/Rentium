@@ -2,6 +2,7 @@ import { PlaceOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import free from './Assets/free-tag.png';
 import { AdContext } from './Context/AdContextProvider';
 import { NavigationContext } from './Context/NavigationContext';
 import Feed from './Feed/Feed';
@@ -99,6 +100,7 @@ const FilterButtons = () => {
 
     if (checkbox?.checked) {
       setFilterNavigation(true);
+      setShowFreeAds(false);
     } else {
       setCount(0);
       setFilterNavigation(false);
@@ -129,6 +131,16 @@ const FilterButtons = () => {
           </div>
         </div>
       </div>
+      <Typography
+        variant="body1"
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          paddingTop: '.4rem',
+        }}
+      >
+        {filterButtons.text}
+      </Typography>
     </div>
   ));
 
@@ -137,13 +149,42 @@ const FilterButtons = () => {
 
   return (
     <Box>
-      <div className=" flex flex-row w-full justify-center filter-buttons">
-        {filterButtonsList}
-      </div>
+      {filterNavigation ? (
+        <div className=" button-div flex flex-row filter-buttons">
+          {filterButtonsList}
+
+          <button
+            id="free-tag"
+            className="h-14 w-14 mb-6 flex justify-center hover:animate-spin rounded-full focus:border-dashed focus:border-2 focus:border-orange-300"
+            onClick={() => setShowFreeAds(true)}
+          >
+            <img src={free} alt="" className="aspect-auto p-1" />
+          </button>
+        </div>
+      ) : (
+        <div className=" button-div flex flex-row filter-buttons-down">
+          {filterButtonsList}
+
+          <button
+            id="free-tag"
+            className="h-14 w-14 mb-6 flex justify-center hover:animate-spin rounded-full focus:border-dashed focus:border-2 focus:border-orange-300"
+            onClick={() => setShowFreeAds(true)}
+          >
+            <img src={free} alt="" className="aspect-auto p-1" />
+          </button>
+        </div>
+      )}
       {filterNavigation === true ? filterLength : empty}
       <div className="flex flex-col-reverse"></div>
       <ContentContainer>
-        {filterNavigation === false ? (
+        {showFreeAds === true ? (
+          <>
+            <ContentContainer>
+              {/* <CategoryLength /> */}
+              <Box sx={{ width: '100%' }}>{freeStuff}</Box>
+            </ContentContainer>
+          </>
+        ) : filterNavigation === false ? (
           <Feed />
         ) : (
           filteredList.map((ad, index) => <SlimCard key={index} ad={ad!} />)
@@ -152,5 +193,4 @@ const FilterButtons = () => {
     </Box>
   );
 };
-
 export default FilterButtons;
