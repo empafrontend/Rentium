@@ -1,7 +1,6 @@
 import { ThemeProvider } from '@emotion/react';
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AdFilterFeed from './AdFilterFeed';
 import AdPage from './AdPage';
 import AdProvider from './Context/AdContextProvider';
 import NavigationContextProvider from './Context/NavigationContext';
@@ -34,7 +33,6 @@ function App() {
                     <Route path="/my-page" element={<MyPage />} />
                     <Route path="/ad/:id" element={<AdPage />} />
                     <Route path="/profile/:id" element={<Profile />} />
-                    <Route path="/filter" element={<AdFilterFeed />} />
                     <Route path="/feed" element={<Feed />} />
                     <Route path="/new-ad" element={<NewAdPage />} />
                     <Route path="*" element={<NotFound />} />

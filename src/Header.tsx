@@ -6,18 +6,13 @@ import './header.css';
 import NavItems from './shared/NavItems';
 
 function Header() {
-  const { filterNavigation, setFilterNavigation, showFreeAds, setShowFreeAds } =
+  const { filterNavigation, setFilterNavigation, setShowFreeAds } =
     useContext(NavigationContext);
 
   const handleHeaderGrow = () => {
     setFilterNavigation(false);
     setShowFreeAds(false);
   };
-
-  /*   const handleHeaderShrink = () => {
-    setFilterNavigation(true);
-    console.log('hej');
-  }; */
 
   return (
     <header>

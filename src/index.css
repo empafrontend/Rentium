@@ -6,8 +6,7 @@
 body {
   margin: 0;
   box-sizing: border-box;
-  /* font-family: 'Hind', sans-serif; this is for header */
-  font-family: 'Roboto', sans-serif; /* for body */
+  font-family: 'Roboto', sans-serif;
 }
 
 h2 {
