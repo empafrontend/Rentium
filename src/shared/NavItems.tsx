@@ -1,5 +1,5 @@
 import { Avatar, Badge, Typography } from '@mui/material';
-import { IconHome, IconPlus, IconSearch, IconUserCircle } from '@tabler/icons';
+import { IconHome, IconPlus, IconUserCircle } from '@tabler/icons';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useAd } from '../Context/AdContextProvider';
@@ -30,15 +30,6 @@ const NavItems = () => {
         <IconHome size={28} stroke={1} />
         <Typography variant="h5" component="h3" mt={0.7}>
           Hem
-        </Typography>
-      </Link>
-
-      <Link to="/" className="link">
-        {/* link to be adjusted */}
-        {/* put this when link for search is implemented: onClick={() => handleHeaderSize()} */}
-        <IconSearch size={28} stroke={1} />
-        <Typography variant="h5" component="h3" mt={0.7}>
-          Sök
         </Typography>
       </Link>
 

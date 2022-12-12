@@ -43,7 +43,7 @@ We use google login in our app with `Firebase`.
 
 ### Github Projects
 
-- [Projects](https://github.com/users/empafrontend/projects/1)
+[Projects](https://github.com/users/empafrontend/projects/1)
 
 <br>
 
@@ -51,6 +51,8 @@ We use google login in our app with `Firebase`.
 
 https://www.figma.com/file/IDmhFfO3T9Vki7NCI0wWLn/Untitled?node-id=0%3A1&t=7E7Crt70M7tJhNly-1
 
+<br>
+
 ### Deployed Site (work in progress)
 
-[Rentium site](https://rentium.vercel.app/)
+[Rentium](https://rentium.vercel.app/)
