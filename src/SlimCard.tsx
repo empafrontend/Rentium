@@ -31,7 +31,6 @@ const SlimCard = (props: SlimcardProps) => {
               {props.ad.description.length > 150
                 ? props.ad.description.substring(0, 150) + ' ...'
                 : props.ad.description}
-              3
             </Typography>
           </div>
 
