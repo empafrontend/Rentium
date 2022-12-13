@@ -8,17 +8,16 @@ import { useUser } from '../Context/UserContextProvider';
 import './navItems.css';
 
 const NavItems = () => {
-  const { filterNavigation, setFilterNavigation } =
-    useContext(NavigationContext);
+  const { isLandingPage, setIsLandingPage } = useContext(NavigationContext);
 
   const handleHeaderSize = () => {
-    if (filterNavigation === false) {
-      setFilterNavigation(true);
+    if (isLandingPage === true) {
+      setIsLandingPage(false);
     }
   };
 
   const goToHomeView = () => {
-    setFilterNavigation(false);
+    setIsLandingPage(true);
   };
 
   const { currentUser } = useUser();

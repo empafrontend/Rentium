@@ -5,10 +5,10 @@ import { useNavi } from '../Context/NavigationContext';
 
 const BackButton = () => {
   const navigate = useNavigate();
-  const { setFilterNavigation } = useNavi();
+  const { setIsLandingPage } = useNavi();
 
   const handleClick = () => {
-    setFilterNavigation(false);
+    setIsLandingPage(false);
     navigate(-1);
   };
 

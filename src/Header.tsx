@@ -6,26 +6,17 @@ import './header.css';
 import NavItems from './shared/NavItems';
 
 function Header() {
-  const { filterNavigation, setFilterNavigation, setShowFreeAds } =
+  const { isLandingPage, setIsLandingPage, setShowFreeAds } =
     useContext(NavigationContext);
 
   const handleHeaderGrow = () => {
-    setFilterNavigation(false);
+    setIsLandingPage(true);
     setShowFreeAds(false);
   };
 
   return (
     <header>
-      {filterNavigation ? (
-        <Box className="header">
-          <Link to="/">
-            <Box className="logo" onClick={handleHeaderGrow} />
-          </Link>
-          <Box className="navigation">
-            <NavItems />
-          </Box>
-        </Box>
-      ) : (
+      {isLandingPage ? (
         <Box className="expanded-header">
           <Box className="upper-content">
             <Link to="/">
@@ -42,6 +33,15 @@ function Header() {
             <Typography variant="subtitle2" sx={{ color: 'white' }}>
               Hyresplatsen för smarta göteborgare
             </Typography>
+          </Box>
+        </Box>
+      ) : (
+        <Box className="header">
+          <Link to="/">
+            <Box className="logo" onClick={handleHeaderGrow} />
+          </Link>
+          <Box className="navigation">
+            <NavItems />
           </Box>
         </Box>
       )}

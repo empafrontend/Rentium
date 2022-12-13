@@ -10,7 +10,7 @@ import './feed.css';
 
 function Feed() {
   const { ads, getAds } = useContext(AdContext);
-  const { setFilterNavigation } = useContext(NavigationContext);
+  const { setIsLandingPage } = useContext(NavigationContext);
 
   useEffect(() => {
     getAds();
@@ -43,7 +43,7 @@ function Feed() {
                 borderRadius: 3,
                 boxShadow: 'none',
               }}
-              onClick={() => setFilterNavigation(true)}
+              onClick={() => setIsLandingPage(false)}
             >
               <Link to={`/ad/${ads.id}`}>
                 <CardMedia

@@ -7,30 +7,37 @@ import {
 } from 'react';
 
 interface NavigationContextValue {
-  filterNavigation: boolean;
-  setFilterNavigation: React.Dispatch<React.SetStateAction<boolean>>;
+  isFilteredView: boolean;
+  setIsFilteredView: React.Dispatch<React.SetStateAction<boolean>>;
   showFreeAds: boolean;
   setShowFreeAds: React.Dispatch<React.SetStateAction<boolean>>;
+  isLandingPage: boolean;
+  setIsLandingPage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const NavigationContext = createContext<NavigationContextValue>({
-  filterNavigation: false,
-  setFilterNavigation: () => undefined,
+  isFilteredView: false,
+  setIsFilteredView: () => undefined,
   showFreeAds: false,
   setShowFreeAds: () => undefined,
+  isLandingPage: true,
+  setIsLandingPage: () => undefined,
 });
 
 const NavigationContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [filterNavigation, setFilterNavigation] = useState<boolean>(false);
+  const [isFilteredView, setIsFilteredView] = useState<boolean>(false);
   const [showFreeAds, setShowFreeAds] = useState<boolean>(false);
-  // console.log(filterNavigation);
+  const [isLandingPage, setIsLandingPage] = useState<boolean>(true);
+  // console.log(isFilteredView);
   return (
     <NavigationContext.Provider
       value={{
-        filterNavigation,
-        setFilterNavigation,
+        isFilteredView,
+        setIsFilteredView,
         showFreeAds,
         setShowFreeAds,
+        isLandingPage,
+        setIsLandingPage,
       }}
     >
       {children}

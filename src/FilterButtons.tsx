@@ -27,8 +27,14 @@ const FilterButtons = () => {
   };
 
   const filteredList = useMemo(filterAds, [selectedCategory]);
-  const { filterNavigation, setFilterNavigation, showFreeAds, setShowFreeAds } =
-    useContext(NavigationContext);
+  const {
+    isFilteredView,
+    setIsFilteredView,
+    setIsLandingPage,
+    isLandingPage,
+    showFreeAds,
+    setShowFreeAds,
+  } = useContext(NavigationContext);
 
   const freeItems = ads.filter((ad) => ad.price === 0);
   const freeStuff = freeItems.map((item, index) => (
@@ -42,17 +48,25 @@ const FilterButtons = () => {
       }}
     >
       <Link to={`/ad/${item.id}`}>
-        <Box sx={{ width: '30rem', display: 'flex', marginTop: '3rem' }}>
+        <Box
+          sx={{
+            width: '20rem',
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '3rem',
+            gap: '1.5rem',
+          }}
+        >
           <img
             src={item.img}
             alt={item.title}
-            className="w-32 h-32 aspect-auto object-cover rounded-lg mx-8"
+            className="w-32 h-32 aspect-auto object-cover rounded-lg"
           />
           <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              width: '18rem',
+              width: '12rem',
               gap: '1rem',
             }}
           >
@@ -88,11 +102,14 @@ const FilterButtons = () => {
   ));
 
   useEffect(() => {
+    if (isFilteredView) {
+      setIsLandingPage(false);
+    }
     Filter();
   }, [selectedCategory, count]);
 
   const borderButton = document.querySelectorAll('.borderButton');
-  if (showFreeAds === true || filterNavigation === false) {
+  if (showFreeAds === true || isFilteredView === false) {
     for (let i = 0; i < borderButton.length; i++) {
       borderButton[i].classList.remove('activeButton');
     }
@@ -102,11 +119,11 @@ const FilterButtons = () => {
       selectedCategory
     ) as HTMLInputElement | null;
     if (checkbox?.checked) {
-      setFilterNavigation(true);
+      setIsFilteredView(true);
       setShowFreeAds(false);
     } else {
       setCount(0);
-      setFilterNavigation(false);
+      setIsLandingPage(true);
       setSelectedCategory('');
     }
 
@@ -179,52 +196,59 @@ const FilterButtons = () => {
     </div>
   ));
 
-  const filterLength = `Antal produkter (${filteredList.length})`;
+  const filterLength = `Antal produkter  (${filteredList.length})`;
   const empty = ``;
 
   return (
-    <Box>
-      {filterNavigation ? (
-        <div className=" button-div flex flex-row filter-buttons">
-          {filterButtonsList}
-
-          <button
-            id="free-tag"
-            className="h-14 w-14 mb-6 flex justify-center hover:animate-spin rounded-full focus:border-dashed focus:border-2 focus:border-orange-300"
-            onClick={() => setShowFreeAds(true)}
-          >
-            <img src={free} alt="Gratis" className="aspect-auto p-1" />
-          </button>
-        </div>
-      ) : (
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      {isLandingPage ? (
         <div className=" button-div flex flex-row filter-buttons-down">
           {filterButtonsList}
 
           <button
             id="free-tag"
-            className="h-14 w-14 mb-6 flex justify-center hover:animate-spin rounded-full focus:border-dashed focus:border-2 focus:border-orange-300"
+            className="mb-4 rounded-full hover:animate-spin rounded-full focus:border-dashed focus:border-2 focus:border-orange-300"
             onClick={() => setShowFreeAds(true)}
           >
-            <img src={free} alt="Gratis" className="aspect-auto p-1" />
+            <div className="h-12 w-12">
+              <img src={free} alt="Gratis" className="aspect-auto p-1 " />
+            </div>
+          </button>
+        </div>
+      ) : (
+        <div className=" button-div flex flex-row filter-buttons">
+          {filterButtonsList}
+
+          <button
+            id="free-tag"
+            className="mb-4 rounded-full hover:animate-spin rounded-full focus:border-dashed focus:border-2 focus:border-orange-300"
+            onClick={() => setShowFreeAds(true)}
+          >
+            <div className="h-12 w-12">
+              <img src={free} alt="Gratis" className="aspect-auto p-1 " />
+            </div>
           </button>
         </div>
       )}
 
       <ContentContainer>
-        {filterNavigation === true ? filterLength : empty}
+        <Box sx={{ marginTop: '2rem' }}>
+          {/* {isFilteredView === true ? filterLength : empty} */}
+        </Box>
         {showFreeAds === true ? (
           <>
-            <Typography variant="body2" mt={5} mb={2} textAlign="center">
+            <Typography variant="body2" mt={2} mb={1} textAlign="center">
               Antal produkter ({freeStuff.length})
             </Typography>
+
             <Box sx={{ width: '100%' }}>{freeStuff}</Box>
           </>
-        ) : filterNavigation === false ? (
+        ) : isLandingPage === true ? (
           <Feed />
         ) : (
           <>
             <Typography variant="body2" mt={5} mb={2} textAlign="center">
-              {filterNavigation === true ? filterLength : empty}
+              {isFilteredView === true ? filterLength : empty}
             </Typography>
             {filteredList.map((ad, index) => (
               <SlimCard key={index} ad={ad} />
