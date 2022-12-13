@@ -109,7 +109,7 @@ const FilterButtons = () => {
   }, [selectedCategory, count]);
 
   const borderButton = document.querySelectorAll('.borderButton');
-  if (showFreeAds === true || isFilteredView === false) {
+  if (showFreeAds === true || isLandingPage === true) {
     for (let i = 0; i < borderButton.length; i++) {
       borderButton[i].classList.remove('activeButton');
     }
@@ -120,6 +120,7 @@ const FilterButtons = () => {
     ) as HTMLInputElement | null;
     if (checkbox?.checked) {
       setIsFilteredView(true);
+      setIsLandingPage(false);
       setShowFreeAds(false);
     } else {
       setCount(0);
@@ -232,9 +233,7 @@ const FilterButtons = () => {
       )}
 
       <ContentContainer>
-        <Box sx={{ marginTop: '2rem' }}>
-          {/* {isFilteredView === true ? filterLength : empty} */}
-        </Box>
+        <Box sx={{ marginTop: '2rem' }}></Box>
         {showFreeAds === true ? (
           <>
             <Typography variant="body2" mt={2} mb={1} textAlign="center">
