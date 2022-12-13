@@ -142,11 +142,12 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
     await addDoc(adsCollectionRef, newAd)
       .then(() => {
         navigate('/');
-        // TODO: toast
+        toast.success('din annons har nu publicerats.', {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       })
       .catch((error) => {
-        console.log(error);
-        // TODO: toast
+        toast.warning(error, { position: toast.POSITION.BOTTOM_CENTER });
       });
   }, []);
 
