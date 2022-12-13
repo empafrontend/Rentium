@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import { IconListDetails } from '@tabler/icons';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { Ad, useAd } from '../Context/AdContextProvider';
@@ -11,6 +12,7 @@ import ContentContainer from '../shared/ContentContainer';
 const MyPage = () => {
   const navigate = useNavigate();
   const {
+    getAds,
     adsFromCurrentUser,
     generateAcceptedReq,
     generatePendingReq,
@@ -19,6 +21,10 @@ const MyPage = () => {
   } = useAd();
   const { handleSignOut } = useUser();
   const { currentUser } = useUser();
+
+  useEffect(() => {
+    getAds();
+  }, []);
 
   return (
     <Protected>

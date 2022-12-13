@@ -99,7 +99,9 @@ const AdCard = (props: ExAdCard) => {
                 placeContent: 'center',
                 pl: 1,
                 maxWidth: 125,
-                height: '100%',
+                height: 130,
+                width: 120,
+                position: 'relative',
               }}
             >
               <Typography variant="body1" fontWeight={600}>
@@ -116,21 +118,23 @@ const AdCard = (props: ExAdCard) => {
                       .toDateString()
                       .replace(/^\S+\s/, '')}
               </Typography>
-              <Typography variant="body1" pt={2} pb={0.5} fontWeight={400}>
+              <Typography variant="body1" pt={1.2} pb={0.5} fontWeight={400}>
                 {formatZeroPrice(props.ad.price)}
               </Typography>
               <Typography
                 variant="body2"
+                fontSize={10}
                 color="#48BC5B"
                 lineHeight={1.2}
                 textAlign="end"
                 fontWeight={400}
+                sx={{ position: 'absolute', bottom: 5, right: 5, width: 100 }}
               >
                 {props.ad.bookingRequests?.some(
                   (req) =>
                     req.uid === currentUser.uid && req.isAccepted === true
                 )
-                  ? 'Accepterad \n Kontakta säljaren'
+                  ? '✓ Accepterad \n Kontakta säljaren'
                   : null}
               </Typography>
             </CardContent>

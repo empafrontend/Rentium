@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Ad, useAd } from './Context/AdContextProvider';
+import filterButtons from './filterButtonsData';
 import Protected from './Protected';
 import ContentContainer from './shared/ContentContainer';
 import InputField from './shared/InputField';
@@ -52,29 +53,6 @@ const validationSchema = yup.object().shape({
       'Datumet måste vara inom ett år från idag.'
     ),
 });
-
-const categories = [
-  {
-    value: 'SHOES',
-    label: 'Skor',
-  },
-  {
-    value: 'TOOLS',
-    label: 'Verktyg',
-  },
-  {
-    value: 'CLOTHES',
-    label: 'Kläder',
-  },
-  {
-    value: 'VEHICLE',
-    label: 'Fordon',
-  },
-  {
-    value: 'HATS',
-    label: 'Hattar',
-  },
-];
 
 function NewAdPage() {
   const { createAd } = useAd();
@@ -151,9 +129,9 @@ function NewAdPage() {
                 }
                 onChange={formik.handleChange}
               >
-                {categories.map((option, index) => (
-                  <MenuItem key={index} value={option.value}>
-                    {option.label}
+                {filterButtons.map((option, index) => (
+                  <MenuItem key={index} value={option.category}>
+                    {option.text}
                   </MenuItem>
                 ))}
               </Select>

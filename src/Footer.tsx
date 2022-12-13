@@ -1,14 +1,17 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import './footer.css';
 import NavItems from './shared/NavItems';
 
 function Footer() {
   return (
-    <Box className="footer">
+    <footer className="footer">
       <Box className="footer-navigation">
         <NavItems />
       </Box>
-    </Box>
+      <Typography className="footer-disclaimer" variant="body2" color="white">
+        Rentium 2022 © Alla rättigheter förbehållna.
+      </Typography>
+    </footer>
   );
 }
 

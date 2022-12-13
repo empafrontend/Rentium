@@ -20,3 +20,11 @@ jobs:
 
       - name: Lint
         run: npm run lint
+
+      - name: Cypress
+        uses: cypress-io/github-action@v4.2.0
+        with:
+          browser: chrome
+          start: npm start && npm run cypress:open
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 60
