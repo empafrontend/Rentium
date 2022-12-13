@@ -10,12 +10,11 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { BookingRequest, useAd } from './Context/AdContextProvider';
 import { useUser } from './Context/UserContextProvider';
 import { auth } from './firebase';
-
 import './footer.css';
 import { formatZeroPrice, onImageError } from './helper';
 import ContentContainer from './shared/ContentContainer';
@@ -74,17 +73,20 @@ function Profile() {
                 p: '1rem',
               }}
             >
-              <CardMedia
-                component="img"
-                image={ad.img}
-                alt="img"
-                onError={onImageError}
-                sx={{
-                  borderRadius: 3,
-                  width: 125,
-                  height: 125,
-                }}
-              />
+              <Link to={`/ad/${ad.id}`}>
+                <CardMedia
+                  component="img"
+                  image={ad.img}
+                  alt="img"
+                  onError={onImageError}
+                  sx={{
+                    borderRadius: 3,
+                    minWidth: 125,
+                    maxWidth: 125,
+                    height: 125,
+                  }}
+                />
+              </Link>
               <CardContent
                 sx={{
                   py: 0,
@@ -95,18 +97,20 @@ function Profile() {
                   height: 120,
                 }}
               >
-                <Typography variant="body1" fontWeight={600}>
-                  {ad.title}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  minHeight={30}
-                >
-                  {ad.description.length > 60
-                    ? ad.description.substring(0, 60) + ' ...'
-                    : ad.description}
-                </Typography>
+                <Link to={`/ad/${ad.id}`}>
+                  <Typography variant="body1" fontWeight={600}>
+                    {ad.title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    minHeight={30}
+                  >
+                    {ad.description.length > 45
+                      ? ad.description.substring(0, 45) + ' ...'
+                      : ad.description}
+                  </Typography>
+                </Link>
                 {currentUser && currentUser.uid === ad.authorId ? (
                   <IsAvailableSwitch ad={ad} />
                 ) : null}
