@@ -15,7 +15,7 @@ const SlimCard = (props: SlimcardProps) => {
     <Link key={props.ad.id} to={`/ad/${props.ad.id}`}>
       <div
         id={`${props.ad.category}`}
-        className={`${props.ad.category} flex flex-row justify-center items-center mb-1 p-1 mt-1`}
+        className={`${props.ad.category} flex flex-row justify-center items-center mb-1 mt-1`}
       >
         <img
           src={props.ad.img}
@@ -23,7 +23,7 @@ const SlimCard = (props: SlimcardProps) => {
           onError={onImageError}
           className="w-32 h-32 aspect-auto object-cover rounded-lg mx-8"
         />
-        <div className="flex flex-col w-2/5">
+        <div className="flex flex-col w-3/5">
           <div className="mb-4">
             <Typography variant="subtitle2">{props.ad.title}</Typography>
             <Typography variant="body2" className="text-sm hind">
@@ -33,7 +33,7 @@ const SlimCard = (props: SlimcardProps) => {
             </Typography>
           </div>
 
-          <div className="flex flex-row justify-between mr-8">
+          <div className="flex flex-row justify-between mr-2">
             <Typography variant="caption" className="text-lg">
               {formatZeroPrice(props.ad.price)}
             </Typography>
