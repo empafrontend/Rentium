@@ -45,7 +45,7 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
   const [currentUser, setCurrentUser] = useState<any>();
   const handleSignIn = (user: User) => console.log('signing in', user); // TODO: add function
   const handleSignUp = (user: User) => console.log('signing up', user); // TODO: add function
-  const { setFilterNavigation } = useNavi();
+  const { setIsLandingPage } = useNavi();
 
   /** Signs in the user via Google */
   const handleGoogleSignIn = async () => {
@@ -71,7 +71,7 @@ const UserProvider: FC<PropsWithChildren> = (props) => {
   const handleSignOut = async () =>
     await signOut(auth)
       .then(() => {
-        setFilterNavigation(false);
+        setIsLandingPage(true);
         setCurrentUser(undefined);
         navigate('/');
       })
