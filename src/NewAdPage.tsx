@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import { useFormik } from 'formik';
+import { ToastContainer } from 'react-toastify';
 import * as yup from 'yup';
 import { Ad, useAd } from './Context/AdContextProvider';
 import filterButtons from './filterButtonsData';
@@ -248,6 +249,7 @@ function NewAdPage() {
             </Button>
           </Box>
         </Box>
+        <ToastContainer />
       </ContentContainer>
     </Protected>
   );
