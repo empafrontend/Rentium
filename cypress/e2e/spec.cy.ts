@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 beforeEach(() => {
-  cy.visit('/');
+  cy.visit('http://localhost:3000');
 });
 
 describe('Landing page', () => {
