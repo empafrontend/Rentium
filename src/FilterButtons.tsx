@@ -8,7 +8,7 @@ import { NavigationContext } from './Context/NavigationContext';
 import Feed from './Feed/Feed';
 import './filterButtons.css';
 import filterButtons from './filterButtonsData';
-import { formatZeroPrice } from './helper';
+import { formatZeroPrice, onImageError } from './helper';
 import ContentContainer from './shared/ContentContainer';
 import SlimCard from './SlimCard';
 
@@ -45,30 +45,32 @@ const FilterButtons = () => {
       sx={{
         display: 'flex',
         flexDirection: 'row',
-        width: '100%',
         justifyContent: 'center',
       }}
     >
       <Link to={`/ad/${item.id}`}>
         <Box
           sx={{
-            width: '90%',
             display: 'flex',
             justifyContent: 'center',
             marginTop: '3rem',
-            gap: '1.5rem',
+            gap: '1rem',
           }}
         >
           <img
             src={item.img}
             alt={item.title}
+            onError={onImageError}
             className="w-32 h-32 aspect-auto object-cover rounded-lg"
+            style={{ minWidth: 128 }}
           />
           <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              width: '60%',
+              width: '90%',
+              minWidth: { xs: 160, sm: 400, md: 460 },
+              maxWidth: { xs: 280, sm: 400, md: 460 },
               gap: '1rem',
             }}
           >
@@ -85,7 +87,7 @@ const FilterButtons = () => {
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
-                widht: '100%',
+                width: '100%',
                 justifyContent: 'space-between',
               }}
             >
