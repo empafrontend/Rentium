@@ -25,7 +25,6 @@ jobs:
         uses: cypress-io/github-action@v4.2.0
         with:
           browser: chrome
-          start: npm start
-          run: npm run cypress:open
+          start: npm start && npm run cypress:open
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 60
