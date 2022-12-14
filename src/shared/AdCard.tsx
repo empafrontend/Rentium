@@ -108,10 +108,10 @@ const AdCard = (props: ExAdCard) => {
                 {props.ad.title}
               </Typography>
               <Typography variant="body2">
-                {props.isRequest && currentUser.uid !== props.authorId
-                  ? props.ad.author
-                  : props.isRequest
+                {props.isRequest && props.ad.requestor?.displayName
                   ? props.ad.requestor?.displayName
+                  : props.isRequest
+                  ? props.ad.author
                   : 'Inlagd: ' +
                     props.ad.createdAt
                       .toDate()
