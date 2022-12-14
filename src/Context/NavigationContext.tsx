@@ -28,7 +28,7 @@ const NavigationContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isFilteredView, setIsFilteredView] = useState<boolean>(false);
   const [showFreeAds, setShowFreeAds] = useState<boolean>(false);
   const [isLandingPage, setIsLandingPage] = useState<boolean>(true);
-  // console.log(isFilteredView);
+
   return (
     <NavigationContext.Provider
       value={{
