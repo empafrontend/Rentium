@@ -36,7 +36,9 @@ const FilterButtons = () => {
     setShowFreeAds,
   } = useContext(NavigationContext);
 
-  const freeItems = ads.filter((ad) => ad.price === 0);
+  const freeItems = ads.filter(
+    (ad) => ad.price === 0 && ad.isAvailable === true
+  );
   const freeStuff = freeItems.map((item, index) => (
     <Box
       key={index}
@@ -50,7 +52,7 @@ const FilterButtons = () => {
       <Link to={`/ad/${item.id}`}>
         <Box
           sx={{
-            width: '20rem',
+            width: '90%',
             display: 'flex',
             justifyContent: 'center',
             marginTop: '3rem',
@@ -66,7 +68,7 @@ const FilterButtons = () => {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              width: '12rem',
+              width: '60%',
               gap: '1rem',
             }}
           >
@@ -211,7 +213,7 @@ const FilterButtons = () => {
             className="mb-4 rounded-full hover:animate-spin rounded-full focus:border-dashed focus:border-2 focus:border-orange-300"
             onClick={() => setShowFreeAds(true)}
           >
-            <div className="h-12 w-12">
+            <div className="h-12 w-12" onClick={() => setIsLandingPage(false)}>
               <img src={free} alt="Gratis" className="aspect-auto p-1 " />
             </div>
           </button>
@@ -225,7 +227,7 @@ const FilterButtons = () => {
             className="mb-4 rounded-full hover:animate-spin rounded-full focus:border-dashed focus:border-2 focus:border-orange-300"
             onClick={() => setShowFreeAds(true)}
           >
-            <div className="h-12 w-12">
+            <div className="h-12 w-12" onClick={() => setIsLandingPage(false)}>
               <img src={free} alt="Gratis" className="aspect-auto p-1 " />
             </div>
           </button>
