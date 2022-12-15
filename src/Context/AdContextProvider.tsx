@@ -240,6 +240,7 @@ const AdProvider: FC<PropsWithChildren> = (props) => {
       bookingRequests: newList,
     }).then(() => {
       getOneAd(adId);
+      getAds();
       toast.success('Din bokningsförfrågan har blivit skickad.', {
         position: toast.POSITION.BOTTOM_CENTER,
       });
